@@ -10,8 +10,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@eva-design/eva": "^2.1.1",
+    "@react-navigation/native": "^6.0.2",
+    "@ui-kitten/components": "^5.1.1",
     "react": "17.0.2",
-    "react-native": "0.65.1"
+    "react-native": "0.65.1",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.6.0",
+    "react-native-svg": "^12.1.1",
+    "react-redux": "^7.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
