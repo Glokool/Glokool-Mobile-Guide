@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "603637824492",
+    "firebase_url": "https://glokool-a7604-default-rtdb.firebaseio.com",
+    "project_id": "glokool-a7604",
+    "storage_bucket": "glokool-a7604.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603637824492:android:01a48ca3afd6cdb4ba9ec9",
+        "android_client_info": {
+          "package_name": "com.glokool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603637824492-3ai4koc69dlm755ksfaljskt1pslhehs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glokool",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "603637824492-de3pr9fbjusgdrauimb4klc72apv5oei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glokool",
+            "certificate_hash": "b8671186663e5301bd076415e963ec40429c20c6"
+          }
+        },
+        {
+          "client_id": "603637824492-hs2gt4v6lbjc73esr2gq9ncgo04h7ur6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glokool",
+            "certificate_hash": "c2cb5c07011357b9b919c48684c56a0c72724186"
+          }
+        },
+        {
+          "client_id": "603637824492-elifaqc06j569ohqnjf1g0nscmvbopsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBojZKglQNuqXygaEr39fP15CiJH60jfNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603637824492-elifaqc06j569ohqnjf1g0nscmvbopsh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "603637824492-b8oars128cdq83j1qll4buprl10fm374.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Glokool"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603637824492:android:c2b8234f3f67ce37ba9ec9",
+        "android_client_info": {
+          "package_name": "com.glokool_guide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603637824492-t8jd4mq7jte2efeu196mbvn72evtt006.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.glokool_guide",
+            "certificate_hash": "0b571f44bec431f5aa18320639957725759928c6"
+          }
+        },
+        {
+          "client_id": "603637824492-elifaqc06j569ohqnjf1g0nscmvbopsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBojZKglQNuqXygaEr39fP15CiJH60jfNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603637824492-elifaqc06j569ohqnjf1g0nscmvbopsh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "603637824492-b8oars128cdq83j1qll4buprl10fm374.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Glokool"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

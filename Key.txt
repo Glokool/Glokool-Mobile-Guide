@@ -1,0 +1,6 @@
+Store: C:\Users\rhqja\.android\debug.keystore
+Alias: AndroidDebugKey
+MD5: 98:2D:D9:F4:8A:70:34:9C:25:4A:00:C4:37:00:0A:45
+SHA1: 0B:57:1F:44:BE:C4:31:F5:AA:18:32:06:39:95:77:25:75:99:28:C6
+SHA-256: F2:1B:56:CD:9A:7F:BB:17:FF:FA:B8:C2:0C:A3:46:E4:6B:8E:DB:FE:D4:6F:86:C0:85:0F:88:FA:F3:FF:BD:AC
+Valid until: 2051년 2월 20일 월요일
