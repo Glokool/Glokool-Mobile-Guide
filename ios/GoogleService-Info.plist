@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>603637824492-dsd3lfrvpe4v5bdhc3q86p83vpj28jv0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.603637824492-dsd3lfrvpe4v5bdhc3q86p83vpj28jv0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>603637824492-3ai4koc69dlm755ksfaljskt1pslhehs.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBi-WrWocGTs5xrxOrE6hzYaoUSr_T9B7M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>603637824492</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.glokool-guide</string>
+	<key>PROJECT_ID</key>
+	<string>glokool-a7604</string>
+	<key>STORAGE_BUCKET</key>
+	<string>glokool-a7604.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:603637824492:ios:76f300a584f39a4dba9ec9</string>
+	<key>DATABASE_URL</key>
+	<string>https://glokool-a7604-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
