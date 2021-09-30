@@ -1,6 +1,7 @@
 export enum NavigatorRoute {
     AUTH = 'Auth',
     MAIN = 'Main',
+    CHAT = 'Chat'
 }
 
 export enum SceneRoute {
@@ -10,5 +11,5 @@ export enum SceneRoute {
     SIGNUP = 'Sign Up',
 
     // Main 네비게이터
-    Main = 'Main'
+    HOME = 'Home'
 }
