@@ -31,7 +31,8 @@ export const AppNavigator = (props : React.ReactElement) : React.ReactElement =>
     return(
         <Stack.Navigator {...props} screenOptions={{ headerShown: false }}>
             {user?
-                <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />                
+                <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />
+                              
             : 
                 <Stack.Screen name={NavigatorRoute.AUTH} component={AuthNavigator} />
             }

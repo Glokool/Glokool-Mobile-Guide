@@ -35,7 +35,7 @@ function ChatInputModel(
         case SET_TEXT : 
             return { values : action.payload };
         case SET_INIT : 
-            return { values : ''};
+            return { values : '' };
         default : 
             return state
     }

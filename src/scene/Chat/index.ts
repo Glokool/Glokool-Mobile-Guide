@@ -1,0 +1,1 @@
+export { ChatRoomScene } from './ChatRoom.scene'
