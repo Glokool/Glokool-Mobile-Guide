@@ -14,8 +14,9 @@ import { RootState } from '../../model';
 import { FomikInputComponent } from '../../component/Auth/SignIn/Formik.Input.component';
 
 import FastImage from 'react-native-fast-image';
-
+import { Formik } from 'formik';
 import { loading_end, loading_start } from '../../model/auth/auth.model';
+import { ProfileFormik } from '../../component/Profile/Profile.Formik.component';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
@@ -54,30 +55,9 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
         <Layout style={styles.MainContainer}>
             <FastImage source={{ uri: CDN + guideInfo?.avatar }} style={styles.ImageItem} />
 
-            <Layout style={styles.ItemContainer}>
-                <Text>Name</Text>
-                <Input value={guideInfo?.name}/>
-            </Layout>
-
-            <Layout style={styles.ItemContainer}>
-                <Text>Email</Text>
-                <Input value={guideInfo?.email} />
-            </Layout>
-
-            <Layout style={styles.ItemContainer}>
-                <Text>Phone</Text>
-                <Input value={guideInfo?.contact} keyboardType={'number-pad'} />
-            </Layout>
-
-            <Layout style={styles.ItemContainer}>
-                <Text>oneLineIntro</Text>
-                <Input value={guideInfo?.oneLineIntro} />
-            </Layout>
-
-            <Layout style={styles.ItemContainer}>
-                <Text>Intro</Text>
-                <Input value={guideInfo?.intro} />
-            </Layout>
+            {/* <Formik>
+                <ProfileFormik />
+            </Formik> */}
 
             <Text>{guideInfo?.country}</Text>
             <Text>{guideInfo?.gender}</Text>
