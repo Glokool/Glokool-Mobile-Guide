@@ -5,7 +5,7 @@
 const LOADING_START = 'model/AUTH/LOADING_START' as const;
 const LOADING_END = 'model/AUTH/LOADING_END' as const;
 
-export const loading_start = (diff : string) => ({
+export const loading_start = () => ({
     type : LOADING_START
 });
 

@@ -1,7 +1,8 @@
 export enum NavigatorRoute {
     AUTH = 'Auth',
     MAIN = 'Main',
-    CHAT = 'Chat'
+    CHAT = 'Chat',
+    PROFILE = 'Profile',
 }
 
 export enum SceneRoute {
@@ -13,8 +14,11 @@ export enum SceneRoute {
     // Main 네비게이터
     HOME = 'Home',
 
-
     // Chat 네비게이터
     CHATLIST = 'Chat List',
-    CHATROOM = 'Chat Room'
+    CHATROOM = 'Chat Room',
+
+    // Profile 네비게이터
+    PROFILE = 'Profile Main',
+
 }
