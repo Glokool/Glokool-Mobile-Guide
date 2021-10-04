@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, Alert, TouchableOpacity, Platform } from 'react-native';
 import { Layout, Text, Button } from '@ui-kitten/components';
 
 import auth from '@react-native-firebase/auth';
@@ -7,6 +7,7 @@ import storage from '@react-native-firebase/storage';
 import axios, { AxiosRequestConfig } from 'axios';
 import FastImage from 'react-native-fast-image';
 import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 import { FormikProps } from 'formik';
 import { FomikInputComponent } from '../Auth/SignIn/Formik.Input.component';
@@ -17,11 +18,13 @@ import { SERVER, CDN } from '../../server';
 const windowWidth = Dimensions.get('window').width;
 
 export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFragment => {
+    const initialValues = props.initialValues;
 
-    const [profileImage, setProfileImage] = useState<string>();
+    const [photo, setPhoto] = useState();
+    const [profileImage, setProfileImage] = useState<string | any>(CDN + initialValues.avatar);
     const [imageChanged, setImageChanged] = useState<boolean>(false);
 
-    const initialValues = props.initialValues;
+
 
     // Save Profile 버튼 클릭 시 바뀐 가이드 정보를 서버에 dispatch
     const onPressSubmit = async (values: GuideInfoType) => {
@@ -73,6 +76,8 @@ export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFra
                 if (response.didCancel) {
                     return;
                 } else {
+
+                    setPhoto(response.assets[0]);
                     setProfileImage(response.assets[0].uri);
                     setImageChanged(true);
                 }
@@ -81,28 +86,32 @@ export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFra
 
     const uploadImage = async () => {
         const authToken = await auth().currentUser?.getIdToken();
-        const data = new FormData();
-        data.append("uid", initialValues.uid);
-        data.append("avatar", profileImage);
-        data.append("type", "image/jpg");
+
+        const result = await fetch(profileImage);
+        const blob = RNFetchBlob.fetch('GET', profileImage)
+        const fileData = new File([blob], blob._data.name, { type: blob._data.type });
+        console.log(blob);
 
         const config: AxiosRequestConfig = {
             method: "post",
             url: SERVER + "api/guides/uploads",
-            data: data,
+            data: fileData,
             headers: {
                 Authorization: "Bearer " + authToken,
                 "Content-Type": "application/json",
             },
         }
-        axios(config).then((response) => { console.log(response.data) }).catch((e) => console.log(e));
+
+        axios(config)
+            .then((response) => console.log(response.data))
+            .catch((e) => console.log("Error", e));
     }
 
     return (
         <>
             <TouchableOpacity onPress={() => onPressImage()}>
                 <FastImage
-                    source={{ uri: CDN + initialValues.avatar }}
+                    source={{ uri: profileImage }}
                     style={styles.ImageItem}
                 />
             </TouchableOpacity>
