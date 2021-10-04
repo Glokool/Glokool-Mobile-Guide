@@ -1,23 +1,35 @@
-import React from 'react';
-import { Dimensions, StyleSheet, Alert } from 'react-native';
-import { ProfileData } from '../../model/profile/profile.validation.model';;
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { Layout, Text, Button } from '@ui-kitten/components';
+
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
+import axios, { AxiosRequestConfig } from 'axios';
+import FastImage from 'react-native-fast-image';
+import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+
 import { FormikProps } from 'formik';
 import { FomikInputComponent } from '../Auth/SignIn/Formik.Input.component';
-import { ChangeInfo, GuideInfoType } from '../../scene/Profile/type';
-import { SERVER } from '../../server';
-import auth from '@react-native-firebase/auth';
-import axios, { AxiosRequestConfig } from 'axios';
+
+import { GuideInfoType } from '../../scene/Profile/type';
+import { SERVER, CDN } from '../../server';
 
 const windowWidth = Dimensions.get('window').width;
 
 export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFragment => {
+
+    const [profileImage, setProfileImage] = useState<string>();
+    const [imageChanged, setImageChanged] = useState<boolean>(false);
 
     const initialValues = props.initialValues;
 
     // Save Profile 버튼 클릭 시 바뀐 가이드 정보를 서버에 dispatch
     const onPressSubmit = async (values: GuideInfoType) => {
         const authToken = await auth().currentUser?.getIdToken();
+
+        if (imageChanged) {
+            uploadImage();
+        }
 
         const guidePatchData = {
             name: values.name,
@@ -41,17 +53,60 @@ export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFra
             },
             data: JSON.stringify(guidePatchData),
         }
-        
+
         axios(config)
             .then((response) => {
-                console.log(response);
                 Alert.alert("modified");
             })
             .catch((e) => console.log(e));
     }
 
+    const onPressImage = () => {
+        launchImageLibrary({
+            mediaType: 'photo',
+            includeBase64: false,
+            quality: 1,
+            maxHeight: 200,
+            maxWidth: 200,
+        },
+            (response: ImagePickerResponse) => {
+                if (response.didCancel) {
+                    return;
+                } else {
+                    setProfileImage(response.assets[0].uri);
+                    setImageChanged(true);
+                }
+            })
+    }
+
+    const uploadImage = async () => {
+        const authToken = await auth().currentUser?.getIdToken();
+        const data = new FormData();
+        data.append("uid", initialValues.uid);
+        data.append("avatar", profileImage);
+        data.append("type", "image/jpg");
+
+        const config: AxiosRequestConfig = {
+            method: "post",
+            url: SERVER + "api/guides/uploads",
+            data: data,
+            headers: {
+                Authorization: "Bearer " + authToken,
+                "Content-Type": "application/json",
+            },
+        }
+        axios(config).then((response) => { console.log(response.data) }).catch((e) => console.log(e));
+    }
+
     return (
         <>
+            <TouchableOpacity onPress={() => onPressImage()}>
+                <FastImage
+                    source={{ uri: CDN + initialValues.avatar }}
+                    style={styles.ImageItem}
+                />
+            </TouchableOpacity>
+
             <Layout style={styles.ItemContainer}>
                 <Text>Name</Text>
                 <FomikInputComponent
@@ -94,6 +149,14 @@ export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFra
                 />
             </Layout>
 
+            {initialValues.keyword?.map((item) => (
+                <Text>{item}</Text>
+            ))}
+
+            <Text>{initialValues.birthDate}</Text>
+            <Text>{initialValues.gender}</Text>
+            <Text>{initialValues.country}</Text>
+
             <Button onPress={() => onPressSubmit(props.values)}>
                 Save Profile
             </Button>
@@ -108,5 +171,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: windowWidth * 0.9,
+    },
+    ImageItem: {
+        width: 150,
+        height: 150,
+        borderRadius: 100,
+        borderWidth: 0.5,
     },
 })

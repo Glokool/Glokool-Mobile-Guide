@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Spinner, Text, Input, Button } from '@ui-kitten/components';
 
-import { ProfileSceneProps } from '../../navigation/Profile.navigator';
-import { SERVER, CDN } from '../../server';
-
 import axios from 'axios';
 import auth from '@react-native-firebase/auth';
-import { GuideInfoType } from './type';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../model';
-import { Formik } from 'formik';
 import { loading_end, loading_start } from '../../model/auth/auth.model';
+import { RootState } from '../../model';
+
+import { Formik } from 'formik';
 import { ProfileFormik } from '../../component/Profile/Profile.Formik.component';
 import { ProfileValidationModel } from '../../model/profile/profile.validation.model';
+
+import { ProfileSceneProps } from '../../navigation/Profile.navigator';
+import { SERVER } from '../../server';
+import { GuideInfoType } from './type';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
@@ -22,13 +24,13 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
     const dispatch = useDispatch();
     const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
 
-
     const UID = auth().currentUser?.uid;
 
     useEffect(() => {
         InitGuideInfo();
     }, [])
 
+    // 가이드 정보 가져오는 부분
     const InitGuideInfo = () => {
         dispatch(loading_start());
 
@@ -46,8 +48,8 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
         </Layout>
     ) : (
         <Layout style={styles.MainContainer}>
-            {/* <FastImage source={{ uri: CDN + guideInfo?.avatar }} style={styles.ImageItem} /> */}
 
+            {/* Formik 으로 가이드 정보 전달해줍니다 */}
             <Formik
                 initialValues={{
                     ...guideInfo,
@@ -75,14 +77,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    ImageItem: {
-        width: 150,
-        height: 150
-    },
-    ItemContainer: {
-        flexDirection: 'row',
-        marginVertical: 5,
-        alignItems: 'center'
-    },
-
 })

@@ -23,11 +23,3 @@ export type GuideInfoType = {
     uid?: string;
     withdrawal?: boolean;
 };
-
-export type ChangeInfo = {
-    contact?: string;
-    email?: string;
-    intro?: string;
-    oneLineIntro?: string;
-    name?: string;
-}
