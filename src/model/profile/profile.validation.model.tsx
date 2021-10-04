@@ -5,12 +5,12 @@ import * as Yup from 'yup';
 
 export class ProfileData {
     constructor(
-        readonly email: string,
-        readonly name: string,
-        readonly contact: string,
-        readonly oneLineIntro: string,
-        readonly intro: string
-    ){}
+        readonly email: string | undefined,
+        readonly name: string | undefined,
+        readonly contact: string | undefined,
+        readonly oneLineIntro: string | undefined,
+        readonly intro: string | undefined,
+    ) { }
 
     static empty(): ProfileData {
         return new ProfileData(

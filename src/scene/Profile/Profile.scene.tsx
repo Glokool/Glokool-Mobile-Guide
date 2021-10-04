@@ -6,17 +6,14 @@ import { ProfileSceneProps } from '../../navigation/Profile.navigator';
 import { SERVER, CDN } from '../../server';
 
 import axios from 'axios';
-import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 import { GuideInfoType } from './type';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../model';
-import { FomikInputComponent } from '../../component/Auth/SignIn/Formik.Input.component';
-
-import FastImage from 'react-native-fast-image';
 import { Formik } from 'formik';
 import { loading_end, loading_start } from '../../model/auth/auth.model';
 import { ProfileFormik } from '../../component/Profile/Profile.Formik.component';
+import { ProfileValidationModel } from '../../model/profile/profile.validation.model';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
@@ -43,31 +40,30 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
             .catch((e) => console.log(e));
     }
 
-    const onPressSubmit = () => {
-
-    }
-
     return loading ? (
         <Layout style={styles.MainContainer}>
             <Spinner status={'info'} />
         </Layout>
     ) : (
         <Layout style={styles.MainContainer}>
-            <FastImage source={{ uri: CDN + guideInfo?.avatar }} style={styles.ImageItem} />
+            {/* <FastImage source={{ uri: CDN + guideInfo?.avatar }} style={styles.ImageItem} /> */}
 
-            {/* <Formik>
-                <ProfileFormik />
-            </Formik> */}
+            <Formik
+                initialValues={{
+                    ...guideInfo,
+                    email: guideInfo?.email,
+                    name: guideInfo?.name,
+                    contact: guideInfo?.contact,
+                    oneLineIntro: guideInfo?.oneLineIntro,
+                    intro: guideInfo?.intro,
+                }}
+                validationData={ProfileValidationModel}
+                onSubmit={() => { }}
+                navigation={props.navigation}
+            >
+                {ProfileFormik}
+            </Formik>
 
-            <Text>{guideInfo?.country}</Text>
-            <Text>{guideInfo?.gender}</Text>
-            <Text>Birthday {moment(guideInfo?.birthDate).format('YYYY.MM.DD')}</Text>
-            <Text>{guideInfo?.keyword}</Text>
-            {/* <Text>{guideInfo?.lang}</Text> */}
-
-            <Button onPress={() => onPressSubmit()}>
-                Save Profile
-            </Button>
         </Layout>
     )
 }
