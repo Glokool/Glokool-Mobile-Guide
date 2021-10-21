@@ -7,8 +7,6 @@ import storage from '@react-native-firebase/storage';
 import axios, { AxiosRequestConfig } from 'axios';
 import FastImage from 'react-native-fast-image';
 import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
-import RNFetchBlob from 'react-native-fetch-blob';
-
 import { FormikProps } from 'formik';
 import { FomikInputComponent } from '../Auth/SignIn/Formik.Input.component';
 
@@ -85,26 +83,26 @@ export const ProfileFormik = (props: FormikProps<GuideInfoType>): React.ReactFra
     }
 
     const uploadImage = async () => {
-        const authToken = await auth().currentUser?.getIdToken();
+        // const authToken = await auth().currentUser?.getIdToken();
 
-        const result = await fetch(profileImage);
-        const blob = RNFetchBlob.fetch('GET', profileImage)
-        const fileData = new File([blob], blob._data.name, { type: blob._data.type });
-        console.log(blob);
+        // const result = await fetch(profileImage);
+        // const blob = RNFetchBlob.fetch('GET', profileImage)
+        // const fileData = new File([blob], blob._data.name, { type: blob._data.type });
+        // console.log(blob);
 
-        const config: AxiosRequestConfig = {
-            method: "post",
-            url: SERVER + "api/guides/uploads",
-            data: fileData,
-            headers: {
-                Authorization: "Bearer " + authToken,
-                "Content-Type": "application/json",
-            },
-        }
+        // const config: AxiosRequestConfig = {
+        //     method: "post",
+        //     url: SERVER + "api/guides/uploads",
+        //     data: fileData,
+        //     headers: {
+        //         Authorization: "Bearer " + authToken,
+        //         "Content-Type": "application/json",
+        //     },
+        // }
 
-        axios(config)
-            .then((response) => console.log(response.data))
-            .catch((e) => console.log("Error", e));
+        // axios(config)
+        //     .then((response) => console.log(response.data))
+        //     .catch((e) => console.log("Error", e));
     }
 
     return (

@@ -1,9 +1,9 @@
 
 import React from 'react';
 import auth from '@react-native-firebase/auth'
-import { StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TouchableWithoutFeedback, Text } from 'react-native'
 import { SignInData } from '../../../model/auth/auth.validation.model';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout } from '@ui-kitten/components';
 import { FormikProps } from 'formik';
 import { FomikInputComponent } from './Formik.Input.component';
 import { useDispatch } from 'react-redux';
@@ -50,6 +50,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     <FomikInputComponent
                         id='email'
                         style={styles.FormikInputContainer}
+                        textStyle={{}}
                         placeholder='E-mail'
                         keyboardType='email-address'
                     />
@@ -66,9 +67,14 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     />
             </Layout>
 
+            <Text style={{fontFamily:'Pretendard-Bold'}}>HELLO</Text>
+            <Text>HELLO</Text>
+
             <Button style={styles.LoginBtn} onPress={() => SignIn(props.values)}>
                 로그인
             </Button>
+
+            
             
         </React.Fragment>
     )

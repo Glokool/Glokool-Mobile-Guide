@@ -273,7 +273,7 @@ PODS:
     - React-jsi (= 0.65.1)
     - React-perflogger (= 0.65.1)
   - React-jsinspector (0.65.1)
-  - react-native-image-picker (4.1.1):
+  - react-native-image-picker (4.1.2):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -356,7 +356,7 @@ PODS:
     - Firebase/Database (= 8.7.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (12.8.0):
+  - RNFBStorage (12.9.2):
     - Firebase/Storage (= 8.7.0)
     - React-Core
     - RNFBApp
@@ -546,7 +546,7 @@ SPEC CHECKSUMS:
   React-jsi: 12913c841713a15f64eabf5c9ad98592c0ec5940
   React-jsiexecutor: 43f2542aed3c26e42175b339f8d37fe3dd683765
   React-jsinspector: 41e58e5b8e3e0bf061fdf725b03f2144014a8fb0
-  react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
+  react-native-image-picker: 9c8a2687b69300ad9e95cec5d38f35ab9d32467d
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: fd28ee1f2b5b150b00043f0301d96bd417fdc339
   React-RCTActionSheet: 7f3fa0855c346aa5d7c60f9ced16e067db6d29fa
@@ -564,7 +564,7 @@ SPEC CHECKSUMS:
   RNFBApp: b97d6654509a5852d49f0abf93be76b300fd2e2c
   RNFBAuth: 07fd836f31fe09d465c22476a052766251af1c49
   RNFBDatabase: 194a730d8182d81cccb7c8126b6e8a71f3bf5d74
-  RNFBStorage: bd5c79a5472c32d484769389fc835f1bd667ff1a
+  RNFBStorage: fec47f271a257f065623c15697744ce2f58e8c2f
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
@@ -574,4 +574,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0d469db7a14cc33b00f0124ddf1630a7ee193021
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
