@@ -10,6 +10,7 @@ export enum SceneRoute {
     // Auth 네비게이터
     SIGNIN = 'Sign In',
     SIGNUP = 'Sign Up',
+    PASSWORD = 'Password',
 
     // Main 네비게이터
     HOME = 'Home',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text } from 'react-native'
+import { Platform, StyleSheet, Text, Touchable } from 'react-native'
 import { Layout, Button } from '@ui-kitten/components'
 import { SignInSceneProps } from '../../navigation/Auth.navigator';
 import { FormikComponent } from '../../component/Auth/SignIn/Formik.component';
@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../model';
 import { windowWidth } from '../../Design.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-
+import { LoadingComponent } from '../../component/Common';
+import { SceneRoute } from '../../navigation/App.route';
 
 export const SignInScene = (props: SignInSceneProps) => {
 
@@ -20,27 +20,34 @@ export const SignInScene = (props: SignInSceneProps) => {
   return (
     <Layout style={styles.MainContainer}>
 
+
       <Layout style={styles.TopTabContainer}>
         <Text style={styles.TopTabBarText}>로그인</Text>
       </Layout>
 
-      <Layout style={{alignItems:'center'}}>
+      <Layout style={{ alignItems: 'center' }}>
         <Formik
           initialValues={SignInData.empty()}
           validationSchema={AuthValidationModel}
           onSubmit={() => { }}>
           {FormikComponent}
         </Formik>
-        <Text style={styles.ForgotPassword}>{'비밀번호 찾기 > '}</Text>
+        <TouchableOpacity onPress={() => props.navigation.navigate(SceneRoute.PASSWORD)}>
+          <Text style={styles.ForgotPassword}>
+            {'비밀번호 찾기 > '}
+          </Text>
+        </TouchableOpacity>
       </Layout>
 
-      <Layout style={{alignItems:'center'}}>
+      <Layout style={{ alignItems: 'center' }}>
         <Text style={styles.MakeAccountText}>아직 계정이 없으신가요?</Text>
 
         <TouchableOpacity style={styles.ApplyTAButton}>
           <Text style={styles.ApplyTAText}>Travel Assistant 지원하기</Text>
         </TouchableOpacity>
       </Layout>
+
+      {loading && <LoadingComponent />}
 
     </Layout>
   )
