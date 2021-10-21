@@ -13,7 +13,7 @@ import { Formik } from 'formik';
 import { ProfileFormik } from '../../component/Profile/Profile.Formik.component';
 import { ProfileValidationModel } from '../../model/profile/profile.validation.model';
 
-import { ProfileSceneProps } from '../../navigation/Profile.navigator';
+import { ProfileSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
 import { SERVER } from '../../server';
 import { GuideInfoType } from './type';
 
