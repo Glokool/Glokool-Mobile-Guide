@@ -26,7 +26,7 @@ export const FomikInputComponent = ({id, ...inputProps}: FormInputProps): InputE
             caption={errors}
             style={styles.input}
             textStyle={{color: 'black'}}
-            placeholderTextColor={'#D2D2D2'}
+            placeholderTextColor={'#c9c9c9'}
             size='large'
             onChangeText={formContext.handleChange(id)}
         />
@@ -37,11 +37,10 @@ const styles = StyleSheet.create({
     input:{
         backgroundColor: '#00ff0000',
         borderColor: '#00ff0000',
-        borderBottomColor: '#8797FF',
+        borderBottomColor: '#c9c9c9',
         borderBottomWidth: 2,
         borderRadius: 2,
         alignItems: 'center',
-        marginHorizontal: 10,
         marginVertical: 0,
         width: '100%'
     },
