@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native'
 import { Layout, Button, State } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
@@ -17,6 +17,15 @@ import { AngleRight } from '../../assets/icon/Common';
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
+
+    const [password, setPassword] = useState<string>("");
+    const [newPassword, setNewPassword] = useState<string>("");
+    const [checkPassword, setCheckPassword] = useState<string>("");
+
+    const [wrongPW, setWrongPW] = useState(false);
+    const [wrongNewPW, setWrongNewPW] = useState(false);
+    const [wrongAgain, setWrongAgain] = useState(false);
+
     const dispatch = useDispatch();
     const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
 
@@ -34,11 +43,39 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
         axios.get(`${SERVER}/api/guides/` + UID)
             .then((response) => {
                 setGuideInfo(response.data);
-                console.log(response.data);
 
                 dispatch(loading_end());
             })
             .catch((e) => console.log(e));
+    }
+
+    const PasswordChange = async () => {
+
+        auth().signInWithEmailAndPassword(auth().currentUser?.email!, password!)
+            .then(() => {
+                setWrongPW(false);
+                if (newPassword.length >= 8 && newPassword === checkPassword) {
+                    auth().currentUser?.updatePassword(newPassword).then(() => Alert.alert("비밀번호 변경이 완료되었습니다."));
+                }
+            })
+            .catch((e) => {
+                setWrongPW(true);
+                return;
+            })
+
+        if (newPassword.length < 8) {
+            setWrongNewPW(true);
+            return;
+        } else {
+            setWrongNewPW(false);
+        }
+
+        if (newPassword != checkPassword) {
+            setWrongAgain(true);
+        } else {
+            setWrongAgain(false);
+        }
+
     }
 
     const renderKeyword = (item) => {
@@ -106,25 +143,40 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 <Layout style={styles.PasswordContainer}>
                     <Text style={styles.PasswordText}>비밀번호 변경</Text>
                     <TextInput
-                        style={styles.TextInputStyle}
+                        style={[styles.TextInputStyle, { borderColor: wrongPW ? '#f77777' : '#d1d1d1' }]}
                         placeholder={'현재 비밀번호를 입력해주세요'}
+                        onChangeText={(e) => setPassword(e)}
+                        secureTextEntry
                     />
+                    <Layout style={styles.WarningContainer}>
+                        {wrongPW && <Text style={styles.WarningText}> 잘못된 비밀번호 입니다</Text>}
+                    </Layout>
                     <TextInput
-                        style={styles.TextInputStyle}
+                        style={[styles.TextInputStyle, { borderColor: wrongNewPW ? '#f77777' : '#d1d1d1' }]}
                         placeholder={'새 비밀번호를 입력해주세요 (8자 이상)'}
+                        onChangeText={(e) => setNewPassword(e)}
+                        secureTextEntry
                     />
+                    <Layout style={styles.WarningContainer}>
+                        {wrongNewPW && <Text style={styles.WarningText}> 8자 이상 입력하셔야 합니다</Text>}
+                    </Layout>
                     <TextInput
-                        style={styles.TextInputStyle}
+                        style={[styles.TextInputStyle, { borderColor: wrongAgain ? '#f77777' : '#d1d1d1' }]}
                         placeholder={'새 비밀번호를 한번 더 입력해주세요'}
+                        onChangeText={(e) => setCheckPassword(e)}
+                        secureTextEntry
                     />
+                    <Layout style={styles.WarningContainer}>
+                        {wrongAgain && <Text style={styles.WarningText}> 비밀번호가 일치하지 않습니다</Text>}
+                    </Layout>
 
-                    <TouchableOpacity style={styles.PasswordButton} onPress={() => { }}>
-                        <Text style={styles.PasswordButtonText}>등록하기</Text>
+                    <TouchableOpacity style={styles.PasswordButton} onPress={() => PasswordChange()}>
+                        <Text style={styles.PasswordButtonText}>비밀번호 변경</Text>
                     </TouchableOpacity>
 
                 </Layout>
 
-                <TouchableOpacity style={styles.FlatButton} onPress={() => auth().signOut()}>
+                <TouchableOpacity style={styles.FlatButton} onPress={() => { }}>
                     <Text style={styles.FlatButtonText}>{'탈퇴하기'}</Text>
                     <AngleRight />
                 </TouchableOpacity>
@@ -255,11 +307,9 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         borderWidth: 1.5,
-        borderColor: '#d1d1d1',
         borderRadius: 10,
         paddingVertical: windowHeight * 0.02,
         paddingHorizontal: windowHeight * 0.02,
-        marginVertical: windowHeight * 0.005,
         fontFamily: 'Pretendard-Regular',
         fontSize: 15,
     },
@@ -300,5 +350,15 @@ const styles = StyleSheet.create({
     FlatButtonText: {
         fontFamily: 'Pretendard-SemiBold',
         fontSize: 18
+    },
+    WarningContainer: {
+        backgroundColor: '#0000',
+        height: 20,
+        justifyContent: 'center',
+    },
+    WarningText: {
+        color: '#f77777',
+        fontFamily: 'Pretendard-Regular',
+        fontSize: 13,
     }
 })
