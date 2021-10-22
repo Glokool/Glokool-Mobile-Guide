@@ -6,14 +6,20 @@ import { NewTourButton } from '../Chat';
 import moment from 'moment';
 import { Location } from '../../assets/icon/Common';
 import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
+import { TourCompleteModal } from '.';
+import { useDispatch } from 'react-redux';
+import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 
 export const TourCompleteList = (props: DailyMainSceneProps) => {
+
+    const dispatch = useDispatch()
+
     const sampleData = [1, 2, 3, 4, 5]
     const tourComplete = false;
 
     const renderItem = (item) => {
         return (
-            <TouchableOpacity style={styles.ItemContainer}>
+            <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourCompleteVisibilityTrue())} >
 
                 <Layout style={styles.TopContainer}>
                     <Layout style={styles.LocationContainer}>
@@ -54,9 +60,8 @@ export const TourCompleteList = (props: DailyMainSceneProps) => {
             <FlatList
                 data={sampleData}
                 renderItem={renderItem}
-                style={{}}
             />
-
+            <TourCompleteModal />
         </Layout>
     )
 }

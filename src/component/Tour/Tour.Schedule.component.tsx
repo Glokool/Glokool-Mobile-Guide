@@ -7,14 +7,19 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
 import { NewTourButton } from '../Chat';
 import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
+import { useDispatch } from 'react-redux';
+import { setTourScheduleVisibilityTrue } from '../../model/tour/Tour.UI.Model';
+import { TourScheduleModal } from '.';
 
 export const TourScheduleList = (props: DailyMainSceneProps) => {
+
+    const dispatch = useDispatch();
 
     const sampleData = [1, 2, 3]
 
     const renderItem = (item) => {
         return (
-            <TouchableOpacity style={styles.ItemContainer}>
+            <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourScheduleVisibilityTrue())}>
                 <Layout style={styles.LocationContainer}>
                     <Location />
                     <Text style={styles.LocationText}>홍대</Text>
@@ -47,12 +52,12 @@ export const TourScheduleList = (props: DailyMainSceneProps) => {
                 data={sampleData}
                 renderItem={renderItem}
                 ListFooterComponent={
-                    <Layout style={{ marginTop: 10, backgroundColor:'#0000' }}>
+                    <Layout style={{ marginTop: 10, backgroundColor: '#0000' }}>
                         <NewTourButton {...props} />
                     </Layout>
                 }
             />
-
+            <TourScheduleModal />
         </Layout>
     )
 }

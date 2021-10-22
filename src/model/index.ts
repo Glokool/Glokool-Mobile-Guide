@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import ChatInputModel from './chat/chat.model';
 import AuthLoadingModel from './auth/auth.model';
+import TourUIModel from './tour/Tour.UI.Model';
 
 const rootReducer = combineReducers({
     ChatInputModel,
-    AuthLoadingModel
+    AuthLoadingModel,
+    TourUIModel,
 });
 
 export default rootReducer;
