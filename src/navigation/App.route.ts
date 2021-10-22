@@ -31,5 +31,6 @@ export enum SceneRoute {
 
     // Profile 네비게이터
     PROFILE = 'Profile Main',
+    PROFILE_DETAIL = 'Profile Detail',
 
 }

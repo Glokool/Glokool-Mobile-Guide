@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, Touchable } from 'react-native'
+import { Platform, StyleSheet, Text,  } from 'react-native'
 import { Layout, Button } from '@ui-kitten/components'
 import { SignInSceneProps } from '../../navigation/Auth.navigator';
 import { FormikComponent } from '../../component/Auth/SignIn/Formik.component';
