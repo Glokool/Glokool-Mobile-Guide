@@ -1,1 +1,0 @@
-export { DailyMainScene } from './DailyMain.scene';

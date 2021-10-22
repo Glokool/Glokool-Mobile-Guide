@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Platform, Text, View } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Daily.Navigator';
+import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
 import { windowWidth } from '../../Design.component';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TourCompleteList, TourScheduleList } from '../../component/Daily';
-import { DailyTopNavigator } from '../../component/Daily/Daily.TopNavigator';
+import { TourCompleteList, TourScheduleList } from '../../component/Tour';
+import { DailyTopNavigator } from '../../component/Tour/Tour.TopNavigator';
 
 const Tab = createMaterialTopTabNavigator();
 

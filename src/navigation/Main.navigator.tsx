@@ -7,7 +7,7 @@ import { ProfileNavigator } from './SceneNavigator/Profile.navigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ChatNavigator } from './SceneNavigator/Chat.navigator';
 import { ChatIconSelected, ChatIconUnselected, DailyIconSelected, DailyIconUnselected, ProfileIconSelected, ProfileIconUnselected } from '../assets/icon/BottomTab';
-import { DailyNavigator } from './SceneNavigator/Daily.Navigator';
+import { DailyNavigator } from './SceneNavigator/Tour.Navigator';
 import { windowHeight } from '../Design.component';
 
 type MainNavigatorParams = AppNavigatorParams & {

@@ -5,7 +5,7 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import { NewTourButton } from '../Chat';
 import moment from 'moment';
 import { Location } from '../../assets/icon/Common';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Daily.Navigator';
+import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
 
 export const TourCompleteList = (props: DailyMainSceneProps) => {
     const sampleData = [1, 2, 3, 4, 5]

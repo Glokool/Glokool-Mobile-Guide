@@ -6,7 +6,7 @@ import { Location } from '../../assets/icon/Common';
 import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
 import { NewTourButton } from '../Chat';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Daily.Navigator';
+import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
 
 export const TourScheduleList = (props: DailyMainSceneProps) => {
 

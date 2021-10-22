@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { AppNavigatorParams } from '../app.navigator';
 import { SceneRoute } from '../App.route';
-import { DailyMainScene } from '../../scene/Daily';
+import { DailyMainScene } from '../../scene/Tour';
 
 type DailyNavigatorParams = AppNavigatorParams & {
     [SceneRoute.DAILYMAIN]: undefined;

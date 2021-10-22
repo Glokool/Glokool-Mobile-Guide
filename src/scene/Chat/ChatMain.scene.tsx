@@ -6,7 +6,7 @@ import { ChatMainBanner } from '../../assets/icon/Chat';
 import { isIphoneX, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { ChatListComponent, NewTourButton } from '../../component/Chat';
-import { DailyTopNavigator } from '../../component/Daily/Daily.TopNavigator';
+import { DailyTopNavigator } from '../../component/Tour/Tour.TopNavigator';
 
 export const ChatMainScene = (props: ChatMainSceneProps) => {
     return (
