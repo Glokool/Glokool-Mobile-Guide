@@ -48,6 +48,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.ttf</string>
+		<string>BrandonGrotesque-Black.ttf</string>
+		<string>BrandonGrotesque-Bold.ttf</string>
+		<string>BrandonGrotesque-BoldItalic.ttf</string>
+		<string>BrandonGrotesque-Medium.ttf</string>
+		<string>BrandonGrotesque-MediumItalic.ttf</string>
 		<string>Pretendard-Bold.ttf</string>
 		<string>Pretendard-ExtraBold.ttf</string>
 		<string>Pretendard-ExtraLight.ttf</string>
