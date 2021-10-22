@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ChatNavigator } from './SceneNavigator/Chat.navigator';
 import { ChatIconSelected, ChatIconUnselected, DailyIconSelected, DailyIconUnselected, ProfileIconSelected, ProfileIconUnselected } from '../assets/icon/BottomTab';
 import { DailyNavigator } from './SceneNavigator/Daily.Navigator';
+import { windowHeight } from '../Design.component';
 
 type MainNavigatorParams = AppNavigatorParams & {
     [SceneRoute.HOME]: undefined;
@@ -33,6 +34,15 @@ export const MainNavigator = (): React.ReactElement => (
             headerShown: false,
             tabBarActiveTintColor: '#7777ff',
             tabBarInactiveTintColor: '#C3C6D6',
+            tabBarStyle: {
+                backgroundColor: 'white',
+                height: windowHeight * 0.1,
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+            },
+            tabBarIconStyle: {
+                bottom: -5
+            }
         })}
     >
         <Tab.Screen

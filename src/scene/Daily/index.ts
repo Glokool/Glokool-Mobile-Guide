@@ -1,1 +1,1 @@
-export { DailyMainScene } from './Daily.scene';
+export { DailyMainScene } from './DailyMain.scene';

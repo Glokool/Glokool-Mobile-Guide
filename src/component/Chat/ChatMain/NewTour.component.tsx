@@ -5,7 +5,7 @@ import { windowHeight, windowWidth } from '../../../Design.component';
 import { NewTourIcon } from '../../../assets/icon/Chat';
 import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat.navigator';
 
-export const NewTourButton = (props: ChatMainSceneProps) => {
+export const NewTourButton = (props: any) => {
     return (
         <Layout style={styles.MainContainer}>
             <Text style={styles.TitleText}>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     MainContainer: {
         backgroundColor: '#0000',
         alignItems: 'center',
-        paddingBottom: windowHeight * 0.05
+        paddingBottom: windowHeight * 0.02
     },
     TitleText: {
         fontFamily: 'Pretendard-Medium',
