@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSheet, Platform, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { ChatMainSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
 import { ChatMainBanner } from '../../assets/icon/Chat';
 import { isIphoneX, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { ChatListComponent, NewTourButton } from '../../component/Chat';
-import { DailyTopNavigator } from '../../component/Tour/Tour.TopNavigator';
 
 export const ChatMainScene = (props: ChatMainSceneProps) => {
     return (

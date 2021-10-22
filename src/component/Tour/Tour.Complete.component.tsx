@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Layout, Divider } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
-import { NewTourButton } from '../Chat';
 import moment from 'moment';
 import { Location } from '../../assets/icon/Common';
 import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';

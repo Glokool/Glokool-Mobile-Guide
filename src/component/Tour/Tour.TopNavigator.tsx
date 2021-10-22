@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, View } from 'react-native';
-import { Layout } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TourCompleteList, TourScheduleList } from '.';
 import { windowWidth } from '../../Design.component';
@@ -14,10 +13,10 @@ export const DailyTopNavigator = () => (
         screenOptions={{
             tabBarLabelStyle: styles.tabBarLabelStyle,
             tabBarItemStyle: styles.tabBarItemStyle,
-            tabBarStyle: { backgroundColor: 'white',},
+            tabBarStyle: { backgroundColor: 'white', },
             tabBarActiveTintColor: '#7777ff',
             tabBarInactiveTintColor: '#cdcdcd',
-            tabBarIndicatorStyle: {backgroundColor: '#7777ff',}
+            tabBarIndicatorStyle: { backgroundColor: '#7777ff', }
         }}
     >
         <Tab.Screen name="예정된 투어" component={TourScheduleList} />
@@ -32,6 +31,6 @@ const styles = StyleSheet.create({
     },
     tabBarItemStyle: {
         width: windowWidth * 0.5,
-        
+
     }
 })

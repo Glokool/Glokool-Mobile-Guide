@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native'
-import { Layout, Button, State } from '@ui-kitten/components'
+import { Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { ProfileDetailSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
@@ -10,9 +10,10 @@ import { GuideInfoType } from './type';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../model';
 import { loading_start, loading_end } from '../../model/auth/auth.model';
-import { SERVER, CDN } from '../../server';
+import { SERVER } from '../../server';
 import FastImage from 'react-native-fast-image';
 import { AngleRight } from '../../assets/icon/Common';
+import { LoadingComponent } from '../../component/Common';
 
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
@@ -78,7 +79,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
     }
 
-    const renderKeyword = (item) => {
+    const renderKeyword = (item: { item: string, index: number }) => {
         return (
             <Layout style={styles.KeywordBox}>
                 <Text style={styles.KeywordText}>
@@ -88,7 +89,9 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
         )
     }
 
-    return (
+    return loading ? (
+        <LoadingComponent />
+    ) : (
         <Layout style={styles.MainContainer}>
             <Layout style={styles.TopTabContainer}>
                 <TouchableOpacity style={styles.SideContainer} onPress={() => props.navigation.pop()}>

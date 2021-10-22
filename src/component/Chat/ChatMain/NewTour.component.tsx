@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, } from 'react-native';
-import { Divider, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../../Design.component';
 import { NewTourIcon } from '../../../assets/icon/Chat';
-import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat.navigator';
 import { NavigatorRoute } from '../../../navigation/App.route';
 
 export const NewTourButton = (props: any) => {

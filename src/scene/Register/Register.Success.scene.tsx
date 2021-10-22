@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, FlatList, TouchableOpacity } from 'react-native';
-import { Layout, Divider } from '@ui-kitten/components';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 import { RegisterSuccessSceneProps } from '../../navigation/Register.Navigator';
 import { windowHeight, windowWidth } from '../../Design.component';
 import moment from 'moment';

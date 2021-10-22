@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Divider, Layout } from '@ui-kitten/components';
 import { Location } from '../../assets/icon/Common';
 

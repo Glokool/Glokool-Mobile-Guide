@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Platform, Text, FlatList, TouchableOpacity, Pressable } from 'react-native';
-import { Layout, Divider } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { RegisterMainSceneProps } from '../../navigation/Register.Navigator';

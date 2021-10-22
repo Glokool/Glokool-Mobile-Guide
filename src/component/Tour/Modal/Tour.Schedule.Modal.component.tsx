@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Layout, Divider, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../Design.component';
 import moment from 'moment';

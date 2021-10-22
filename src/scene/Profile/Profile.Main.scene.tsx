@@ -1,58 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import { StyleSheet, Platform, Text, TouchableOpacity } from 'react-native';
-import { Layout, Spinner, Input, Button, Icon } from '@ui-kitten/components';
-
-import axios from 'axios';
+import { Layout } from '@ui-kitten/components';
 import auth from '@react-native-firebase/auth';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { loading_end, loading_start } from '../../model/auth/auth.model';
-import { RootState } from '../../model';
-
-import { Formik } from 'formik';
-import { ProfileFormik } from '../../component/Profile/Profile.Formik.component';
-import { ProfileValidationModel } from '../../model/profile/profile.validation.model';
-
 import { ProfileSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
-import { SERVER } from '../../server';
-import { GuideInfoType } from './type';
-import { LoadingComponent } from '../../component/Common';
-
 import { windowWidth, windowHeight } from '../../Design.component';
-import { AngleRight, ArrowLeft, CloseIcon } from '../../assets/icon/Common';
+import { AngleRight } from '../../assets/icon/Common';
 import { SceneRoute } from '../../navigation/App.route';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
-    const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
-
-    const dispatch = useDispatch();
-    const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
-
-    const UID = auth().currentUser?.uid;
-
-    useEffect(() => {
-        InitGuideInfo();
-        console.log(auth().currentUser);
-    }, [])
-
-    // 가이드 정보 가져오는 부분
-    const InitGuideInfo = () => {
-        dispatch(loading_start());
-        console.log(UID);
-
-        axios.get(`${SERVER}/api/guides/` + UID)
-            .then((response) => {
-                setGuideInfo(response.data);
-
-                dispatch(loading_end());
-            })
-            .catch((e) => console.log(e));
-    }
-
-    return loading ? (
-        <LoadingComponent />
-    ) : (
+    return (
         <Layout style={styles.MainContainer}>
 
             <Layout style={styles.TopTabContainer}>
@@ -78,23 +35,6 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                 <Text style={styles.FlatButtonText}>{'로그아웃'}</Text>
                 <AngleRight />
             </TouchableOpacity>
-
-            {/* Formik 으로 가이드 정보 전달해줍니다
-            <Formik
-                initialValues={{
-                    ...guideInfo,
-                    email: guideInfo?.email,
-                    name: guideInfo?.name,
-                    contact: guideInfo?.contact,
-                    oneLineIntro: guideInfo?.oneLineIntro,
-                    intro: guideInfo?.intro,
-                }}
-                validationData={ProfileValidationModel}
-                onSubmit={() => { }}
-                navigation={props.navigation}
-            >
-                {ProfileFormik}
-            </Formik> */}
 
         </Layout >
     )

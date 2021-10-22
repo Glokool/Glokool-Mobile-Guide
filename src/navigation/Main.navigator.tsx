@@ -19,16 +19,9 @@ export interface HomeSceneProps {
     route: RouteProp<MainNavigatorParams, SceneRoute.HOME>;
 }
 
-
-const Stack = createStackNavigator();
-
 const Tab = createBottomTabNavigator();
 
 export const MainNavigator = (): React.ReactElement => (
-    // <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //     <Stack.Screen name={SceneRoute.HOME} component={HomeScene} />
-    //     <Stack.Screen name={NavigatorRoute.PROFILE} component={ProfileNavigator} />
-    // </Stack.Navigator>
     <Tab.Navigator
         screenOptions={({ route }) => ({
             headerShown: false,
