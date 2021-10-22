@@ -4,6 +4,7 @@ import { Divider, Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../../Design.component';
 import { NewTourIcon } from '../../../assets/icon/Chat';
 import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat.navigator';
+import { NavigatorRoute } from '../../../navigation/App.route';
 
 export const NewTourButton = (props: any) => {
     return (
@@ -11,7 +12,7 @@ export const NewTourButton = (props: any) => {
             <Text style={styles.TitleText}>
                 더 많은 여행객들이 기다리고 있어요!
             </Text>
-            <TouchableOpacity style={styles.ButtonContainer}>
+            <TouchableOpacity style={styles.ButtonContainer} onPress={() => props.navigation.navigate(NavigatorRoute.REGISTER)}>
                 <Text style={styles.ButtonText}>새 투어 등록하기</Text>
                 <NewTourIcon />
             </TouchableOpacity>

@@ -4,20 +4,22 @@ import { NavigatorRoute } from "./App.route";
 import { AuthNavigator } from './Auth.navigator';
 import auth from '@react-native-firebase/auth';
 import { MainNavigator } from './Main.navigator';
+import { RegisterNavigator } from './Register.Navigator';
 
 export type AppNavigatorParams = {
-    [NavigatorRoute.AUTH] : undefined;
-    [NavigatorRoute.MAIN] : undefined;
+    [NavigatorRoute.AUTH]: undefined;
+    [NavigatorRoute.MAIN]: undefined;
+    [NavigatorRoute.REGISTER]: undefined;
 }
 
 const Stack = createStackNavigator();
 
-export const AppNavigator = (props : React.ReactElement) : React.ReactElement => {
+export const AppNavigator = (props: React.ReactElement): React.ReactElement => {
 
     // Firebase 유저 관리 파일
     const [initializing, setInitializing] = React.useState(true);
     const [user, setUser] = React.useState();
-    
+
     function onAuthStateChanged(user) {
         setUser(user);
         if (initializing) setInitializing(false);
@@ -28,12 +30,14 @@ export const AppNavigator = (props : React.ReactElement) : React.ReactElement =>
         return subscriber;
     }, []);
 
-    return(
+    return (
         <Stack.Navigator {...props} screenOptions={{ headerShown: false }}>
-            {user?
-                <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />
-                              
-            : 
+            {user ?
+                <>
+                    <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />
+                    <Stack.Screen name={NavigatorRoute.REGISTER} component={RegisterNavigator} />
+                </>
+                :
                 <Stack.Screen name={NavigatorRoute.AUTH} component={AuthNavigator} />
             }
         </Stack.Navigator>
