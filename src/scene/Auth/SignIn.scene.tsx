@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, } from 'react-native'
+import { Platform, StyleSheet, Text, Linking } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import { SignInSceneProps } from '../../navigation/Auth.navigator';
 import { FormikComponent } from '../../component/Auth/SignIn/Formik.component';
@@ -41,7 +41,7 @@ export const SignInScene = (props: SignInSceneProps) => {
       <Layout style={{ alignItems: 'center' }}>
         <Text style={styles.MakeAccountText}>아직 계정이 없으신가요?</Text>
 
-        <TouchableOpacity style={styles.ApplyTAButton}>
+        <TouchableOpacity style={styles.ApplyTAButton} onPress={() => Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')}>
           <Text style={styles.ApplyTAText}>Travel Assistant 지원하기</Text>
         </TouchableOpacity>
       </Layout>

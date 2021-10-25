@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2518DC422726980D0035A30C /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 2518DC412726980D0035A30C /* splash.png */; };
 		25529AE027224B8C00936F6B /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD227224B8C00936F6B /* Pretendard-Medium.ttf */; };
 		25529AE127224B8C00936F6B /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD327224B8C00936F6B /* Pretendard-Black.ttf */; };
 		25529AE227224B8C00936F6B /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD427224B8C00936F6B /* Pretendard-Regular.ttf */; };
@@ -55,6 +56,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Glokool_Guide/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Glokool_Guide/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Glokool_Guide/main.m; sourceTree = "<group>"; };
+		2518DC412726980D0035A30C /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		25529AD227224B8C00936F6B /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		25529AD327224B8C00936F6B /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
 		25529AD427224B8C00936F6B /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				2518DC412726980D0035A30C /* splash.png */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -336,6 +339,7 @@
 				25529AEC27224B8C00936F6B /* BrandonGrotesque-MediumItalic.ttf in Resources */,
 				25529AE627224B8C00936F6B /* BrandonGrotesque-Medium.ttf in Resources */,
 				25529AE127224B8C00936F6B /* Pretendard-Black.ttf in Resources */,
+				2518DC422726980D0035A30C /* splash.png in Resources */,
 				25529AE927224B8C00936F6B /* Pretendard-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

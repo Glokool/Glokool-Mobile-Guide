@@ -1,5 +1,5 @@
 import React, { } from 'react';
-import { StyleSheet, Platform, Text, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Linking } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import auth from '@react-native-firebase/auth';
 import { ProfileSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
@@ -41,7 +41,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                 </TouchableOpacity>
             </Layout>
 
-            <TouchableOpacity style={styles.FlatButton}>
+            <TouchableOpacity style={styles.FlatButton} onPress={() => Linking.openURL('https://spring-wok-92b.notion.site/4cc039f1d5f0452bbca9036578998faa')}>
                 <Text style={styles.FlatButtonText}>{'공지사항 & FAQ'}</Text>
                 <AngleRight />
             </TouchableOpacity>
