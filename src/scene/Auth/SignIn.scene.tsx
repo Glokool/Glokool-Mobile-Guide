@@ -27,15 +27,17 @@ export const SignInScene = (props: SignInSceneProps) => {
       <Layout style={{ alignItems: 'center' }}>
         <Formik
           initialValues={SignInData.empty()}
-          validationSchema={AuthValidationModel}
+          // validationSchema={AuthValidationModel}
           onSubmit={() => { }}>
           {FormikComponent}
         </Formik>
+
         <TouchableOpacity onPress={() => props.navigation.navigate(SceneRoute.PASSWORD)}>
           <Text style={styles.ForgotPassword}>
             {'비밀번호 찾기 > '}
           </Text>
         </TouchableOpacity>
+
       </Layout>
 
       <Layout style={{ alignItems: 'center' }}>

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth'
 import { StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native'
 import { SignInData } from '../../../model/auth/auth.validation.model';
@@ -18,6 +18,8 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
 
     //Re-Rendering이 자주 일어나지 않는 UI 관련 Hook
     const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
+
+    const [authError, setAuthError] = useState<string>("");
 
     //비밀번호 입력창 Icon rendering
     const renderIcon = (props: any): React.ReactElement => (
@@ -38,7 +40,8 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     dispatch(loading_end())
                 })
                 .catch((err) => {
-                    console.log(err.code);
+                    setAuthError(err.code);
+                    dispatch(loading_end())
                 })
         }
 
@@ -55,6 +58,10 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     placeholder='이메일을 입력해주세요.'
                     keyboardType='email-address'
                 />
+                <Layout style={styles.WarningContainer}>
+                    {authError === 'auth/invalid-email' && (<Text style={styles.WarningText}>잘못된 이메일 형식입니다</Text>)}
+                    {authError === 'auth/user-not-found' && (<Text style={styles.WarningText}>가입되지 않은 사용자입니다</Text>)}
+                </Layout>
             </Layout>
 
             <Layout style={styles.InputContainer}>
@@ -67,6 +74,9 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     accessoryRight={renderIcon}
                     secureTextEntry={!passwordVisible}
                 />
+                <Layout style={styles.WarningContainer}>
+                    {authError === 'auth/wrong-password' && (<Text style={styles.WarningText}>잘못된 비밀번호입니다</Text>)}
+                </Layout>
             </Layout>
 
 
@@ -110,5 +120,15 @@ const styles = StyleSheet.create({
     },
     FormikInputContainer: {
 
+    },
+    WarningContainer: {
+        backgroundColor: '#0000',
+        height: 20,
+        justifyContent: 'center',
+    },
+    WarningText: {
+        color: '#f77777',
+        fontFamily: 'Pretendard-Regular',
+        fontSize: windowHeight * 0.018,
     }
 })

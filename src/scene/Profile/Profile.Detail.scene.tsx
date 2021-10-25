@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native'
-import { Layout } from '@ui-kitten/components'
+import { Button, Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { ProfileDetailSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import auth from '@react-native-firebase/auth';
 import { GuideInfoType } from './type';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../model';
 import { loading_start, loading_end } from '../../model/auth/auth.model';
-import { SERVER } from '../../server';
+import { SERVER, CDN } from '../../server';
 import FastImage from 'react-native-fast-image';
 import { AngleRight } from '../../assets/icon/Common';
 import { LoadingComponent } from '../../component/Common';
 import { SelectableText } from '../../component/Common/SelectableText.component';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ImagePicker } from '../../assets/icon/Profile';
+import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
+    const [profileImage, setProfileImage] = useState<string | any>(CDN + guideInfo?.avatar);
+    const [imageChanged, setImageChanged] = useState(false);
 
     const [password, setPassword] = useState<string>("");
     const [newPassword, setNewPassword] = useState<string>("");
@@ -60,6 +64,57 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 text: "확인"
             }]
         )
+    }
+
+    const onPressImage = () => {
+        launchImageLibrary({
+            mediaType: 'photo',
+            includeBase64: false,
+            quality: 1,
+            maxHeight: windowWidth * 0.2,
+            maxWidth: windowWidth * 0.2,
+        },
+            (response: ImagePickerResponse) => {
+                if (response.didCancel) {
+                    return;
+                } else {
+                    setProfileImage(response.assets[0].uri);
+                    setImageChanged(true);
+                }
+            }
+        )
+    }
+
+    const onPressSaveButton = async () => {
+        const authToken = await auth().currentUser?.getIdToken();
+
+        const guidePatchData = {
+            name: guideInfo?.name,
+            birthDate: guideInfo?.birthDate,
+            gender: guideInfo?.gender,
+            lang: guideInfo?.lang,
+            contact: guideInfo?.contact,
+            oneLineIntro: guideInfo?.oneLineIntro,
+            intro: guideInfo?.intro,
+            country: guideInfo?.country,
+            keyword: guideInfo?.keyword,
+            avatar: Platform.OS === 'android' ? profileImage : profileImage.replace('file://', ''),
+        }
+
+        const config: AxiosRequestConfig = {
+            method: "patch",
+            url: `${SERVER}/api/guides/${guideInfo?.uid}`,
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify(guidePatchData),
+        }
+
+        axios(config)
+            .then((response) => {
+                Alert.alert("modified")
+            }).catch((e) => console.log(e));
     }
 
     const PasswordChange = async () => {
@@ -124,13 +179,17 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
             </Layout>
 
             <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
+
                 <Layout style={styles.ProfileCard}>
                     <Layout style={styles.ProfileContainer}>
-                        <FastImage
-                            source={{ uri: guideInfo?.avatar }}
-                            style={styles.Image}
-                            resizeMode='contain'
-                        />
+                        <TouchableOpacity onPress={() => onPressImage()}>
+                            <FastImage
+                                source={{ uri: profileImage }}
+                                style={styles.Image}
+                                resizeMode='contain'
+                            />
+                            <ImagePicker style={styles.ImagePicker} />
+                        </TouchableOpacity>
                         <Layout>
                             <Text style={styles.NameText}>{guideInfo?.name}</Text>
                             <Text style={styles.EmailText}>{guideInfo?.email}</Text>
@@ -160,6 +219,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                             />
                         </Layout>
                     )}
+                    <Button onPress={() => onPressSaveButton()}>테스트 저장</Button>
                 </Layout>
 
                 <Text style={[styles.GlokoolEmail, { color: '#595959' }]}>프로필 내용 수정을 희망할 시 아래 이메일로 연락 주세요</Text>
@@ -386,5 +446,10 @@ const styles = StyleSheet.create({
         color: '#f77777',
         fontFamily: 'Pretendard-Regular',
         fontSize: 13,
+    },
+    ImagePicker: {
+        position: 'absolute',
+        bottom: 0,
+        right: 20,
     }
 })
