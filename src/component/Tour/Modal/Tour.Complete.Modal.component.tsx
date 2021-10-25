@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: windowHeight * 0.006,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: '#0000',
     },
     KeyText: {
         fontFamily: 'Pretendard-Medium',

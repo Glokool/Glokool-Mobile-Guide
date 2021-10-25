@@ -59,6 +59,7 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
             <FlatList
                 data={sampleData}
                 renderItem={renderItem}
+                showsVerticalScrollIndicator={false}
             />
             <TourCompleteModal />
         </Layout>
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: windowHeight * 0.005,
+        backgroundColor: '#0000',
     },
     KeyText: {
         fontFamily: 'Pretendard-Regular',

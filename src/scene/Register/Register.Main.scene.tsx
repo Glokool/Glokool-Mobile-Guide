@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0000',
         alignItems: 'center',
         alignSelf: 'center',
-        width: windowWidth * 0.9
+        width: windowWidth * 0.9,
     },
     InfoText: {
         fontFamily: 'Pretendard-Medium',

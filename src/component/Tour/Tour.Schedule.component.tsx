@@ -51,6 +51,7 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
             <FlatList
                 data={sampleData}
                 renderItem={renderItem}
+                showsVerticalScrollIndicator={false}
                 ListFooterComponent={
                     <Layout style={{ marginTop: 10, backgroundColor: '#0000' }}>
                         <NewTourButton {...props} />
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: windowHeight * 0.005,
+        backgroundColor: '#0000',
     },
     KeyText: {
         fontFamily: 'Pretendard-Regular',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
+import { windowHeight, windowWidth } from '../../Design.component';
 
 export const LoadingComponent = () => {
     return (
@@ -12,8 +13,8 @@ export const LoadingComponent = () => {
 
 const styles = StyleSheet.create({
     MainContainer: {
-        width: '100%',
-        height: '100%',
+        width: windowWidth,
+        height: windowHeight,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0006',

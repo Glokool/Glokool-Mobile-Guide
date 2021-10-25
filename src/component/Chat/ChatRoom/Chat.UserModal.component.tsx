@@ -109,13 +109,13 @@ const styles = StyleSheet.create({
     },
     KeyText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: 15,
+        fontSize: windowWidth*0.035,
         color: '#aeaeae',
         flex: 1.1,
     },
     ValueText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: 15,
+        fontSize: windowWidth*0.035,
         flex: 2.5,
     },
     snsContainer: {

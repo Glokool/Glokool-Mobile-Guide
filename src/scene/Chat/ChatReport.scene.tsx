@@ -10,6 +10,16 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
     const [reportText, setReportText] = useState<string>("");
     const phoneNumber = '07043000833';
 
+    const onPressReport = () => {
+        Alert.alert(
+            "접수 완료",
+            "신고가 접수되었습니다. 신고 내용은 영업일 2일 이내에 처리됩니다.",
+            [{
+                text: "확인"
+            }]
+        )
+    }
+
     return (
         <Layout style={styles.MainContainer}>
             <Layout style={styles.TopTabContainer}>
@@ -17,7 +27,7 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
                     <ArrowLeft />
                 </TouchableOpacity>
                 <Text style={styles.TopTabBarText}>신고</Text>
-                <TouchableOpacity style={styles.ReportButton}>
+                <TouchableOpacity style={styles.ReportButton} onPress={() => onPressReport()}>
                     <Text style={styles.ReportText}>신고하기</Text>
                 </TouchableOpacity>
             </Layout>
@@ -30,12 +40,13 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
                     numberOfLines={10}
                     onChangeText={(e) => setReportText(e)}
                     style={styles.TextInputStyle}
+                    textAlignVertical='top'
                     placeholder={'예시) 도배/욕설 메세지, 불법 정보, 음란성/선정성 등'}
                     placeholderTextColor={'#d1d1d1'}
                 />
 
                 <Text style={[styles.EmergencyText, { color: '#FE8686' }]}>* 긴급한 상황일 경우 글로쿨 관리자에게 문의해주세요</Text>
-                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]} onPress={()=>{Linking.openURL(`tel:${phoneNumber}`)}}>문의처 : 070-4300-0833</Text>
+                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]} onPress={() => { Linking.openURL(`tel:${phoneNumber}`) }}>문의처 : 070-4300-0833</Text>
             </Layout>
 
         </Layout>
@@ -79,7 +90,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         fontFamily: 'Pretendard-Regular',
-        fontSize: 15,
+        fontSize: windowWidth * 0.04,
         marginVertical: windowHeight * 0.02
     },
     TitleText: {
@@ -89,7 +100,7 @@ const styles = StyleSheet.create({
     },
     EmergencyText: {
         fontFamily: 'Pretendard-Regular',
-        fontSize: 15,
+        fontSize: windowWidth * 0.035,
         marginVertical: 1,
         marginLeft: windowWidth * 0.03
     },
