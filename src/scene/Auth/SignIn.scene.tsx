@@ -20,7 +20,6 @@ export const SignInScene = (props: SignInSceneProps) => {
   return (
     <Layout style={styles.MainContainer}>
 
-
       <Layout style={styles.TopTabContainer}>
         <Text style={styles.TopTabBarText}>로그인</Text>
       </Layout>
@@ -93,12 +92,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   ApplyTAText: {
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 14,
     color: '#7777ff'
   },
   MakeAccountText: {
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 16,
     color: '#555',
   }

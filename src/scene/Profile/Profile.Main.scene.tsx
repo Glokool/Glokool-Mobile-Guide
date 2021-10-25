@@ -1,5 +1,5 @@
-import React, {  } from 'react';
-import { StyleSheet, Platform, Text, TouchableOpacity } from 'react-native';
+import React, { } from 'react';
+import { StyleSheet, Platform, Text, TouchableOpacity, Alert } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import auth from '@react-native-firebase/auth';
 import { ProfileSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
@@ -8,6 +8,21 @@ import { AngleRight } from '../../assets/icon/Common';
 import { SceneRoute } from '../../navigation/App.route';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
+
+    const onPressLogout = () => {
+        Alert.alert(
+            "로그아웃",
+            "정말 로그아웃 하시겠습니까?",
+            [{
+                text: "취소",
+                style: "destructive"
+            }, {
+                text: "확인",
+                onPress: () => auth().signOut(),
+                style: "default"
+            }]
+        )
+    }
 
     return (
         <Layout style={styles.MainContainer}>
@@ -31,7 +46,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                 <AngleRight />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.FlatButton} onPress={() => auth().signOut()}>
+            <TouchableOpacity style={styles.FlatButton} onPress={() => onPressLogout()}>
                 <Text style={styles.FlatButtonText}>{'로그아웃'}</Text>
                 <AngleRight />
             </TouchableOpacity>
@@ -84,6 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: windowWidth * 0.9,
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingVertical: 20,
     },
     FlatButtonText: {

@@ -38,7 +38,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     dispatch(loading_end())
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err.code);
                 })
         }
 
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         marginTop: windowHeight * 0.05
     },
     LoginButtonText: {
-        fontFamily: 'Pretendard-Medium',
+        fontFamily: 'Pretendard-SemiBold',
         fontSize: 18,
         color: 'white'
     },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         color: '#7777ff'
     },
     PlaceholderText: {
-        fontFamily: 'Pretendard-Medium',
+        fontFamily: 'Pretendard-Regular',
         fontSize: 18,
     },
     FormikInputContainer: {

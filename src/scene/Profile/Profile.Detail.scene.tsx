@@ -50,13 +50,33 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
             .catch((e) => console.log(e));
     }
 
+    const onPressWithdrawal = () => {
+        Alert.alert(
+            "가이드 탈퇴",
+            "탈퇴하기 버튼을 누르면, 글로쿨 가이드앱의 모든 정보가 즉시 삭제되며, 복구할 수 없습니다. 정말로 탈퇴하시겠습니까? 탈퇴를 희망하신다면, sungsoo@glokool.com 으로 문의주세요.",
+            [{
+                text: "확인"
+            }]
+        )
+    }
+
     const PasswordChange = async () => {
 
         auth().signInWithEmailAndPassword(auth().currentUser?.email!, password!)
             .then(() => {
                 setWrongPW(false);
                 if (newPassword.length >= 8 && newPassword === checkPassword) {
-                    auth().currentUser?.updatePassword(newPassword).then(() => Alert.alert("비밀번호 변경이 완료되었습니다."));
+                    auth().currentUser?.updatePassword(newPassword)
+                        .then(() => {
+                            Alert.alert(
+                                "비밀번호 변경",
+                                "비밀번호가 변경되었습니다. 다시 로그인 해주세요.",
+                                [{
+                                    text: "확인",
+                                    onPress: () => auth().signOut(),
+                                }]
+                            )
+                        });
                 }
             })
             .catch((e) => {
@@ -179,7 +199,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
                 </Layout>
 
-                <TouchableOpacity style={styles.FlatButton} onPress={() => { }}>
+                <TouchableOpacity style={styles.FlatButton} onPress={() => onPressWithdrawal()}>
                     <Text style={styles.FlatButtonText}>{'탈퇴하기'}</Text>
                     <AngleRight />
                 </TouchableOpacity>

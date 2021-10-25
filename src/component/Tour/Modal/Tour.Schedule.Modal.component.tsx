@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Layout, Divider, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../Design.component';
 import moment from 'moment';
@@ -14,6 +14,19 @@ export const TourScheduleModal = () => {
     const dispatch = useDispatch();
 
     const tourComplete = true;
+    
+    const onPressCancel = () => {
+        Alert.alert(
+            "투어 취소",
+            "정말 취소하시겠습니까? 취소한 투어는 복구되지 않습니다.",
+            [{
+                text: "아니오",
+                style: "destructive"
+            },{
+                text: "네",
+            }]
+        )
+    }
 
     return (
         <Modal
@@ -62,7 +75,7 @@ export const TourScheduleModal = () => {
                 </Layout>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.ButtonContainer}>
+            <TouchableOpacity style={styles.ButtonContainer} onPress={()=>onPressCancel()}>
                 <Text style={styles.ButtonText}>투어 취소하기</Text>
             </TouchableOpacity>
 
