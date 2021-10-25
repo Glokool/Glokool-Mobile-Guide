@@ -4,12 +4,14 @@ import { NavigatorRoute } from "./App.route";
 import { AuthNavigator } from './Auth.navigator';
 import auth from '@react-native-firebase/auth';
 import { MainNavigator } from './Main.navigator';
-import { RegisterNavigator } from './Register.Navigator';
+import { RegisterNavigator } from './SceneNavigator/Tour/Tour.Register.Navigator';
+import { ChatNavigator } from './SceneNavigator/Chat/Chat.navigator';
 
 export type AppNavigatorParams = {
     [NavigatorRoute.AUTH]: undefined;
     [NavigatorRoute.MAIN]: undefined;
     [NavigatorRoute.REGISTER]: undefined;
+    [NavigatorRoute.CHAT]: undefined;
 }
 
 const Stack = createStackNavigator();
@@ -36,6 +38,7 @@ export const AppNavigator = (props: React.ReactElement): React.ReactElement => {
                 <>
                     <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />
                     <Stack.Screen name={NavigatorRoute.REGISTER} component={RegisterNavigator} />
+                    <Stack.Screen name={NavigatorRoute.CHAT} component={ChatNavigator} />
                 </>
                 :
                 <Stack.Screen name={NavigatorRoute.AUTH} component={AuthNavigator} />

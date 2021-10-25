@@ -6,7 +6,7 @@ import { windowWidth } from '../../Design.component';
 
 const Tab = createMaterialTopTabNavigator();
 
-export const DailyTopNavigator = () => (
+export const TourTopNavigator = () => (
 
     <Tab.Navigator
         initialRouteName="일정"

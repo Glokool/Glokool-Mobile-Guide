@@ -1,9 +1,9 @@
 import React from 'react';
 import { RouteProp } from '@react-navigation/native'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParams } from './app.navigator';
-import { SceneRoute } from './App.route';
-import { RegisterMainScene, RegisterSuccessScene } from '../scene/Register';
+import { AppNavigatorParams } from '../../app.navigator';
+import { SceneRoute } from '../../App.route';
+import { RegisterMainScene, RegisterSuccessScene } from '../../../scene/Register';
 
 type RegisterNavigatorParams = AppNavigatorParams & {
     [SceneRoute.REGISTERMAIN]: undefined;

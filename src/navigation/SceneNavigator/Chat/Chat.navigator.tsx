@@ -1,9 +1,9 @@
 import React from 'react';
 import { RouteProp } from '@react-navigation/native'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParams } from '../app.navigator';
-import { SceneRoute } from '../App.route';
-import { ChatRoomScene, ChatMainScene, ChatRoomInfoScene, ChatReportScene } from '../../scene/Chat';
+import { AppNavigatorParams } from '../../app.navigator';
+import { SceneRoute } from '../../App.route';
+import { ChatRoomScene, ChatMainScene, ChatRoomInfoScene, ChatReportScene } from '../../../scene/Chat';
 
 type ChatNavigatorParams = AppNavigatorParams & {
     [SceneRoute.CHATMAIN]: undefined;
@@ -42,9 +42,9 @@ const Stack = createStackNavigator();
 
 export const ChatNavigator = (): React.ReactElement => (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SceneRoute.CHATMAIN} component={ChatMainScene} />
+        {/* <Stack.Screen name={SceneRoute.CHATMAIN} component={ChatMainScene} /> */}
+        <Stack.Screen name={SceneRoute.CHATROOM} component={ChatRoomScene} />
         <Stack.Screen name={SceneRoute.CHAT_ROOM_INFO} component={ChatRoomInfoScene} />
         <Stack.Screen name={SceneRoute.CHAT_REPORT} component={ChatReportScene} />
-        <Stack.Screen name={SceneRoute.CHATROOM} component={ChatRoomScene} />
     </Stack.Navigator>
 )

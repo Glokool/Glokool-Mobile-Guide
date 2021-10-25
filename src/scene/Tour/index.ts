@@ -1,1 +1,1 @@
-export { DailyMainScene } from './TourMain.scene';
+export { TourMainScene } from './TourMain.scene';

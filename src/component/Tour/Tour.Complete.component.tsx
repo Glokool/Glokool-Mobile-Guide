@@ -4,12 +4,12 @@ import { Layout, Divider } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
 import { Location } from '../../assets/icon/Common';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
+import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { TourCompleteModal } from '.';
 import { useDispatch } from 'react-redux';
 import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 
-export const TourCompleteList = (props: DailyMainSceneProps) => {
+export const TourCompleteList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch()
 

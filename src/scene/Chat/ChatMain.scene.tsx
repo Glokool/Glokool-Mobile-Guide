@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { ChatMainSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
+import { ChatMainSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 import { ChatMainBanner } from '../../assets/icon/Chat';
 import { isIphoneX, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { windowHeight, windowWidth } from '../../Design.component';

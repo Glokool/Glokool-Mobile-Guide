@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { ChatRoomSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
+import { ChatRoomSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { getBottomSpace, getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';

@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Platform, Text } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
+import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { windowWidth } from '../../Design.component';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { DailyTopNavigator } from '../../component/Tour/Tour.TopNavigator';
+import { TourTopNavigator } from '../../component/Tour/Tour.TopNavigator';
 
 const Tab = createMaterialTopTabNavigator();
 
-export const DailyMainScene = (props: DailyMainSceneProps) => {
+export const TourMainScene = (props: TourMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
 
@@ -16,7 +16,7 @@ export const DailyMainScene = (props: DailyMainSceneProps) => {
                 <Text style={styles.TopTabBarText}>내 투어 일정</Text>
             </Layout>
 
-            <DailyTopNavigator />
+            <TourTopNavigator />
         </Layout>
     )
 }

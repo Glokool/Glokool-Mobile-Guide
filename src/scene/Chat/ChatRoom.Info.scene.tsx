@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Image, FlatList } 
 import { Layout } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
-import { ChatRoomInfoSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
+import { ChatRoomInfoSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 import { ChatUserModal } from '../../component/Chat';
 import { useDispatch } from 'react-redux';
 import { setChatModalVisiblityTrue } from '../../model/chat/Chat.UI.model';

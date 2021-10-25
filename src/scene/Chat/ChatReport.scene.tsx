@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Text, TouchableOpacity, Alert, TextInput } from '
 import { Layout } from '@ui-kitten/components';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { windowWidth, windowHeight } from '../../Design.component';
-import { ChatReportSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
+import { ChatReportSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 
 export const ChatReportScene = (props: ChatReportSceneProps) => {
 

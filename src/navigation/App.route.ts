@@ -2,7 +2,7 @@ export enum NavigatorRoute {
     AUTH = 'Auth',
     MAIN = 'Main',
     CHAT = 'Chat',
-    DAILY = 'Daily',
+    TOUR = 'Tour',
     PROFILE = 'Profile',
     REGISTER = 'Register',
 }
@@ -24,8 +24,8 @@ export enum SceneRoute {
     CHAT_ROOM_INFO = 'Chat Room Info',
     CHAT_REPORT = 'Chat Report',
 
-    // Daily 네비게이터
-    DAILYMAIN = 'Daily Main',
+    // Tour 네비게이터
+    TOURMAIN = 'Tour Main',
 
     // Register 네비게이터
     REGISTERMAIN = 'Register Main',

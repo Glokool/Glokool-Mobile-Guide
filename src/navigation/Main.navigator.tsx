@@ -1,23 +1,11 @@
 import React from 'react';
-import { RouteProp } from '@react-navigation/native'
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParams } from './app.navigator';
 import { NavigatorRoute, SceneRoute } from './App.route';
 import { ProfileNavigator } from './SceneNavigator/Profile.navigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ChatNavigator } from './SceneNavigator/Chat.navigator';
-import { ChatIconSelected, ChatIconUnselected, DailyIconSelected, DailyIconUnselected, ProfileIconSelected, ProfileIconUnselected } from '../assets/icon/BottomTab';
-import { DailyNavigator } from './SceneNavigator/Tour.Navigator';
+import { ChatMainScene } from '../scene/Chat';
+import { ChatIconSelected, ChatIconUnselected, TourIconSelected, TourIconUnselected, ProfileIconSelected, ProfileIconUnselected } from '../assets/icon/BottomTab';
+import { TourNavigator } from './SceneNavigator/Tour/Tour.Main.Navigator';
 import { windowHeight } from '../Design.component';
-
-type MainNavigatorParams = AppNavigatorParams & {
-    [SceneRoute.HOME]: undefined;
-}
-
-export interface HomeSceneProps {
-    navigation: StackNavigationProp<MainNavigatorParams, SceneRoute.HOME>;
-    route: RouteProp<MainNavigatorParams, SceneRoute.HOME>;
-}
 
 const Tab = createBottomTabNavigator();
 
@@ -35,26 +23,27 @@ export const MainNavigator = (): React.ReactElement => (
             },
             tabBarIconStyle: {
                 bottom: -5
-            }
+            },
         })}
     >
         <Tab.Screen
-            name={NavigatorRoute.CHAT}
-            component={ChatNavigator}
-            options={{
+            name={SceneRoute.CHATMAIN}
+            component={ChatMainScene}
+            options={({ route }) => ({
                 tabBarLabel: '글로챗',
                 tabBarIcon: ({ focused }) => (
                     focused ? <ChatIconSelected /> : <ChatIconUnselected />
-                )
-            }}
+                ),
+                
+            })}
         />
         <Tab.Screen
-            name={NavigatorRoute.DAILY}
-            component={DailyNavigator}
+            name={NavigatorRoute.TOUR}
+            component={TourNavigator}
             options={{
                 tabBarLabel: '일정',
                 tabBarIcon: ({ focused }) => (
-                    focused ? <DailyIconSelected /> : <DailyIconUnselected />
+                    focused ? <TourIconSelected /> : <TourIconUnselected />
                 )
             }}
         />

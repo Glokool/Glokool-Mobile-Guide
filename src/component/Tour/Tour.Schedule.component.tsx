@@ -6,12 +6,12 @@ import { Location } from '../../assets/icon/Common';
 import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
 import { NewTourButton } from '../Chat';
-import { DailyMainSceneProps } from '../../navigation/SceneNavigator/Tour.Navigator';
+import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { useDispatch } from 'react-redux';
 import { setTourScheduleVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 import { TourScheduleModal } from '.';
 
-export const TourScheduleList = (props: DailyMainSceneProps) => {
+export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch();
 

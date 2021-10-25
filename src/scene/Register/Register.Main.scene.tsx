@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Text, FlatList, TouchableOpacity, Pressable } fro
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
-import { RegisterMainSceneProps } from '../../navigation/Register.Navigator';
+import { RegisterMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Register.Navigator';
 import moment from 'moment';
 import { SceneRoute } from '../../navigation/App.route';
 

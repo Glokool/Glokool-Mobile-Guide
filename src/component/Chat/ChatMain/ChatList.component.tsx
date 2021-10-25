@@ -4,8 +4,8 @@ import { Divider, Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../../Design.component';
 import { Location } from '../../../assets/icon/Common';
 import moment from 'moment';
-import { SceneRoute } from '../../../navigation/App.route';
-import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat.navigator';
+import { NavigatorRoute, SceneRoute } from '../../../navigation/App.route';
+import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat/Chat.navigator';
 
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
@@ -15,7 +15,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             <Text style={styles.TourText}>진행중인 투어</Text>
-            <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(SceneRoute.CHAT_ROOM_INFO)}>
+            <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT)}>
                 <Layout style={styles.ItemInfoContainer}>
                     <Layout style={styles.LocationContainer}>
                         <Location />
