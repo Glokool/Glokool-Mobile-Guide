@@ -4,19 +4,37 @@ import { Layout, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../Design.component';
 import { CloseIcon } from '../../../assets/icon/Common';
 import { SNSicon_FB } from '../../../assets/icon/Chat';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../model';
+import { setChatModalVisiblityFalse } from '../../../model/chat/Chat.UI.model';
+import { useNavigation } from '@react-navigation/core';
+import { SceneRoute } from '../../../navigation/App.route';
 
-export const ChatUserModal = () => {
+export const ChatUserModal = (props: any) => {
+
+    const Visibility = useSelector((state: RootState) => state.ChatUIModel.ChatModalVisibility);
+    const dispatch = useDispatch();
+
+    const onPressReport = () => {
+        dispatch(setChatModalVisiblityFalse());
+        props.navigation.navigate(SceneRoute.CHAT_REPORT);
+    }
+
     return (
         <Modal
-            visible={true}
+            visible={Visibility}
             style={styles.MainContainer}
             backdropStyle={styles.BackDrop}
+            onBackdropPress={() => dispatch(setChatModalVisiblityFalse())}
         >
             <Layout style={styles.ButtonsContainer}>
-                <Layout style={styles.ReportButton}>
+                <TouchableOpacity style={styles.ReportButton} onPress={() => onPressReport()}>
                     <Text style={styles.ReportButtonText}>신고</Text>
-                </Layout>
-                <CloseIcon />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.CloseButton} onPress={() => dispatch(setChatModalVisiblityFalse())}>
+                    <CloseIcon />
+                </TouchableOpacity>
             </Layout>
 
             <Image
@@ -110,5 +128,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: windowHeight * 0.01,
         marginBottom: windowHeight * 0.02
+    },
+    CloseButton: {
+        width: windowWidth * 0.05,
+        height: windowWidth * 0.05,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })

@@ -5,8 +5,12 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { ChatRoomInfoSceneProps } from '../../navigation/SceneNavigator/Chat.navigator';
 import { ChatUserModal } from '../../component/Chat';
+import { useDispatch } from 'react-redux';
+import { setChatModalVisiblityTrue } from '../../model/chat/Chat.UI.model';
 
 export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
+
+    const dispatch = useDispatch();
 
     const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
 
@@ -19,7 +23,7 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                     <Text style={styles.NameText}>{item.item}</Text>
                 </Layout>
 
-                <TouchableOpacity style={styles.DetailsButton}>
+                <TouchableOpacity style={styles.DetailsButton} onPress={() => dispatch(setChatModalVisiblityTrue())}>
                     <Text style={styles.DetailsButtonText}>예약정보</Text>
                 </TouchableOpacity>
 
@@ -44,7 +48,7 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                 ListHeaderComponent={<Text style={styles.TitleText}>여행객 리스트</Text>}
             />
 
-            <ChatUserModal />
+            <ChatUserModal navigation={props.navigation}/>
 
         </Layout>
     )
