@@ -191,13 +191,13 @@ const styles = StyleSheet.create({
     },
     TitleText: {
         fontFamily: 'Pretendard-SemiBold',
-        fontSize: 16,
+        fontSize: windowHeight*0.021,
         color: '#8f8f8f',
-        marginBottom: 15,
+        marginBottom: windowHeight*0.01,
     },
     ButtonValueText: {
         fontFamily: 'Pretendard-SemiBold',
-        fontSize: 16,
+        fontSize: windowHeight*0.02,
     },
     DateButton: {
         width: windowWidth * 0.28,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     InfoText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: 14,
+        fontSize: windowHeight*0.018,
         color: '#8f8f8f',
         marginBottom: 4,
     },
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     },
     RegisterButtonText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: 18,
+        fontSize: windowHeight*0.02,
         color: 'white'
     },
     InnerContainer: {
@@ -259,6 +259,6 @@ const styles = StyleSheet.create({
     WarningText: {
         color: '#f77777',
         fontFamily: 'Pretendard-Regular',
-        fontSize: 13,
+        fontSize: windowHeight*0.018,
     }
 })
