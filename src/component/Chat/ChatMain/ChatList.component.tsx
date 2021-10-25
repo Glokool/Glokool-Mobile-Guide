@@ -15,7 +15,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             <Text style={styles.TourText}>진행중인 투어</Text>
-            <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(SceneRoute.CHATROOM)}>
+            <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(SceneRoute.CHAT_ROOM_INFO)}>
                 <Layout style={styles.ItemInfoContainer}>
                     <Layout style={styles.LocationContainer}>
                         <Location />

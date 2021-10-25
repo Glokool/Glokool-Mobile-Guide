@@ -21,6 +21,8 @@ export enum SceneRoute {
     CHATMAIN = 'Chat Main',
     CHATLIST = 'Chat List',
     CHATROOM = 'Chat Room',
+    CHAT_ROOM_INFO = 'Chat Room Info',
+    CHAT_REPORT = 'Chat Report',
 
     // Daily 네비게이터
     DAILYMAIN = 'Daily Main',
