@@ -20,7 +20,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
     const PressButton = () => {
         if (dateIndex > -1 && locationIndex > -1 && travelerIndex > -1) {
 
-            const pickedDate = moment(Today).add(dateIndex, 'days').toString();
+            const pickedDate = moment(Today).add(dateIndex + 1, 'days').toString();
             const params = {
                 location: locationList[locationIndex],
                 traveler: travelerList[travelerIndex],
@@ -44,7 +44,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                 onPress={() => setDateIndex(item.index)}
             >
                 <Text style={[styles.ButtonValueText, { color: isSelected ? '#7777ff' : '#5c5c5c' }]}>
-                    {moment(item.item).add(item.index, 'days').format('M월 D일')}
+                    {moment(item.item).add(item.index + 1, 'days').format('M월 D일')}
                 </Text>
             </Pressable>
         )
@@ -196,12 +196,12 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     ButtonValueText: {
-        fontFamily: 'Pretendard-Regular',
+        fontFamily: 'Pretendard-SemiBold',
         fontSize: 16,
     },
     DateButton: {
         width: windowWidth * 0.28,
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     },
     GridButton: {
         width: windowWidth * 0.43,
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -228,7 +228,8 @@ const styles = StyleSheet.create({
     InfoText: {
         fontFamily: 'Pretendard-Medium',
         fontSize: 14,
-        color: '#8f8f8f'
+        color: '#8f8f8f',
+        marginBottom: 4,
     },
     RegisterButton: {
         width: windowWidth * 0.9,

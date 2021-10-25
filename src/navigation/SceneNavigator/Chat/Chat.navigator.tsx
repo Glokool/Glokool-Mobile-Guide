@@ -42,8 +42,7 @@ const Stack = createStackNavigator();
 
 export const ChatNavigator = (): React.ReactElement => (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name={SceneRoute.CHATMAIN} component={ChatMainScene} /> */}
-        <Stack.Screen name={SceneRoute.CHATROOM} component={ChatRoomScene} />
+        {/* <Stack.Screen name={SceneRoute.CHATROOM} component={ChatRoomScene} /> */}
         <Stack.Screen name={SceneRoute.CHAT_ROOM_INFO} component={ChatRoomInfoScene} />
         <Stack.Screen name={SceneRoute.CHAT_REPORT} component={ChatReportScene} />
     </Stack.Navigator>

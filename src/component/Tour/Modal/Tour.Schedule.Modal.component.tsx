@@ -14,7 +14,7 @@ export const TourScheduleModal = () => {
     const dispatch = useDispatch();
 
     const tourComplete = true;
-    
+
     const onPressCancel = () => {
         Alert.alert(
             "투어 취소",
@@ -22,8 +22,18 @@ export const TourScheduleModal = () => {
             [{
                 text: "아니오",
                 style: "destructive"
-            },{
+            }, {
                 text: "네",
+            }]
+        )
+    }
+
+    const onPressPolicy = () => {
+        Alert.alert(
+            "투어 취소정책",
+            "투어일 기준 1일 전까지 투어 취소가 가능합니다. 등록된 투어는 반드시 진행되어야 하며, 노쇼 (취소 절차 없이 무단으로 투어 진행에 임하지 않음) 의 경우 TA 자격이 정지됩니다.",
+            [{
+                text: "확인"
             }]
         )
     }
@@ -68,14 +78,14 @@ export const TourScheduleModal = () => {
             </Layout>
 
 
-            <TouchableOpacity style={styles.CancellationContainer}>
+            <TouchableOpacity style={styles.CancellationContainer} onPress={() => onPressPolicy()}>
                 <Text style={styles.CancellationText}>투어 취소 정책</Text>
                 <Layout style={styles.QuestionContainer}>
                     <Text style={styles.CancellationText}>?</Text>
                 </Layout>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.ButtonContainer} onPress={()=>onPressCancel()}>
+            <TouchableOpacity style={styles.ButtonContainer} onPress={() => onPressCancel()}>
                 <Text style={styles.ButtonText}>투어 취소하기</Text>
             </TouchableOpacity>
 

@@ -14,6 +14,8 @@ import { SERVER } from '../../server';
 import FastImage from 'react-native-fast-image';
 import { AngleRight } from '../../assets/icon/Common';
 import { LoadingComponent } from '../../component/Common';
+import { SelectableText } from '../../component/Common/SelectableText.component';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
@@ -121,7 +123,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 <Layout style={styles.SideContainer} />
             </Layout>
 
-            <ScrollView style={styles.ScrollViewStyle}>
+            <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
                 <Layout style={styles.ProfileCard}>
                     <Layout style={styles.ProfileContainer}>
                         <FastImage
@@ -161,7 +163,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 </Layout>
 
                 <Text style={[styles.GlokoolEmail, { color: '#595959' }]}>프로필 내용 수정을 희망할 시 아래 이메일로 연락 주세요</Text>
-                <Text style={[styles.GlokoolEmail, { color: '#6464CC' }]}>sungsoo@glokool.com</Text>
+                <SelectableText style={[styles.GlokoolEmail, { color: '#6464CC' }]}>sungsoo@glokool.com</SelectableText>
 
                 <Layout style={styles.PasswordContainer}>
                     <Text style={styles.PasswordText}>비밀번호 변경</Text>
@@ -204,6 +206,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                     <AngleRight />
                 </TouchableOpacity>
 
+                <SafeAreaView />
             </ScrollView>
 
         </Layout>

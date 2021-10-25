@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Platform, Text, TouchableOpacity, Alert, TextInput } from 'react-native';
+import { StyleSheet, Platform, Text, TouchableOpacity, Alert, TextInput, Linking } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { windowWidth, windowHeight } from '../../Design.component';
@@ -8,6 +8,7 @@ import { ChatReportSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.
 export const ChatReportScene = (props: ChatReportSceneProps) => {
 
     const [reportText, setReportText] = useState<string>("");
+    const phoneNumber = '07043000833';
 
     return (
         <Layout style={styles.MainContainer}>
@@ -34,7 +35,7 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
                 />
 
                 <Text style={[styles.EmergencyText, { color: '#FE8686' }]}>* 긴급한 상황일 경우 글로쿨 관리자에게 문의해주세요</Text>
-                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]}>문의처 : 070-4300-0833</Text>
+                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]} onPress={()=>{Linking.openURL(`tel:${phoneNumber}`)}}>문의처 : 070-4300-0833</Text>
             </Layout>
 
         </Layout>

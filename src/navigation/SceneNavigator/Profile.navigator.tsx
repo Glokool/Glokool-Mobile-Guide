@@ -26,6 +26,6 @@ const Stack = createStackNavigator();
 export const ProfileNavigator = (): React.ReactElement => (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={SceneRoute.PROFILE} component={ProfileScene} />
-        <Stack.Screen name={SceneRoute.PROFILE_DETAIL} component={ProfileDetailScene} />
+        
     </Stack.Navigator>
 )
