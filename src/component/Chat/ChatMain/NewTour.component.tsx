@@ -5,6 +5,7 @@ import { windowHeight, windowWidth } from '../../../Design.component';
 import { NewTourIcon } from '../../../assets/icon/Chat';
 import { NavigatorRoute } from '../../../navigation/App.route';
 
+// 새로운 투어 등록하기 버튼
 export const NewTourButton = (props: any) => {
     return (
         <Layout style={styles.MainContainer}>

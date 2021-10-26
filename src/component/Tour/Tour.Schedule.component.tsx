@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { setTourScheduleVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 import { TourScheduleModal } from '.';
 
+// 예정된 투어 렌더링 리스트
 export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch();

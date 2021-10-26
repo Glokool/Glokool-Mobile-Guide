@@ -5,6 +5,7 @@ import { RegisterSuccessSceneProps } from '../../navigation/SceneNavigator/Tour/
 import { windowHeight, windowWidth } from '../../Design.component';
 import moment from 'moment';
 
+// 일정 등록 완료 화면
 export const RegisterSuccessScene = (props: RegisterSuccessSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>

@@ -1,24 +1,24 @@
 import React, { } from 'react';
-import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
-import { ArrowLeft } from '../../assets/icon/Common';
 import { ChatRoomInfoSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 import { ChatUserModal } from '../../component/Chat';
 import { useDispatch } from 'react-redux';
 import { setChatModalVisiblityTrue } from '../../model/chat/Chat.UI.model';
 import { TopTab_GoBack } from '../../component/Common';
 
+// 채팅 참여자 목록 화면
 export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
 
     const dispatch = useDispatch();
 
     const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
 
+    // 리스트 아이템 렌더링
     const renderItem = (item) => {
         return (
             <Layout style={styles.ItemContainer}>
-
                 <Layout style={styles.ProfileContainer}>
                     <Image source={require('../../assets/image/Common/GloGray.png')} style={styles.ImageContainer} resizeMode="contain" />
                     <Text style={styles.NameText}>{item.item}</Text>
@@ -27,7 +27,6 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                 <TouchableOpacity style={styles.DetailsButton} onPress={() => dispatch(setChatModalVisiblityTrue())}>
                     <Text style={styles.DetailsButtonText}>예약정보</Text>
                 </TouchableOpacity>
-
             </Layout>
         )
     }
@@ -42,9 +41,8 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                 renderItem={renderItem}
                 ListHeaderComponent={<Text style={styles.TitleText}>여행객 리스트</Text>}
             />
-
+            {/* 참여자 프로필 모달 */}
             <ChatUserModal navigation={props.navigation}/>
-
         </Layout>
     )
 }

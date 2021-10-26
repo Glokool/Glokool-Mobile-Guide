@@ -1,19 +1,17 @@
 import React from 'react';
-import { StyleSheet, Platform, Text } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { windowWidth } from '../../Design.component';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TourTopNavigator } from '../../component/Tour/Tour.TopNavigator';
+import { TourTopNavigator } from '../../navigation/SceneNavigator/Tour/Tour.TopNavigator';
 import { TopTab_NoButton } from '../../component/Common';
 
-const Tab = createMaterialTopTabNavigator();
-
+// 일정 메인 화면
 export const TourMainScene = (props: TourMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
-
             <TopTab_NoButton title={'내 투어 일정'} />
+            {/* 상단에 예정된 투어, 지난 투어 위한 navigator */}
             <TourTopNavigator />
         </Layout>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Platform, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { PasswordSceneProps } from '../../navigation/Auth.navigator';
@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
 import { TopTab_GoBack } from '../../component/Common';
 
+// 비밀번호 초기화 화면
 export const PasswordScene = (props: PasswordSceneProps) => {
 
     const [email, setEmail] = useState<string>("");
@@ -14,6 +15,7 @@ export const PasswordScene = (props: PasswordSceneProps) => {
     const [isValid, setIsValid] = useState(true);
     const [isMember, setIsMember] = useState(true);
 
+    // 이메일 초기화 버튼 클릭
     const onPressButton = () => {
         auth().sendPasswordResetEmail(email)
             .then((response) => {
@@ -28,8 +30,8 @@ export const PasswordScene = (props: PasswordSceneProps) => {
                 )
             })
             .catch((e) => {
+                // 에러코드 분류 -> 유효하지 않은 이메일, 가입되지 않은 이메일
                 e.code == 'auth/invalid-email' && setIsValid(false);
-
                 if (e.code == 'auth/user-not-found') {
                     setIsMember(false);
                     setIsValid(true);
@@ -63,7 +65,6 @@ export const PasswordScene = (props: PasswordSceneProps) => {
                     <Text style={styles.ResetButtonText}>비밀번호 재설정 이메일 보내기</Text>
                 </TouchableOpacity>
             </Layout>
-
         </Layout >
     )
 }

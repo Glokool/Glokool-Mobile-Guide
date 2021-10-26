@@ -37,6 +37,7 @@ export const AppNavigator = (props: React.ReactElement): React.ReactElement => {
         <Stack.Navigator {...props} screenOptions={{ headerShown: false }}>
             {user ?
                 <>
+                    {/* Bottom Tab 을 보여주고 싶은 화면은 Main navigator 하위로, 보여주고 싶지 않은 화면은 동일 경로로 설정 */}
                     <Stack.Screen name={NavigatorRoute.MAIN} component={MainNavigator} />
                     <Stack.Screen name={NavigatorRoute.REGISTER} component={RegisterNavigator} />
                     <Stack.Screen name={NavigatorRoute.CHAT} component={ChatNavigator} />

@@ -8,8 +8,10 @@ import { AngleRight } from '../../assets/icon/Common';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_NoButton } from '../../component/Common';
 
+// 내 정보 메인 화면
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
+    // 로그아웃
     const onPressLogout = () => {
         Alert.alert(
             "로그아웃",
@@ -27,7 +29,6 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
     return (
         <Layout style={styles.MainContainer}>
-
             <TopTab_NoButton title={'내 정보'} />
 
             <Layout style={styles.WelcomeContainer}>

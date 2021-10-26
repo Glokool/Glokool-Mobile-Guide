@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Platform, Text, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity, Pressable } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
-import { ArrowLeft } from '../../assets/icon/Common';
 import { RegisterMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Register.Navigator';
 import moment from 'moment';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_GoBack } from '../../component/Common';
 
+// 일정등록 메인 화면
 export const RegisterMainScene = (props: RegisterMainSceneProps) => {
 
     const Today = new Date();
@@ -18,24 +18,23 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
     const [locationIndex, setLocationIndex] = useState(-1);
     const [travelerIndex, setTravelerIndex] = useState(-1);
 
+    // 일정 등록 버튼 클릭 시
     const PressButton = () => {
+        // 인덱스 모두 검증 (선택되었는지 아닌지)
         if (dateIndex > -1 && locationIndex > -1 && travelerIndex > -1) {
-
             const pickedDate = moment(Today).add(dateIndex + 1, 'days').toString();
             const params = {
                 location: locationList[locationIndex],
                 traveler: travelerList[travelerIndex],
                 date: pickedDate,
             }
-
             props.navigation.replace(SceneRoute.REGISTERSUCCESS, params);
         }
     }
 
+    // 날짜 버튼 렌더링
     const renderDate = (item: { item: Date, index: number }) => {
-
         const isSelected = dateIndex === item.index;
-
         return (
             <Pressable
                 style={[
@@ -51,10 +50,9 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
         )
     }
 
+    // 지역 버튼 렌더링
     const renderLocation = (item: { item: string, index: number }) => {
-
         const isSelected = locationIndex === item.index;
-
         return (
             <Pressable
                 style={[
@@ -68,10 +66,9 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
         )
     }
 
+    // 투어 인원 수 버튼 렌더링
     const renderTravelers = (item: { item: number, index: number }) => {
-
         const isSelected = travelerIndex === item.index;
-
         return (
             <Pressable
                 style={[
@@ -145,8 +142,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                         <Text style={styles.RegisterButtonText}>등록하기</Text>
                     </TouchableOpacity>
                 </Layout>
-
-
+                
             </Layout>
         </Layout>
     )

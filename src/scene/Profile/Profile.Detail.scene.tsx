@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
 import { SelectableText } from '../../component/Common';
 
+// 내 정보 관리 화면
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
     const InitLoading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
@@ -40,8 +41,10 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 <Text style={[styles.GlokoolEmail, { color: '#595959' }]}>프로필 내용 수정을 희망할 시 아래 이메일로 연락 주세요</Text>
                 <SelectableText style={[styles.GlokoolEmail, { color: '#6464CC' }]}>sungsoo@glokool.com</SelectableText>
 
+                {/* 비밀번호 재설정 컴포넌트 */}
                 <ProfileResetPassword />
 
+                {/* 탈퇴버튼 */}
                 <TouchableOpacity style={styles.FlatButton} onPress={() => onPressWithdrawal()}>
                     <Text style={styles.FlatButtonText}>{'탈퇴하기'}</Text>
                     <AngleRight />
@@ -51,6 +54,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
             </ScrollView>
 
+            {/* 가이드 정보 로딩 혹은 비밀번호 변경 로딩 */}
             {PWLoading || InitLoading && <LoadingComponent />}
         </Layout>
     )

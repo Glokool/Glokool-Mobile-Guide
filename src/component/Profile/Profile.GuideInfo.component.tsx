@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native'
+import { FlatList, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Button, Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ImagePicker } from '../../assets/icon/Profile';
@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import { loading_start, loading_end } from '../../model/auth/auth.model';
 import { GuideInfoType } from '../../scene/Profile/type';
 import { SERVER, CDN } from '../../server';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
@@ -115,7 +115,10 @@ export const ProfileGuideInfo = () => {
 
             <Layout style={styles.ItemContainer}>
                 <Text style={styles.KeyText}>Language</Text>
-                <Text style={styles.ValueText}>English</Text>
+                <Text style={styles.ValueText}>
+                    {guideInfo?.lang && (guideInfo?.lang[0] && 'English ')}
+                    {guideInfo?.lang && (guideInfo?.lang[1] && '中文')}
+                </Text>
             </Layout>
 
             <Layout style={styles.ItemContainer}>

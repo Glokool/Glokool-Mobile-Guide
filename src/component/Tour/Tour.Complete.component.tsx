@@ -9,6 +9,7 @@ import { TourCompleteModal } from '.';
 import { useDispatch } from 'react-redux';
 import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 
+// 종료된 투어들 렌더링해주는 리스트
 export const TourCompleteList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch()

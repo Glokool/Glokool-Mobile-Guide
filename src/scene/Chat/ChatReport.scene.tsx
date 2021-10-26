@@ -5,18 +5,16 @@ import { ArrowLeft } from '../../assets/icon/Common';
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ChatReportSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 
+// 채팅 신고 화면
 export const ChatReportScene = (props: ChatReportSceneProps) => {
 
     const [reportText, setReportText] = useState<string>("");
-    const phoneNumber = '07043000833';
 
     const onPressReport = () => {
         Alert.alert(
             "접수 완료",
             "신고가 접수되었습니다. 신고 내용은 영업일 2일 이내에 처리됩니다.",
-            [{
-                text: "확인"
-            }]
+            [{ text: "확인" }]
         )
     }
 
@@ -46,7 +44,7 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
                 />
 
                 <Text style={[styles.EmergencyText, { color: '#FE8686' }]}>* 긴급한 상황일 경우 글로쿨 관리자에게 문의해주세요</Text>
-                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]} onPress={() => { Linking.openURL(`tel:${phoneNumber}`) }}>문의처 : 070-4300-0833</Text>
+                <Text style={[styles.EmergencyText, { color: '#c3c3c3' }]} onPress={() => { Linking.openURL(`tel:${'07043000833'}`) }}>문의처 : 070-4300-0833</Text>
             </Layout>
 
         </Layout>

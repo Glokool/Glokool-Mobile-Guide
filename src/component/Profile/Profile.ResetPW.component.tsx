@@ -6,6 +6,7 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import { useDispatch } from 'react-redux';
 import { profile_loading_start, profile_loading_end } from '../../model/profile/Profile.UI.model';
 
+// 비밀번호 재설정 컴포넌트
 export const ProfileResetPassword = () => {
 
     const dispatch = useDispatch();

@@ -7,11 +7,15 @@ import { isIphoneX, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { ChatListComponent, NewTourButton } from '../../component/Chat';
 
+// 글로챗 메인 화면 
 export const ChatMainScene = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
+            {/* 채팅 상단 배너 */}
             <ChatMainBanner width={windowWidth} />
+            {/* 채팅 리스트 */}
             <ChatListComponent {...props} />
+            {/* 새로운 일정 등록 버튼 */}
             <NewTourButton {...props} />
         </Layout>
     )

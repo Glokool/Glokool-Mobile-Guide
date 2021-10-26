@@ -7,6 +7,7 @@ import moment from 'moment';
 import { NavigatorRoute, SceneRoute } from '../../../navigation/App.route';
 import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat/Chat.navigator';
 
+// 현재 채팅 목록 나타내는 리스트
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
     const sampleData = false

@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
 
+// 로딩 컴포넌트 
 export const LoadingComponent = () => {
     return (
         <Layout style={styles.MainContainer}>

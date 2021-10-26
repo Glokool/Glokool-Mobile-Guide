@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../model';
 import { setTourScheduleVisibilityFalse } from '../../../model/tour/Tour.UI.Model';
 
-
+// 예정된 투어 나타내는 모달
 export const TourScheduleModal = () => {
     const visibility = useSelector((state: RootState) => state.TourUIModel.ScheduleVisibility);
     const dispatch = useDispatch();

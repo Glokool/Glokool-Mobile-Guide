@@ -1,9 +1,9 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, Linking } from 'react-native'
+import { StyleSheet, Text, Linking } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import { SignInSceneProps } from '../../navigation/Auth.navigator';
 import { FormikComponent } from '../../component/Auth/SignIn/Formik.component';
-import { AuthValidationModel, SignInData } from '../../model/auth/auth.validation.model';
+import { SignInData } from '../../model/auth/auth.validation.model';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../model';
@@ -13,6 +13,7 @@ import { LoadingComponent } from '../../component/Common';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_NoButton } from '../../component/Common';
 
+// 로그인 화면
 export const SignInScene = (props: SignInSceneProps) => {
 
   //로그인 상황 확인을 위한 Loading 상태 관리

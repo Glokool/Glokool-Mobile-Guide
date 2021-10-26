@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, Platform, TouchableOpacity, Alert, ViewStyle } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, Platform, TouchableOpacity, ViewStyle } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { windowWidth, windowHeight } from '../../Design.component';
+import { windowWidth } from '../../Design.component';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { useNavigation } from '@react-navigation/core';
-import { string } from 'yup/lib/locale';
 
+// Top Tab Bar 컴포넌트
+
+// 왼쪽에 뒤로가기 버튼이 있는 탭바
 export const TopTab_GoBack = (props: { title: string, style?: ViewStyle }) => {
     const navigation = useNavigation();
 
@@ -20,6 +22,7 @@ export const TopTab_GoBack = (props: { title: string, style?: ViewStyle }) => {
     )
 }
 
+// 양쪽에 아무 버튼 없는 탭바
 export const TopTab_NoButton = (props: { title: string, style?: ViewStyle }) => {
     return (
         <Layout style={styles.TopTabContainer}>

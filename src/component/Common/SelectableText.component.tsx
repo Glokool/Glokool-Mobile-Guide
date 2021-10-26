@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, Text, Platform } from 'react-native';
 
+// 선택, 복사 가능한 텍스트
 export const SelectableText = (props: any) => {
     return (
         <>

@@ -10,11 +10,13 @@ import { setChatModalVisiblityFalse } from '../../../model/chat/Chat.UI.model';
 import { useNavigation } from '@react-navigation/core';
 import { SceneRoute } from '../../../navigation/App.route';
 
+// 채팅 이용자 프로필 모달
 export const ChatUserModal = (props: any) => {
 
     const Visibility = useSelector((state: RootState) => state.ChatUIModel.ChatModalVisibility);
     const dispatch = useDispatch();
 
+    // 신고 버튼 클릭 시
     const onPressReport = () => {
         dispatch(setChatModalVisiblityFalse());
         props.navigation.navigate(SceneRoute.CHAT_REPORT);
