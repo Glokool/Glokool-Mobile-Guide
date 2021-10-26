@@ -19,7 +19,6 @@ export const ProfileGuideInfo = () => {
     const [profileImage, setProfileImage] = useState<string | any>();
     const [photo, setPhoto] = useState<Asset | undefined>(undefined);
     const [imageChanged, setImageChanged] = useState(false);
-    const [fileName, setFileName] = useState('');
 
     const UID = auth().currentUser?.uid;
 
@@ -29,10 +28,9 @@ export const ProfileGuideInfo = () => {
         InitGuideInfo();
     }, []);
 
+    // 가이드 정보 초기화 
     const InitGuideInfo = () => {
         dispatch(loading_start());
-
-    
 
         axios.get(SERVER + '/api/guides/' + UID)
             .then((response) => {
@@ -43,6 +41,7 @@ export const ProfileGuideInfo = () => {
             .catch((e) => console.log(e));
     }
 
+    // 갤러리에서 이미지 선택 
     const onPressImage = () => {
         launchImageLibrary({
             mediaType: 'photo',
@@ -56,53 +55,24 @@ export const ProfileGuideInfo = () => {
                     return;
                 } else {
                     setPhoto(response.assets[0]);
+                    setProfileImage(response.assets[0].uri);
                     setImageChanged(true);
                 }
             }
         )
     }
 
-    function urlToBlob() {
-        return new Promise((resolve, reject) => {
-            var xhr = new XMLHttpRequest();
-            xhr.onerror = reject;
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    resolve(xhr.response);
-                }
-            };
-            xhr.open('GET', photo);
-            xhr.responseType = 'blob'; // convert type
-            xhr.send();
-        })
-    }
-
-    const createFormData = (blob) => {
-        const data = new FormData();
-
-        data.append('uid', UID);
-        data.append("avatar", {
-            photo.fileName,
-            type : photo?.type,
-            uri : photo?.uri
-        });
-
-        return data;
-    }
-
+    // 이미지 선택 후 저장버튼 클릭
     const onPressSaveButton = async () => {
         const authToken = await auth().currentUser?.getIdToken();
 
-        // const blob = await urlToBlob()
-        // console.log(blob._data.blobId);
-
         const data = new FormData();
 
         data.append('uid', UID);
         data.append("avatar", {
-            photo.fileName,
-            type : photo?.type,
-            uri : photo?.uri
+            name: photo?.fileName,
+            type: photo?.type,
+            uri: Platform.OS === 'android' ? 'file://' + photo?.uri : photo?.uri
         });
 
         axios.post(SERVER + '/api/guides/uploads', data, {
@@ -113,35 +83,9 @@ export const ProfileGuideInfo = () => {
         }).then((response) => console.log(response))
             .catch((e) => console.log(e))
 
-
-        // const modifiedGuide = {
-        //     name: guideInfo?.name,
-        //     email: guideInfo?.email,
-        //     // password: values.password,
-        //     contact: guideInfo?.contact,
-        //     gender: guideInfo?.gender,
-        //     birthDate: guideInfo?.birthDate,
-        //     lang: [true,true],
-        //     oneLineIntro: guideInfo?.oneLineIntro,
-        //     intro: guideInfo?.intro,
-        //     country: guideInfo?.country,
-        //     keyword: ["hi","gi"],
-        //   };
-
-        // const config: AxiosRequestConfig = {
-        //     method: "patch",
-        //     url: `${SERVER}/api/guides/${UID}`,
-        //     headers: {
-        //         Authorization: `Bearer ${authToken}`,
-        //         "Content-Type": "application/json",
-        //     },
-        //     data: JSON.stringify(modifiedGuide),
-        // };
-
-        // axios(config).then((r) => console.log(r)).catch((e) => console.log(e));
     }
 
-
+    // 키워드 렌더링
     const renderKeyword = (item: { item: string, index: number }) => {
         return (
             <Layout style={styles.KeywordBox}>
