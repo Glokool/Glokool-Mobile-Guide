@@ -10,13 +10,14 @@ import { SERVER, CDN } from '../../server';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 
 
 export const ProfileGuideInfo = () => {
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
     const [profileImage, setProfileImage] = useState<string | any>(CDN + guideInfo?.avatar);
+    const [photo, setPhoto] = useState();
     const [imageChanged, setImageChanged] = useState(false);
 
     const UID = auth().currentUser?.uid;
@@ -50,6 +51,7 @@ export const ProfileGuideInfo = () => {
                 if (response.didCancel) {
                     return;
                 } else {
+                    setPhoto(response.assets[0]);
                     setProfileImage(response.assets[0].uri);
                     setImageChanged(true);
                 }
@@ -57,36 +59,25 @@ export const ProfileGuideInfo = () => {
         )
     }
 
+    const createFormData = () => {
+        const data = new FormData();
+
+        data.append('uid', UID);
+        data.append('img', profileImage);
+
+        return data;
+    }
+
     const onPressSaveButton = async () => {
         const authToken = await auth().currentUser?.getIdToken();
 
-        const guidePatchData = {
-            name: guideInfo?.name,
-            birthDate: guideInfo?.birthDate,
-            gender: guideInfo?.gender,
-            lang: guideInfo?.lang,
-            contact: guideInfo?.contact,
-            oneLineIntro: guideInfo?.oneLineIntro,
-            intro: guideInfo?.intro,
-            country: guideInfo?.country,
-            keyword: guideInfo?.keyword,
-            avatar: Platform.OS === 'android' ? profileImage : profileImage.replace('file://', ''),
-        }
-
-        const config: AxiosRequestConfig = {
-            method: "patch",
-            url: `${SERVER}/api/guides/${guideInfo?.uid}`,
+        axios.post(SERVER + '/api/guides/uploads', createFormData(), {
             headers: {
                 Authorization: `Bearer ${authToken}`,
                 "Content-Type": "application/json",
-            },
-            data: JSON.stringify(guidePatchData),
-        }
-
-        axios(config)
-            .then((response) => {
-                Alert.alert("modified")
-            }).catch((e) => console.log(e));
+            }
+        }).then((response) => console.log(response))
+            .catch((E) => console.log(E))
     }
 
 
@@ -140,6 +131,7 @@ export const ProfileGuideInfo = () => {
                     />
                 </Layout>
             )}
+
             <Button onPress={() => onPressSaveButton()}>테스트 저장</Button>
         </Layout>
     )
