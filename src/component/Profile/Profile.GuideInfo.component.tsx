@@ -17,8 +17,9 @@ export const ProfileGuideInfo = () => {
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
     const [profileImage, setProfileImage] = useState<string | any>();
-    const [photo, setPhoto] = useState();
+    const [photo, setPhoto] = useState<Asset | undefined>(undefined);
     const [imageChanged, setImageChanged] = useState(false);
+    const [fileName, setFileName] = useState('');
 
     const UID = auth().currentUser?.uid;
 
@@ -30,6 +31,8 @@ export const ProfileGuideInfo = () => {
 
     const InitGuideInfo = () => {
         dispatch(loading_start());
+
+    
 
         axios.get(SERVER + '/api/guides/' + UID)
             .then((response) => {
@@ -52,8 +55,7 @@ export const ProfileGuideInfo = () => {
                 if (response.didCancel) {
                     return;
                 } else {
-                    setPhoto(response.assets[0].base64);
-                    setProfileImage(response.assets[0].uri);
+                    setPhoto(response.assets[0]);
                     setImageChanged(true);
                 }
             }
@@ -79,7 +81,11 @@ export const ProfileGuideInfo = () => {
         const data = new FormData();
 
         data.append('uid', UID);
-        data.append('avatar', blob);
+        data.append("avatar", {
+            photo.fileName,
+            type : photo?.type,
+            uri : photo?.uri
+        });
 
         return data;
     }
@@ -87,10 +93,19 @@ export const ProfileGuideInfo = () => {
     const onPressSaveButton = async () => {
         const authToken = await auth().currentUser?.getIdToken();
 
-        const blob = await urlToBlob()
-        console.log(blob._data.blobId);
+        // const blob = await urlToBlob()
+        // console.log(blob._data.blobId);
 
-        axios.post(SERVER + '/api/guides/uploads', createFormData(blob._data.blobId), {
+        const data = new FormData();
+
+        data.append('uid', UID);
+        data.append("avatar", {
+            photo.fileName,
+            type : photo?.type,
+            uri : photo?.uri
+        });
+
+        axios.post(SERVER + '/api/guides/uploads', data, {
             headers: {
                 Authorization: `Bearer ${authToken}`,
                 "Content-Type": "application/json",
