@@ -6,6 +6,7 @@ import { ProfileSceneProps } from '../../navigation/SceneNavigator/Profile.navig
 import { windowWidth, windowHeight } from '../../Design.component';
 import { AngleRight } from '../../assets/icon/Common';
 import { SceneRoute } from '../../navigation/App.route';
+import { TopTab_NoButton } from '../../component/Common';
 
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
@@ -27,9 +28,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
     return (
         <Layout style={styles.MainContainer}>
 
-            <Layout style={styles.TopTabContainer}>
-                <Text style={styles.TopTabBarText}>내 정보</Text>
-            </Layout>
+            <TopTab_NoButton title={'내 정보'} />
 
             <Layout style={styles.WelcomeContainer}>
                 <Text style={[styles.WelcomeText, { color: '#bbb' }]}>안녕하세요</Text>
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'ios' ? 50 : 20,
     },
     WelcomeContainer: {
-        width: windowWidth * 0.9,
+        paddingHorizontal: windowWidth * 0.05,
         paddingTop: windowHeight * 0.15
     },
     WelcomeText: {

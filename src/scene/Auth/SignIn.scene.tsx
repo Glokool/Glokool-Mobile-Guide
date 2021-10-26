@@ -11,6 +11,7 @@ import { windowWidth } from '../../Design.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LoadingComponent } from '../../component/Common';
 import { SceneRoute } from '../../navigation/App.route';
+import { TopTab_NoButton } from '../../component/Common';
 
 export const SignInScene = (props: SignInSceneProps) => {
 
@@ -20,9 +21,7 @@ export const SignInScene = (props: SignInSceneProps) => {
   return (
     <Layout style={styles.MainContainer}>
 
-      <Layout style={styles.TopTabContainer}>
-        <Text style={styles.TopTabBarText}>로그인</Text>
-      </Layout>
+      <TopTab_NoButton title={'로그인'} />
 
       <Layout style={{ alignItems: 'center' }}>
         <Formik
@@ -60,15 +59,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)'
-  },
-  TopTabBarText: {
-    fontFamily: 'Pretendard-Bold',
-    fontSize: 20,
-  },
-  TopTabContainer: {
-    alignItems: 'center',
-    width: windowWidth,
-    paddingTop: Platform.OS === 'ios' ? 50 : 20,
   },
   MainContainer: {
     width: '100%',

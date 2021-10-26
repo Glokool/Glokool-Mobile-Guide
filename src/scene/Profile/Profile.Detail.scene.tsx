@@ -1,16 +1,15 @@
-import React, {  } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import React, { } from 'react';
+import { StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import { windowWidth } from '../../Design.component';
-import { ArrowLeft } from '../../assets/icon/Common';
 import { ProfileDetailSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../model';
 import { AngleRight } from '../../assets/icon/Common';
-import { LoadingComponent } from '../../component/Common';
-import { SelectableText } from '../../component/Common/SelectableText.component';
+import { LoadingComponent, TopTab_GoBack } from '../../component/Common';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
+import { SelectableText } from '../../component/Common';
 
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
@@ -33,13 +32,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
 
-            <Layout style={styles.TopTabContainer}>
-                <TouchableOpacity style={styles.SideContainer} onPress={() => props.navigation.pop()}>
-                    <ArrowLeft />
-                </TouchableOpacity>
-                <Text style={styles.TopTabBarText}>프로필 관리</Text>
-                <Layout style={styles.SideContainer} />
-            </Layout>
+            <TopTab_GoBack title={'프로필 관리'} style={styles.TopTabContainer} />
 
             <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
 
@@ -57,7 +50,7 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                 </TouchableOpacity>
 
                 <SafeAreaView />
-                
+
             </ScrollView>
 
             {PWLoading || InitLoading && <LoadingComponent />}
@@ -75,28 +68,10 @@ const styles = StyleSheet.create({
     ScrollViewStyle: {
         width: windowWidth,
     },
-    TopTabBarText: {
-        fontFamily: 'Pretendard-Bold',
-        fontSize: 20,
-    },
     TopTabContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: windowWidth,
-        paddingTop: Platform.OS === 'ios' ? 50 : 20,
-        paddingBottom: 20,
-        paddingHorizontal: windowWidth * 0.05,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd'
     },
-    SideContainer: {
-        width: windowWidth * 0.07,
-        height: windowWidth * 0.07,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     GlokoolEmail: {
         fontFamily: 'Pretendard-Regular',
         fontSize: 15,

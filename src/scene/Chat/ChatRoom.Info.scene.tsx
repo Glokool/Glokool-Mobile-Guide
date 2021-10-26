@@ -7,6 +7,7 @@ import { ChatRoomInfoSceneProps } from '../../navigation/SceneNavigator/Chat/Cha
 import { ChatUserModal } from '../../component/Chat';
 import { useDispatch } from 'react-redux';
 import { setChatModalVisiblityTrue } from '../../model/chat/Chat.UI.model';
+import { TopTab_GoBack } from '../../component/Common';
 
 export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
 
@@ -34,13 +35,7 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
 
-            <Layout style={styles.TopTabContainer}>
-                <TouchableOpacity style={styles.SideContainer} onPress={() => props.navigation.pop()}>
-                    <ArrowLeft />
-                </TouchableOpacity>
-                <Text style={styles.TopTabBarText}>채팅방 정보</Text>
-                <Layout style={styles.SideContainer} />
-            </Layout>
+            <TopTab_GoBack title={'채팅방 정보'} />
 
             <FlatList
                 data={sampleData}
@@ -60,25 +55,6 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         backgroundColor: '#f9f9f9'
-    },
-    TopTabBarText: {
-        fontFamily: 'Pretendard-Bold',
-        fontSize: 20,
-    },
-    TopTabContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: windowWidth,
-        paddingTop: Platform.OS === 'ios' ? 50 : 20,
-        paddingHorizontal: windowWidth * 0.05,
-        paddingBottom: 20,
-    },
-    SideContainer: {
-        width: windowWidth * 0.07,
-        height: windowWidth * 0.07,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     ImageContainer: {
         width: windowWidth * 0.11,

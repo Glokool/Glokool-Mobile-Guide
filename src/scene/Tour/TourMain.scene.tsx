@@ -5,6 +5,7 @@ import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Ma
 import { windowWidth } from '../../Design.component';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TourTopNavigator } from '../../component/Tour/Tour.TopNavigator';
+import { TopTab_NoButton } from '../../component/Common';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -12,10 +13,7 @@ export const TourMainScene = (props: TourMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
 
-            <Layout style={styles.TopTabContainer}>
-                <Text style={styles.TopTabBarText}>내 투어 일정</Text>
-            </Layout>
-
+            <TopTab_NoButton title={'내 투어 일정'} />
             <TourTopNavigator />
         </Layout>
     )

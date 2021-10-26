@@ -6,6 +6,7 @@ import { ArrowLeft } from '../../assets/icon/Common';
 import { RegisterMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Register.Navigator';
 import moment from 'moment';
 import { SceneRoute } from '../../navigation/App.route';
+import { TopTab_GoBack } from '../../component/Common';
 
 export const RegisterMainScene = (props: RegisterMainSceneProps) => {
 
@@ -86,13 +87,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
 
-            <Layout style={styles.TopTabContainer}>
-                <TouchableOpacity style={styles.SideContainer} onPress={() => props.navigation.pop()}>
-                    <ArrowLeft />
-                </TouchableOpacity>
-                <Text style={styles.TopTabBarText}>새 투어 등록하기</Text>
-                <Layout style={styles.SideContainer} />
-            </Layout>
+            <TopTab_GoBack title={'새 투어 등록하기'} />
 
             <Layout style={styles.InnerContainer}>
 
@@ -159,25 +154,6 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
 
 
 const styles = StyleSheet.create({
-    TopTabBarText: {
-        fontFamily: 'Pretendard-Bold',
-        fontSize: 20,
-    },
-    TopTabContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: windowWidth,
-        paddingTop: Platform.OS === 'ios' ? 50 : 20,
-        paddingBottom: 20,
-        paddingHorizontal: windowWidth * 0.05,
-    },
-    SideContainer: {
-        width: windowWidth * 0.07,
-        height: windowWidth * 0.07,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     PropsContainer: {
         backgroundColor: '#0000',
         width: windowWidth * 0.9,
@@ -191,13 +167,13 @@ const styles = StyleSheet.create({
     },
     TitleText: {
         fontFamily: 'Pretendard-SemiBold',
-        fontSize: windowHeight*0.021,
+        fontSize: windowHeight * 0.021,
         color: '#8f8f8f',
-        marginBottom: windowHeight*0.01,
+        marginBottom: windowHeight * 0.01,
     },
     ButtonValueText: {
         fontFamily: 'Pretendard-SemiBold',
-        fontSize: windowHeight*0.02,
+        fontSize: windowHeight * 0.02,
     },
     DateButton: {
         width: windowWidth * 0.28,
@@ -227,7 +203,7 @@ const styles = StyleSheet.create({
     },
     InfoText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: windowHeight*0.018,
+        fontSize: windowHeight * 0.018,
         color: '#8f8f8f',
         marginBottom: 4,
     },
@@ -243,7 +219,7 @@ const styles = StyleSheet.create({
     },
     RegisterButtonText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: windowHeight*0.02,
+        fontSize: windowHeight * 0.02,
         color: 'white'
     },
     InnerContainer: {
@@ -259,6 +235,6 @@ const styles = StyleSheet.create({
     WarningText: {
         color: '#f77777',
         fontFamily: 'Pretendard-Regular',
-        fontSize: windowHeight*0.018,
+        fontSize: windowHeight * 0.018,
     }
 })
