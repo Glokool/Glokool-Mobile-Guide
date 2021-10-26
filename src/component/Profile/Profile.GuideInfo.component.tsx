@@ -16,7 +16,7 @@ import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-ima
 export const ProfileGuideInfo = () => {
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
-    const [profileImage, setProfileImage] = useState<string | any>(CDN + guideInfo?.avatar);
+    const [profileImage, setProfileImage] = useState<string | any>();
     const [photo, setPhoto] = useState();
     const [imageChanged, setImageChanged] = useState(false);
 
@@ -31,9 +31,10 @@ export const ProfileGuideInfo = () => {
     const InitGuideInfo = () => {
         dispatch(loading_start());
 
-        axios.get(`${SERVER}/api/guides/` + UID)
+        axios.get(SERVER + '/api/guides/' + UID)
             .then((response) => {
                 setGuideInfo(response.data);
+                setProfileImage(CDN + response.data.avatar);
                 dispatch(loading_end());
             })
             .catch((e) => console.log(e));
@@ -42,7 +43,7 @@ export const ProfileGuideInfo = () => {
     const onPressImage = () => {
         launchImageLibrary({
             mediaType: 'photo',
-            includeBase64: false,
+            includeBase64: true,
             quality: 1,
             maxHeight: windowWidth * 0.2,
             maxWidth: windowWidth * 0.2,
@@ -51,7 +52,7 @@ export const ProfileGuideInfo = () => {
                 if (response.didCancel) {
                     return;
                 } else {
-                    setPhoto(response.assets[0]);
+                    setPhoto(response.assets[0].base64);
                     setProfileImage(response.assets[0].uri);
                     setImageChanged(true);
                 }
@@ -59,11 +60,26 @@ export const ProfileGuideInfo = () => {
         )
     }
 
-    const createFormData = () => {
+    function urlToBlob() {
+        return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.onerror = reject;
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    resolve(xhr.response);
+                }
+            };
+            xhr.open('GET', photo);
+            xhr.responseType = 'blob'; // convert type
+            xhr.send();
+        })
+    }
+
+    const createFormData = (blob) => {
         const data = new FormData();
 
         data.append('uid', UID);
-        data.append('img', profileImage);
+        data.append('avatar', blob);
 
         return data;
     }
@@ -71,13 +87,43 @@ export const ProfileGuideInfo = () => {
     const onPressSaveButton = async () => {
         const authToken = await auth().currentUser?.getIdToken();
 
-        axios.post(SERVER + '/api/guides/uploads', createFormData(), {
+        const blob = await urlToBlob()
+        console.log(blob._data.blobId);
+
+        axios.post(SERVER + '/api/guides/uploads', createFormData(blob._data.blobId), {
             headers: {
                 Authorization: `Bearer ${authToken}`,
                 "Content-Type": "application/json",
             }
         }).then((response) => console.log(response))
-            .catch((E) => console.log(E))
+            .catch((e) => console.log(e))
+
+
+        // const modifiedGuide = {
+        //     name: guideInfo?.name,
+        //     email: guideInfo?.email,
+        //     // password: values.password,
+        //     contact: guideInfo?.contact,
+        //     gender: guideInfo?.gender,
+        //     birthDate: guideInfo?.birthDate,
+        //     lang: [true,true],
+        //     oneLineIntro: guideInfo?.oneLineIntro,
+        //     intro: guideInfo?.intro,
+        //     country: guideInfo?.country,
+        //     keyword: ["hi","gi"],
+        //   };
+
+        // const config: AxiosRequestConfig = {
+        //     method: "patch",
+        //     url: `${SERVER}/api/guides/${UID}`,
+        //     headers: {
+        //         Authorization: `Bearer ${authToken}`,
+        //         "Content-Type": "application/json",
+        //     },
+        //     data: JSON.stringify(modifiedGuide),
+        // };
+
+        // axios(config).then((r) => console.log(r)).catch((e) => console.log(e));
     }
 
 

@@ -27,8 +27,6 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
         )
     }
 
-
-
     return (
         <Layout style={styles.MainContainer}>
 
