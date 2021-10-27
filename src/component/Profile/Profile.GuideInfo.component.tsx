@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Button, Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ImagePicker } from '../../assets/icon/Profile';
@@ -20,7 +20,7 @@ export const ProfileGuideInfo = () => {
     const [photo, setPhoto] = useState<Asset | undefined>(undefined);
     const [imageChanged, setImageChanged] = useState(false);
 
-    const UID = auth().currentUser?.uid;
+    const UID: string | any = auth().currentUser?.uid;
 
     const dispatch = useDispatch();
 
@@ -64,25 +64,37 @@ export const ProfileGuideInfo = () => {
 
     // 이미지 선택 후 저장버튼 클릭
     const onPressSaveButton = async () => {
-        const authToken = await auth().currentUser?.getIdToken();
+        if (imageChanged) {
+            const authToken = await auth().currentUser?.getIdToken();
 
-        const data = new FormData();
+            const data = new FormData();
 
-        data.append('uid', UID);
-        data.append("avatar", {
-            name: photo?.fileName,
-            type: photo?.type,
-            uri: Platform.OS === 'android' ? 'file://' + photo?.uri : photo?.uri
-        });
+            data.append('uid', UID);
+            data.append("avatar", {
+                name: photo?.fileName,
+                type: photo?.type,
+                uri: Platform.OS === 'android' ? 'file://' + photo?.uri : photo?.uri
+            });
 
-        axios.post(SERVER + '/api/guides/uploads', data, {
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-                "Content-Type": "application/json",
-            }
-        }).then((response) => console.log(response))
-            .catch((e) => console.log(e))
-
+            axios.post(SERVER + '/api/guides/uploads', data, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                    "Content-Type": "application/json",
+                }
+            }).then((response) => {
+                Alert.alert(
+                    "변경 완료",
+                    "프로필 이미지 변경이 완료되었습니다.",
+                    [{ text: "확인" }]
+                )
+            }).catch((e) => {
+                Alert.alert(
+                    "변경 실패",
+                    "프로필 이미지 업로드에 실패하였습니다. 다시 시도해 주세요.",
+                    [{ text: "확인" }]
+                )
+            })
+        }
     }
 
     // 키워드 렌더링

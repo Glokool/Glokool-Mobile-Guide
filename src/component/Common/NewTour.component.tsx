@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { windowHeight, windowWidth } from '../../../Design.component';
-import { NewTourIcon } from '../../../assets/icon/Chat';
-import { NavigatorRoute } from '../../../navigation/App.route';
+import { windowHeight, windowWidth } from '../../Design.component';
+import { NewTourIcon } from '../../assets/icon/Chat';
+import { NavigatorRoute } from '../../navigation/App.route';
 
 // 새로운 투어 등록하기 버튼
 export const NewTourButton = (props: any) => {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     ButtonText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: 18,
+        fontSize: windowWidth * 0.045,
         color: 'white',
         marginRight: 10,
     }

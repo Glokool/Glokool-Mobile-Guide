@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     },
     RegisterButtonText: {
         fontFamily: 'Pretendard-Medium',
-        fontSize: windowHeight * 0.02,
+        fontSize: windowHeight * 0.024,
         color: 'white'
     },
     InnerContainer: {

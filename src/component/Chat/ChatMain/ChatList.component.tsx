@@ -10,42 +10,49 @@ import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat/Chat
 // 현재 채팅 목록 나타내는 리스트
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
-    const sampleData = false
-    const count = 12
+    const sampleData = true;
+    const dayTour = true;
+    const count = 12;
 
     return (
         <Layout style={styles.MainContainer}>
             <Text style={styles.TourText}>진행중인 투어</Text>
-            <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT)}>
-                <Layout style={styles.ItemInfoContainer}>
-                    <Layout style={styles.LocationContainer}>
-                        <Location />
-                        <Text style={styles.LocationText}>지역</Text>
+            {dayTour ? (
+                <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT)}>
+                    <Layout style={styles.ItemInfoContainer}>
+                        <Layout style={styles.LocationContainer}>
+                            <Location />
+                            <Text style={styles.LocationText}>지역</Text>
+                        </Layout>
+                        <Text>{moment(new Date()).format('YYYY.MM.DD')}</Text>
                     </Layout>
-                    <Text>{moment(new Date()).format('YYYY.MM.DD')}</Text>
-                </Layout>
-                <Divider style={styles.Divider} />
+                    <Divider style={styles.Divider} />
 
-                <Layout style={[styles.TravelerContainer, { justifyContent: sampleData ? 'center' : 'space-between' }]}>
-                    {sampleData ?
-                        (
-                            <Text style={styles.NotMatchedText}>아직 매칭된 여행객이 없습니다.</Text>
-                        ) : (
-                            <>
-                                <Layout style={styles.ChatUsersContainer}>
-                                    <Text style={styles.ChatUsersText}>현재 참여 인원 수</Text>
-                                    <Text style={styles.ChatUsersNum}>10</Text>
-                                </Layout>
-                                <Layout style={styles.UnreadMessageContainer}>
-                                    {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
-                                    <Layout style={[styles.UnreadMessageCount, { backgroundColor: count > 0 ? '#7777ff' : '#cdcdcd' }]}>
-                                        <Text style={styles.UnreadMessageCountText}>{count}</Text>
+                    <Layout style={[styles.TravelerContainer, { justifyContent: sampleData ? 'center' : 'space-between' }]}>
+                        {sampleData ?
+                            (
+                                <Text style={styles.NotMatchedText}>아직 매칭된 여행객이 없습니다</Text>
+                            ) : (
+                                <>
+                                    <Layout style={styles.ChatUsersContainer}>
+                                        <Text style={styles.ChatUsersText}>현재 참여 인원 수</Text>
+                                        <Text style={styles.ChatUsersNum}>10</Text>
                                     </Layout>
-                                </Layout>
-                            </>
-                        )}
-                </Layout>
-            </TouchableOpacity>
+                                    <Layout style={styles.UnreadMessageContainer}>
+                                        {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
+                                        <Layout style={[styles.UnreadMessageCount, { backgroundColor: count > 0 ? '#7777ff' : '#cdcdcd' }]}>
+                                            <Text style={styles.UnreadMessageCountText}>{count}</Text>
+                                        </Layout>
+                                    </Layout>
+                                </>
+                            )}
+                    </Layout>
+                </TouchableOpacity>
+            ) : (
+                <Text style={styles.NoTourText}>오늘 진행되는 투어가 없습니다</Text>
+            )}
+
+
         </Layout>
     )
 }
@@ -101,6 +108,14 @@ const styles = StyleSheet.create({
         height: windowHeight * 0.15,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    NoTourText: {
+        fontFamily: 'Pretendard-Medium',
+        fontSize: 18,
+        color: '#ababab',
+        textAlign: 'center',
+        alignSelf: 'center',
+        marginTop: windowHeight * 0.1
     },
     NotMatchedText: {
         fontFamily: 'Pretendard-SemiBold',
