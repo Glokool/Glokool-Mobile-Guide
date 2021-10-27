@@ -1,14 +1,14 @@
 import React, { } from 'react';
 import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Image, FlatList } from 'react-native';
 import { Layout, Modal } from '@ui-kitten/components';
-import { windowWidth, windowHeight } from '../../../Design.component';
-import { CloseIcon } from '../../../assets/icon/Common';
-import { SNSicon_FB } from '../../../assets/icon/Chat';
+import { windowWidth, windowHeight } from '../../../../Design.component';
+import { CloseIcon } from '../../../../assets/icon/Common';
+import { SNSicon_FB } from '../../../../assets/icon/Chat';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../model';
-import { setChatModalVisiblityFalse } from '../../../model/chat/Chat.UI.model';
+import { RootState } from '../../../../model';
+import { setChatModalVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
 import { useNavigation } from '@react-navigation/core';
-import { SceneRoute } from '../../../navigation/App.route';
+import { SceneRoute } from '../../../../navigation/App.route';
 
 // 채팅 이용자 프로필 모달
 export const ChatUserModal = (props: any) => {
@@ -40,7 +40,7 @@ export const ChatUserModal = (props: any) => {
             </Layout>
 
             <Image
-                source={require('../../../assets/image/Common/GloGray.png')}
+                source={require('../../../../assets/image/Common/GloGray.png')}
                 style={styles.ImageContainer}
                 resizeMode="contain"
             />

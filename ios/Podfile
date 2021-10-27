@@ -17,6 +17,10 @@ target 'Glokool_Guide' do
     # Pods for testing
   end
 
+  # 권한 제어를 위한 모듈 프리 세팅
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
