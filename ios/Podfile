@@ -20,6 +20,10 @@ target 'Glokool_Guide' do
   # 권한 제어를 위한 모듈 프리 세팅
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+  
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+  pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
 
   # My Location 기능을 위한 React-Native-Maps 세팅
   rn_maps_path = '../node_modules/react-native-maps'

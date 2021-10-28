@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 import { ActionsProps, Composer, ComposerProps, IMessage, InputToolbar, InputToolbarProps, Send, SendProps } from 'react-native-gifted-chat';
 import { Chat_Exit, Chat_Menu, Send_1 } from '../../../../assets/icon/Chat/ChatRoom';
 import { Emoji_Keyboard_Selected, Emoji_Keyboard_UnSelected } from '../../../../assets/icon/Chat/Emoji';
-import { cleanKeyboardComponent, setEmojiKeyboardFalse, setEmojiKeyboardTrue } from '../../../../model/chat/Chat.Keyboard.model';
+import { setEmojiKeyboardFalse, setEmojiKeyboardTrue } from '../../../../model/chat/Chat.Keyboard.model';
 import { setMenuVisiblityFalse, setMenuVisiblityTrue } from '../../../../model/chat/Chat.UI.model';
 
 
@@ -72,7 +72,7 @@ export const renderInputToolbar = (props : InputToolbarProps, dispatch : Dispatc
     const renderComposer = (props: ComposerProps): React.ReactElement => {
      
         const TouchStartPlatform = () => {
-            dispatch(cleanKeyboardComponent());
+            // dispatch(cleanKeyboardComponent());
             dispatch(setMenuVisiblityFalse());
             dispatch(setEmojiKeyboardFalse());
         }
