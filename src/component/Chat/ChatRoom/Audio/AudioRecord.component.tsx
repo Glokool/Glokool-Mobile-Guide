@@ -1,11 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-    StyleSheet,
-    Text,
-    Platform,
-    Dimensions,
-    Pressable,
-} from 'react-native';
+import { StyleSheet, Text, Platform, Dimensions, Pressable } from 'react-native';
 import { AudioRecorder, AudioUtils } from 'react-native-audio';
 import storage from '@react-native-firebase/storage';
 import {
@@ -20,7 +14,7 @@ import {
 import { Exit_Color } from '../../../../assets/icon/Common';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../model';
-import { countAudioDuration, resetAudioDuration } from '../../../../model/Chat/chat.Audio.model';
+import { countAudioDuration, resetAudioDuration } from '../../../../model/chat/Chat.Audio.model';
 import { setAudioVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
 import { AuthContext } from '../../../../context/AuthContext';
 import axios from 'axios';

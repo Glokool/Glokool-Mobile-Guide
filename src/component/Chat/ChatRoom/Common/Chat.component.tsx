@@ -18,6 +18,8 @@ import { setKeyboardFalse, setKeyboardHeight, setKeyboardTrue } from '../../../.
 import { ImageModal } from '../Image/Chat.ImageModal.component';
 import { renderSound } from '../Audio/Sound.component';
 import { LocationModal } from '../Location/LocationModal.component';
+import { ExtraKeyboardComponent } from './ExtraKeyboard.component';
+import { AudioRecordComponent } from '../Audio/AudioRecord.component';
 
 
 export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement => {
@@ -115,6 +117,12 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
                     renderInputToolbar={(props) => renderInputToolbar(props, dispatch, menuVisiblity, emojiVisiblity)}
                 />
             </Layout>
+
+            {/* 엑스트라 키보드 */}
+            <ExtraKeyboardComponent ChatDB={ChatDB} ChatRoomID={'testChat'}/>
+
+            {/* 오디오 컴포넌트 */}
+            <AudioRecordComponent ChatDB={ChatDB} />
 
             {/* 이미지 클릭시 확대 이미지 창 출력 */}
             <ImageModal />

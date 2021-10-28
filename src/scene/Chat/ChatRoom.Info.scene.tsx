@@ -16,7 +16,7 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
 
     // 리스트 아이템 렌더링
-    const renderItem = (item) => {
+    const renderItem = (item : {item : any, index : number}) => {
         return (
             <Layout style={styles.ItemContainer}>
                 <Layout style={styles.ProfileContainer}>

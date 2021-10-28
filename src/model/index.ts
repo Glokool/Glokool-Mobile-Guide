@@ -6,7 +6,7 @@ import TourUIModel from './tour/Tour.UI.Model';
 import ProfileUIModel from './profile/Profile.UI.model';
 import ChatKeyboardModel from './chat/Chat.Keyboard.model';
 import ChatLocationModel from './chat/Chat.Location.model';
-import AudioDurationModel from './chat/chat.Audio.model';
+import AudioDurationModel from './chat/Chat.Audio.model';
 
 
 const rootReducer = combineReducers({

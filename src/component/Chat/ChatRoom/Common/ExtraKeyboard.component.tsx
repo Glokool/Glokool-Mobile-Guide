@@ -4,16 +4,15 @@ import { StyleSheet, Pressable, Platform, PermissionsAndroid } from 'react-nativ
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../model';
 import { Layout, Text } from '@ui-kitten/components';
-import { setAudioVisiblityTrue, setMenuVisiblityFalse } from '../../../../model/Chat/Chat.UI.model';
-import { Images, Record, Camera } from '../../../../assets/icon/Chat';
+import { setAudioVisiblityTrue, setMenuVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
+import { Images, Record, Camera } from '../../../../assets/icon/Chat/ChatRoom';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { AuthContext } from '../../../../context/AuthContext';
 import { requestCameraPermission, requestStoragePermission } from '../../../Common/Permissions.component';
-import { launchCamera } from 'react-native-image-picker/src';
-import Geolocation from '@react-native-community/geolocation';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 import { SERVER } from '../../../../server';
+import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 
 
 
@@ -104,7 +103,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                     quality: 0.5,
                 },
                 (response) => {
-                    if (response != undefined) {
+                    if (response.assets != undefined) {
 
                         if (response.didCancel == true) {
                             throw Error('Camera Cancel');
@@ -112,16 +111,16 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                         
                         else {
 
-                            if (response.type === undefined || response.uri === undefined){
+                            if (response.assets[0].type === undefined || response.assets[0].uri === undefined){
                                 throw Error('카메라 촬영파일 불러오기 실패');
                             }
 
                             const newMessage = ChatDB.push();
-                            const type : string = response.type;
+                            const type : string = response.assets[0].type;
                             const imageType = type.split('/');
                             const reference = storage().ref();
 
-                            const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType[1]}`,).putFile(response.uri);
+                            const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType[1]}`,).putFile(response.assets[0].uri);
 
                             picRef.on(storage.TaskEvent.STATE_CHANGED, 
                                 function (snapshot) { // 업로드 도중 실행 함수
@@ -281,14 +280,16 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
         
                         <Pressable
                             style={styles.SideButton}
-                            onPress={() => ImageSend()}>
+                            onPress={() => ImageSend()}
+                        >
                             <Images />
                             <Text style={styles.SideButtonTxt}>Images</Text>
                         </Pressable>
         
                         <Pressable
                             style={styles.SideButton}
-                            onPress={() => takePhoto()}>
+                            onPress={() => takePhoto()}
+                        >
                             <Camera />
                             <Text style={styles.SideButtonTxt}>Camera</Text>
                         </Pressable>
