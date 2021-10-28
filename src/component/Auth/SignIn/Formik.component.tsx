@@ -9,12 +9,14 @@ import { FomikInputComponent } from './Formik.Input.component';
 import { useDispatch } from 'react-redux';
 import { loading_end, loading_start } from '../../../model/auth/auth.model';
 import { windowHeight, windowWidth } from '../../../Design.component';
+import { AuthContext } from '../../../context';
 
 
 export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFragment => {
 
     const FirebaseAuth = auth();
     const dispatch = useDispatch();
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
     //Re-Rendering이 자주 일어나지 않는 UI 관련 Hook
     const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
@@ -37,7 +39,17 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
             //빈칸일 경우 진행하지 않음
             FirebaseAuth.signInWithEmailAndPassword(values.email, values.password)
                 .then((response) => {
-                    dispatch(loading_end())
+                    dispatch(loading_end());
+
+                    const userInfo = {
+                        displayName: response.user.displayName,
+                        email: response.user.email,
+                        photoURL: response.user.photoURL,
+                        uid: response.user.uid,
+                        access_token: '',
+                    }
+                    setCurrentUser(userInfo);
+      
                 })
                 .catch((err) => {
                     setAuthError(err.code);

@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import { AvatarProps, IMessage } from 'react-native-gifted-chat';
 import { windowWidth } from '../../../../Design.component';
 import { Layout, Text } from '@ui-kitten/components';
+import { AuthContext } from '../../../../context';
 
 export const renderAvatar = (props: AvatarProps<IMessage>): React.ReactElement => {
 

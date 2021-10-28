@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface authContextType {
+export interface authContextType {
     access_token: string;
     displayName: string;
     email: string;

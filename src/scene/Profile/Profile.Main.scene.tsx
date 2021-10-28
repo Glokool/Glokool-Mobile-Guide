@@ -7,9 +7,12 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import { AngleRight } from '../../assets/icon/Common';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_NoButton } from '../../component/Common';
+import { AuthContext } from '../../context';
 
 // 내 정보 메인 화면
 export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
+
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
     // 로그아웃
     const onPressLogout = () => {
@@ -21,7 +24,10 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                 style: "destructive"
             }, {
                 text: "확인",
-                onPress: () => auth().signOut(),
+                onPress: () => {
+                    setCurrentUser(null);
+                    auth().signOut();                    
+                },
                 style: "default"
             }]
         )

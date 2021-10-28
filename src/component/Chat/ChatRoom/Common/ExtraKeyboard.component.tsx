@@ -12,9 +12,7 @@ import { requestCameraPermission, requestStoragePermission } from '../../../Comm
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 import { SERVER } from '../../../../server';
-import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
-
-
+import { launchCamera } from 'react-native-image-picker';
 
 export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
 
@@ -35,7 +33,6 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
             console.log('e', e);
         }
     };
-
 
     const FCMSend = async(message : any, messageType : string) => {
           
@@ -81,8 +78,6 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
             }
         });
     }
-
-
 
     /*이미지 촬영 */
     const takePhoto = async () => {
@@ -306,6 +301,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
 }
 
 const styles = StyleSheet.create({    
+    
     SideContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -315,6 +311,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F8F8',
 
     },
+
     SideButton: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -322,9 +319,11 @@ const styles = StyleSheet.create({
         height: 65,
         marginTop: 10,
     },
+
     SideButtonTxt: {
         fontFamily: 'IBMPlexSansKR-Medium',
         color: '#8C8C8C',
         fontSize: 12,
     },
+
 })

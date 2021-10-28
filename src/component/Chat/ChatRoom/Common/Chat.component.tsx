@@ -36,6 +36,7 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
     const dispatch = useDispatch();
     const menuVisiblity = useSelector((state : RootState) => state.ChatUIModel.menuVisiblity);
     const emojiVisiblity = useSelector((state : RootState) => state.ChatKeyboardModel.emojiKeyboardVisiblity);
+    const keyboardOpen = useSelector((state : RootState) => state.ChatKeyboardModel.keyboard);
 
     // 최초 시동 함수
     React.useEffect(() => {
@@ -100,11 +101,11 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
                 <GiftedChat
                     messages={ChatMessages}
                     textInputProps={{ autoFocus: true }}
-                    bottomOffset={70}
+                    bottomOffset={(isIphoneX()) ? -getBottomSpace() + 47 : (Platform.OS === 'ios') ? - 25 : 0}
                     onSend={(messages) => onSend(messages)}
                     infiniteScroll={true}
                     user={{ _id: currentUser?.uid }}
-                    messagesContainerStyle={styles.ChatContainer}
+                    messagesContainerStyle={{ paddingBottom : (keyboardOpen)? 20 : 20}}
                     alwaysShowSend={true}
                     showUserAvatar={false}
                     renderAvatarOnTop={true}
@@ -139,7 +140,4 @@ const styles = StyleSheet.create({
         flex : 1,
     },
 
-    ChatContainer : {
-        paddingBottom : 0
-    }
 })
