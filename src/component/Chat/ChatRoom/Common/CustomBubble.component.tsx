@@ -1,7 +1,9 @@
 import React from 'react';
 import { BubbleProps, IMessage } from 'react-native-gifted-chat';
 import { Dispatch } from 'redux';
-import { ChatMessageType, renderLocationMessage } from '..';
+import { ChatMessageType } from '..';
+import { renderLocationMessage } from '../Location/LocationMessage.component';
+
 
 export const renderCustomBubble = (props: BubbleProps<IMessage> & ChatMessageType, dispatch : Dispatch<any>) : React.ReactNode => {
 

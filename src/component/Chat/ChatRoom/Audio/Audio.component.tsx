@@ -2,7 +2,7 @@ import { Layout, Text } from '@ui-kitten/components';
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
 import Sound from 'react-native-sound';
-import { Left_Play, Right_Play, Right_Stop } from '../../../../assets/icon/Chat';
+import { Left_Play, Right_Play, Right_Stop } from '../../../../assets/icon/Chat/ChatRoom/Audio';
 import { AuthContext } from '../../../../context/AuthContext';
 import { useInterval } from './Timer.component';
 
@@ -14,7 +14,6 @@ function pad(n : number, width : number, z='0') {
 export const ChatAudioComponent = (props : any) : React.ReactElement => {
 
     const message = props.message;
-    const guide = props.guide;
 
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
     const [sound, setSound] = React.useState<Sound | undefined>(new Sound(message.currentMessage.audio));
@@ -77,26 +76,7 @@ export const ChatAudioComponent = (props : any) : React.ReactElement => {
 
     }
 
-    else if (guide === message.currentMessage.user._id) {
-        return(
-            <Layout style={styles.AudioGuideMessageContainer}>            
-                <Layout style={styles.ButtonContainer}>
-                    <Pressable onPress={() => PlaySoundMessage()}>
-                        {play? 
-                            <Right_Stop />
-                            
-                        :
-                            <Left_Play />
-                        }                    
-                    </Pressable>                
-                </Layout>
 
-                <Layout style={styles.TextContainer}>
-                    <Text style={styles.TimeText2}>{minutes}:{seconds}</Text>
-                </Layout>
-            </Layout>
-        )
-    }
 
     return(
         <Layout style={styles.AudioElseMessageContainer}>            
@@ -130,20 +110,6 @@ const styles = StyleSheet.create({
         borderTopEndRadius : 15,
         borderBottomStartRadius : 15,
         borderBottomEndRadius: 5,
-    },
-
-    AudioGuideMessageContainer: {
-        width: 120,
-        height : 50,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTopStartRadius : 5,
-        borderTopEndRadius : 15,
-        borderBottomStartRadius : 15,
-        borderBottomEndRadius: 15,
-        backgroundColor: '#292434',
-
     },
 
     AudioElseMessageContainer: {

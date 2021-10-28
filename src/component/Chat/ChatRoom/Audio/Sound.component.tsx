@@ -2,7 +2,8 @@ import React from "react";
 import { Layout } from '@ui-kitten/components'
 import { StyleSheet } from "react-native";
 import { IMessage } from "react-native-gifted-chat";
-import { ChatAudioComponent } from "..";
+import { ChatAudioComponent } from "./Audio.component";
+
 
 type ChatAudioMessage = {
     currentMessage : {
@@ -10,11 +11,11 @@ type ChatAudioMessage = {
     }
 }
 
-export const renderSound = (message : IMessage & ChatAudioMessage, guide : any) : React.ReactElement => {
+export const renderSound = (message : IMessage & ChatAudioMessage) : React.ReactElement => {
 
     return (
         <Layout style={styles.AudioMessageContainer}>            
-            <ChatAudioComponent message={message} guide={guide.uid}/>
+            <ChatAudioComponent message={message} />
         </Layout>
     );
 };

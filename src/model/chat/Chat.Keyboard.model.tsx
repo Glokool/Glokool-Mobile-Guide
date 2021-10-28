@@ -1,18 +1,16 @@
-const SET_KEYBOARD_COMPONENT = 'model/chat/set_keyboard_component' as const;
-const CLEAN_KEYBOARD_COMPONENT = 'model/chat/clean_keyboard_component' as const;
+const SET_KEYBOARD_TRUE = 'model/chat/set_keyboard_true' as const;
+const SET_KEYBOARD_FALSE = 'model/chat/set_keyboard_false' as const;
 const SET_KEYBOARD_HEIGHT = 'model/chat/set_keyboard_height' as const;
 const CLEAN_KEYBOARD_HEIGHT = 'model/chat/clean_keyboard_height' as const;
 const SET_EMOJI_KEYBOARD_TRUE = 'model/chat/set_emoji_keyboard_true' as const;
 const SET_EMOJI_KEYBOARD_FALSE = 'model/chat/set_emoji_keyboard_false' as const;
 
-
-export const setKeyboardComponent = (diff: string) => ({
-    type: SET_KEYBOARD_COMPONENT,
-    payload: diff
+export const setKeyboardTrue = () => ({
+    type: SET_KEYBOARD_TRUE,
 })
 
-export const cleanKeyboardComponent = () => ({
-    type: CLEAN_KEYBOARD_COMPONENT
+export const setKeyboardFalse = () => ({
+    type: SET_KEYBOARD_FALSE
 })
 
 export const setKeyboardHeight = (diff: number) => ({
@@ -33,8 +31,8 @@ export const setEmojiKeyboardFalse = () => ({
 })
 
 type ChatKeyboardAction =
-    | ReturnType<typeof setKeyboardComponent>
-    | ReturnType<typeof cleanKeyboardComponent>
+    | ReturnType<typeof setKeyboardTrue>
+    | ReturnType<typeof setKeyboardFalse>
     | ReturnType<typeof setKeyboardHeight>
     | ReturnType<typeof cleanKeyboardHeight>
     | ReturnType<typeof setEmojiKeyboardTrue>
@@ -42,13 +40,13 @@ type ChatKeyboardAction =
 
 
 type ChatKeyboardState = {
-    keyboardComponent: string | undefined;
+    keyboard: boolean;
     keyboardHeight: number;
     emojiKeyboardVisiblity : boolean;
 }
 
 const initialChatKeyboardState: ChatKeyboardState = {
-    keyboardComponent: undefined,
+    keyboard: false,
     keyboardHeight: 0,
     emojiKeyboardVisiblity : false
 }
@@ -60,12 +58,12 @@ function ChatKeyboardModel(
 
     switch (action.type) {
 
-        case SET_KEYBOARD_COMPONENT: return { keyboardComponent: action.payload, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
-        case CLEAN_KEYBOARD_COMPONENT: return { keyboardComponent: undefined, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
-        case SET_KEYBOARD_HEIGHT: return { keyboardComponent: state.keyboardComponent, keyboardHeight: action.payload, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
-        case CLEAN_KEYBOARD_HEIGHT: return { keyboardComponent: state.keyboardComponent, keyboardHeight: 0, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
-        case SET_EMOJI_KEYBOARD_FALSE: return { keyboardComponent: state.keyboardComponent, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : false } 
-        case SET_EMOJI_KEYBOARD_TRUE: return { keyboardComponent: state.keyboardComponent, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : true } 
+        case SET_KEYBOARD_TRUE: return { keyboard: true, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
+        case SET_KEYBOARD_FALSE: return { keyboard: false, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
+        case SET_KEYBOARD_HEIGHT: return { keyboard: state.keyboard, keyboardHeight: action.payload, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
+        case CLEAN_KEYBOARD_HEIGHT: return { keyboard: state.keyboard, keyboardHeight: 0, emojiKeyboardVisiblity : state.emojiKeyboardVisiblity }
+        case SET_EMOJI_KEYBOARD_FALSE: return { keyboard: state.keyboard, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : false } 
+        case SET_EMOJI_KEYBOARD_TRUE: return { keyboard: state.keyboard, keyboardHeight: state.keyboardHeight, emojiKeyboardVisiblity : true } 
         
         default: return state
     }

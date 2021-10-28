@@ -3,12 +3,20 @@ import React, { Dispatch } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { BubbleProps, IMessage } from "react-native-gifted-chat";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { LocationTitle } from "../../../../assets/icon/Chat";
-import { AuthContext } from "../../../../context/AuthContext";
-import { setLocation } from "../../../../model/Chat/Chat.Location.model";
-import { setLocationVisiblityTrue } from "../../../../model/Chat/Chat.UI.model";
-import { LocationBubbleMessage } from "../../../../types";
+import { LocationTitle } from "../../../../assets/icon/Chat/ChatRoom/Location";
+import { setLocation } from "../../../../model/chat/Chat.Location.model";
+import { setLocationVisiblityTrue } from "../../../../model/chat/Chat.UI.model";
 
+
+interface LocationBubbleMessage {
+    currentMessage: {
+        location: {
+            lat: string,
+            lon: string
+        },
+        messageType: string
+    }
+}
 
 export const renderLocationMessage = (props: BubbleProps<IMessage> & LocationBubbleMessage, dispatch : Dispatch<any>) => {
 
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         marginTop: 5,
         marginRight: 10,
-        color: '#8C8C8C',
+        color: 'white',
         fontFamily: 'BrandonGrotesque-Medium',
         fontSize: 17,
         marginLeft: 5

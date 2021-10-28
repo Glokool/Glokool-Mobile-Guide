@@ -64,9 +64,7 @@ const styles = StyleSheet.create({
     },
 
     TabBar: {
-        position: 'absolute',
         width: '100%',
-        top: isIphoneX()? statusBarHeight : 0 ,
         height: 60,
         justifyContent : 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
