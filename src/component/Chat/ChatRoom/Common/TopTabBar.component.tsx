@@ -5,6 +5,7 @@ import { ArrowLeft } from '../../../../assets/icon/Common';
 import { Chat_Setting } from '../../../../assets/icon/Chat/ChatRoom';
 import { getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
 import { ChatRoomSceneProps } from '../../../../navigation/SceneNavigator/Chat/Chat.navigator';
+import { SceneRoute } from '../../../../navigation/App.route';
 
 const statusBarHeight = getStatusBarHeight();
 
@@ -38,6 +39,7 @@ export const ChatTopTabBarComponent = (props : ChatRoomSceneProps) : React.React
 
                 <Pressable
                     style={styles.RightIcon}
+                    onPress={() => props.navigation.navigate(SceneRoute.CHAT_ROOM_INFO)}
                 >
                     <Chat_Setting />
                 </Pressable>

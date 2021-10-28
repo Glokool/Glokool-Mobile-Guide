@@ -17,6 +17,7 @@ import { renderImage } from '../Image/Chat.Image.component';
 import { setKeyboardFalse, setKeyboardHeight, setKeyboardTrue } from '../../../../model/chat/Chat.Keyboard.model';
 import { ImageModal } from '../Image/Chat.ImageModal.component';
 import { renderSound } from '../Audio/Sound.component';
+import { LocationModal } from '../Location/LocationModal.component';
 
 
 export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement => {
@@ -117,6 +118,9 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
 
             {/* 이미지 클릭시 확대 이미지 창 출력 */}
             <ImageModal />
+
+            {/* 위치 메시지 클릭시 큰 화면 출력 */}
+            <LocationModal />
 
         </SafeAreaView>
     )

@@ -8,26 +8,24 @@ import {
 } from 'react-native';
 import { AudioRecorder, AudioUtils } from 'react-native-audio';
 import storage from '@react-native-firebase/storage';
-
 import {
     Layout,
     Modal,
 } from '@ui-kitten/components';
 import {
-    Chat_Voice_End,
-    Chat_Voice_Start,
-    Chat_Voice_Stop,
-} from '../../../../assets/icon/Chat';
-import { Exit_C } from '../../../../assets/icon/Common';
+    Voice_End,
+    Voice_Start,
+    Voice_Stop,
+} from '../../../../assets/icon/Chat/ChatRoom/Audio';
+import { Exit_Color } from '../../../../assets/icon/Common';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../model';
-import { countAudioDuration, resetAudioDuration } from '../../../../model/Chat/Chat.Audio.model';
-import { setAudioVisiblityFalse } from '../../../../model/Chat/Chat.UI.model';
+import { countAudioDuration, resetAudioDuration } from '../../../../model/Chat/chat.Audio.model';
+import { setAudioVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
 import { AuthContext } from '../../../../context/AuthContext';
-import { messageIdGenerator } from '../../../Common/MessageIdGenerator';
 import axios from 'axios';
 import { IMessage } from 'react-native-gifted-chat';
-import { SERVER } from '../../../../server.component';
+import { SERVER } from '../../../../server';
 
 
 const WindowWidth = Dimensions.get('window').width;
@@ -49,6 +47,14 @@ export const AudioRecordComponent = (props : any) => {
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isPaused, setIsPaused] = useState<boolean>(false);
 
+    const messageIdGenerator = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+            let r = (Math.random() * 16) | 0,
+                v = c == 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
+    };
+
     const getAccessToken = async () => {
         try {
             const res = await axios.get(`${SERVER}/api/token`);
@@ -57,7 +63,6 @@ export const AudioRecordComponent = (props : any) => {
             console.log('e', e);
         }
     };
-
 
     const FCMSend = async(message : IMessage, messageType : string) => {
           
@@ -240,7 +245,7 @@ export const AudioRecordComponent = (props : any) => {
                 <Pressable
                     style={styles.VoiceContainerExitButton}
                     onPress={() => audioExit()}>
-                    <Exit_C />
+                    <Exit_Color />
                 </Pressable>
 
                 <Layout style={styles.VoiceRecorder}>
@@ -259,12 +264,12 @@ export const AudioRecordComponent = (props : any) => {
                             onPress={handleAudio}>
                             {audioPath == '' ? (
                                 startAudio === true ? (
-                                    <Chat_Voice_Stop />
+                                    <Voice_Stop />
                                 ) : (
-                                    <Chat_Voice_Start />
+                                    <Voice_Start />
                                 )
                             ) : (
-                                <Chat_Voice_End />
+                                <Voice_End />
                             )}
                         </Pressable>
                     </Layout>

@@ -1,13 +1,12 @@
 import React from 'react';
-import { Layout, Text, Modal, Card,  } from '@ui-kitten/components';
+import { Layout, Text, Modal, Card } from '@ui-kitten/components';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { windowHeight, windowWidth } from '../../../../Design.component';
 import { Pressable, StyleSheet, } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../model';
-import { setLocationVisiblityFalse, } from '../../../../model/Chat/Chat.UI.model';
+import { setLocationVisiblityFalse, } from '../../../../model/chat/Chat.UI.model';
+import { Exit_Color } from '../../../../assets/icon/Common';
 
 export const LocationModal = () : React.ReactElement => {
 
@@ -27,7 +26,7 @@ export const LocationModal = () : React.ReactElement => {
 
             <Layout style={{ flex: 1, alignItems: 'flex-end' }}>
                 <Pressable onPress={() => dispatch(setLocationVisiblityFalse())}>
-                    <FontAwesomeIcon icon={faTimes} size={28} />
+                    <Exit_Color />
                 </Pressable>
             </Layout>
         </Layout>
