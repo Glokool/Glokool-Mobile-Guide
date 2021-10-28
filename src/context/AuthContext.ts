@@ -17,7 +17,7 @@ const user = {
         uid: "",
         expiry_date: 0
     },
-    setCurrentUser: (newState: authContextType | null) => { newState },
+    setCurrentUser: (newState: authContextType | any) => { newState },
 };
 
 export const AuthContext = React.createContext(user);

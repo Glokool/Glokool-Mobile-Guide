@@ -26,7 +26,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                 text: "확인",
                 onPress: () => {
                     setCurrentUser(null);
-                    auth().signOut();                    
+                    auth().signOut();
                 },
                 style: "default"
             }]
@@ -39,7 +39,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
             <Layout style={styles.WelcomeContainer}>
                 <Text style={[styles.WelcomeText, { color: '#bbb' }]}>안녕하세요</Text>
-                <Text style={styles.WelcomeText}>{auth().currentUser?.displayName}</Text>
+                <Text style={styles.WelcomeText}>{currentUser.displayName}</Text>
                 <Text style={[styles.WelcomeText, { color: '#bbb' }]}>트래블 어시스턴트님!</Text>
 
                 <TouchableOpacity style={styles.ProfileDetailButton} onPress={() => props.navigation.navigate(SceneRoute.PROFILE_DETAIL)}>

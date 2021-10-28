@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Button, Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
@@ -7,20 +7,23 @@ import FastImage from 'react-native-fast-image';
 import { loading_start, loading_end } from '../../model/auth/auth.model';
 import { GuideInfoType } from '../../scene/Profile/type';
 import { SERVER, CDN } from '../../server';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import { AuthContext } from '../../context';
 
 
 export const ProfileGuideInfo = () => {
+
+    const {currentUser} = useContext(AuthContext);
 
     const [guideInfo, setGuideInfo] = useState<GuideInfoType>();
     const [profileImage, setProfileImage] = useState<string | any>();
     const [photo, setPhoto] = useState<Asset | undefined>(undefined);
     const [imageChanged, setImageChanged] = useState(false);
 
-    const UID: string | any = auth().currentUser?.uid;
+    const UID: string = currentUser.uid;
 
     const dispatch = useDispatch();
 

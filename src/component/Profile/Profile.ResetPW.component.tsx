@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, TextInput, Alert } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import auth from '@react-native-firebase/auth';
 import { windowWidth, windowHeight } from '../../Design.component';
 import { useDispatch } from 'react-redux';
 import { profile_loading_start, profile_loading_end } from '../../model/profile/Profile.UI.model';
+import { AuthContext } from '../../context';
 
 // 비밀번호 재설정 컴포넌트
 export const ProfileResetPassword = () => {
 
     const dispatch = useDispatch();
+    const { setCurrentUser } = useContext(AuthContext);
 
     const [wrongPW, setWrongPW] = useState(false);
     const [wrongNewPW, setWrongNewPW] = useState(false);
@@ -35,7 +37,10 @@ export const ProfileResetPassword = () => {
                                 "비밀번호가 변경되었습니다. 다시 로그인 해주세요.",
                                 [{
                                     text: "확인",
-                                    onPress: () => auth().signOut(),
+                                    onPress: () => {
+                                        setCurrentUser(null);
+                                        auth().signOut();
+                                    },
                                 }]
                             )
                         });

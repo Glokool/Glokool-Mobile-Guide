@@ -18,6 +18,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
         <Layout style={styles.MainContainer}>
             <Text style={styles.TourText}>진행중인 투어</Text>
             {dayTour ? (
+                // 오늘 진행되는 투어가 있을 때
                 <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT)}>
                     <Layout style={styles.ItemInfoContainer}>
                         <Layout style={styles.LocationContainer}>
@@ -31,8 +32,10 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                     <Layout style={[styles.TravelerContainer, { justifyContent: sampleData ? 'center' : 'space-between' }]}>
                         {sampleData ?
                             (
+                                // 매칭이 안됐을 때
                                 <Text style={styles.NotMatchedText}>아직 매칭된 여행객이 없습니다</Text>
                             ) : (
+                                // 매칭이 되었을 때
                                 <>
                                     <Layout style={styles.ChatUsersContainer}>
                                         <Text style={styles.ChatUsersText}>현재 참여 인원 수</Text>
@@ -49,6 +52,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                     </Layout>
                 </TouchableOpacity>
             ) : (
+                // 오늘 진행되는 투어가 없을 때
                 <Text style={styles.NoTourText}>오늘 진행되는 투어가 없습니다</Text>
             )}
 
