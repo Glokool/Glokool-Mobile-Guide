@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>would like to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>유저들의 위치 메시지 결과를 확인하기 위하여 구글 맵 연동이 필요하며 그로인한 권한이 필요합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>would like to use your microphone (for videos)</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

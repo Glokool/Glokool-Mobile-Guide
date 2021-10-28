@@ -4,6 +4,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 #import <Firebase.h>
 
@@ -34,6 +35,7 @@
 //  InitializeFlipper(application);
 //#endif
   [FIRApp configure];
+  [GMSServices provideAPIKey:@"AIzaSyCRMnPLQDqrELKLx5kAkX3zXSmC6ZVZgxA"];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -51,6 +53,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  
 
   return YES;
 }
