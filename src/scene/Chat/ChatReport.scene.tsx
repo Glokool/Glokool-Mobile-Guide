@@ -20,6 +20,7 @@ export const ChatReportScene = (props: ChatReportSceneProps) => {
 
     return (
         <Layout style={styles.MainContainer}>
+            {/* Top Tab Bar */}
             <Layout style={styles.TopTabContainer}>
                 <TouchableOpacity style={styles.SideContainer} onPress={() => props.navigation.pop()}>
                     <ArrowLeft />

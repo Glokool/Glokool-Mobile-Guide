@@ -11,6 +11,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import { AuthContext } from './context';
 import { authContextType } from './context/AuthContext';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   // Redux Store 파일
@@ -22,42 +24,43 @@ export default function App() {
 
   React.useEffect(() => {
     auth().onAuthStateChanged((user) => {
-        if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
-            if (user && user?.emailVerified) {
-                const userInfo = {
-                    displayName: user?.displayName,
-                    email: user?.email,
-                    photoURL: user?.photoURL,
-                    uid: user?.uid,
-                    access_token: null,
-                };
+      if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
+        if (user && user?.emailVerified) {
+          const userInfo = {
+            displayName: user?.displayName,
+            email: user?.email,
+            photoURL: user?.photoURL,
+            uid: user?.uid,
+            access_token: null,
+          };
 
-                setCurrentUser(userInfo);
-            } else {
-                auth().signOut;
-            }
+          setCurrentUser(userInfo);
         } else {
-            const userInfo = {
-                displayName: user?.displayName,
-                email: user?.email,
-                photoURL: user?.photoURL,
-                uid: user?.uid,
-                access_token: null,
-            };
-
-            setCurrentUser(userInfo);
+          auth().signOut;
         }
+      } else {
+        const userInfo = {
+          displayName: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL,
+          uid: user?.uid,
+          access_token: null,
+        };
+
+        setCurrentUser(userInfo);
+      }
     });
 
 
     setTimeout(() => {
       SplashScreen.hide();
     }, 500)
-}, []);
+  }, []);
 
   return (
     <Provider store={store}>
       <IconRegistry icons={EvaIconsPack} />
+      <StatusBar barStyle="dark-content" />
       <ApplicationProvider {...eva} theme={{ ...eva.light }} >
         <AuthContext.Provider value={userValue}>
           <NavigationContainer>

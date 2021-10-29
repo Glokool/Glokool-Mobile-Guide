@@ -199,7 +199,7 @@ export const AudioRecordComponent = (props : any) => {
                     };
         
                     newMessage?.set(message, (e) => {
-                        console.log('이미지 메시지 전송 실패 : ', e)
+                        console.log('오디오 메시지 전송 실패 : ', e)
                     });
 
                     FCMSend(message, "Sent a Voice");

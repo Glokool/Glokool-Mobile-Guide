@@ -21,9 +21,7 @@ export const ChatRoomScene = (props: ChatRoomSceneProps): React.ReactElement => 
 
     return (
         <SafeAreaView style={styles.Container}>
-
             <ChatComponent {...props} />
-
         </SafeAreaView>
     )
 }

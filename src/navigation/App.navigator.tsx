@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigatorRoute, SceneRoute } from "./App.route";
 import { AuthNavigator } from './Auth.navigator';

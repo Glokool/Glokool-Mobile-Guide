@@ -25,8 +25,8 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
             }, {
                 text: "확인",
                 onPress: () => {
-                    setCurrentUser(null);
                     auth().signOut();
+                    setCurrentUser(null);
                 },
                 style: "default"
             }]
@@ -35,23 +35,25 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
     return (
         <Layout style={styles.MainContainer}>
+
             <TopTab_NoButton title={'내 정보'} />
 
             <Layout style={styles.WelcomeContainer}>
                 <Text style={[styles.WelcomeText, { color: '#bbb' }]}>안녕하세요</Text>
-                <Text style={styles.WelcomeText}>{currentUser.displayName}</Text>
+                <Text style={styles.WelcomeText}>{auth().currentUser?.displayName}</Text>
                 <Text style={[styles.WelcomeText, { color: '#bbb' }]}>트래블 어시스턴트님!</Text>
 
                 <TouchableOpacity style={styles.ProfileDetailButton} onPress={() => props.navigation.navigate(SceneRoute.PROFILE_DETAIL)}>
                     <Text style={styles.ProfileDetailText}>프로필 관리</Text>
                 </TouchableOpacity>
             </Layout>
-
+            
+            {/* 공지사항 FAQ 버튼 */}
             <TouchableOpacity style={styles.FlatButton} onPress={() => Linking.openURL('https://spring-wok-92b.notion.site/4cc039f1d5f0452bbca9036578998faa')}>
                 <Text style={styles.FlatButtonText}>{'공지사항 & FAQ'}</Text>
                 <AngleRight />
             </TouchableOpacity>
-
+            {/* 로그아웃 */}
             <TouchableOpacity style={styles.FlatButton} onPress={() => onPressLogout()}>
                 <Text style={styles.FlatButtonText}>{'로그아웃'}</Text>
                 <AngleRight />

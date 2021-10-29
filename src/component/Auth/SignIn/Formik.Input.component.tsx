@@ -4,28 +4,29 @@ import { Input, InputElement, InputProps, Icon } from '@ui-kitten/components';
 import { useFormikContext } from 'formik';
 
 interface FormInputProps extends InputProps {
-    id : string;
+    id: string;
+    authError: boolean;
 }
 
-export const FomikInputComponent = ({id, ...inputProps}: FormInputProps): InputElement => {
+export const FomikInputComponent = ({ id, authError, ...inputProps }: FormInputProps): InputElement => {
 
     const formContext = useFormikContext();
 
     // @ts-ignore Formik이 타입을 지원하지 않음 (무시)
-    const { [id] : errors} = formContext.errors;
+    const { [id]: errors } = formContext.errors;
     const fieldProps: Partial<InputProps> = {
-      status: errors && 'danger',
-      caption: errors && <Icon {...(styles.captionIcon)} name='alert-circle-outline'/>,
-      textStyle: { color: 'red' }
+        status: errors && 'danger',
+        caption: errors && <Icon {...(styles.captionIcon)} name='alert-circle-outline' />,
+        textStyle: { color: 'red' }
     };
 
-    return(
+    return (
         <Input
             {...inputProps}
             {...fieldProps}
             caption={errors}
-            style={styles.input}
-            textStyle={{color: 'black'}}
+            style={[styles.input, { borderBottomColor: authError ? '#FE8686' : '#c9c9c9' }]}
+            textStyle={{ color: 'black' }}
             placeholderTextColor={'#c9c9c9'}
             size='large'
             onChangeText={formContext.handleChange(id)}
@@ -34,10 +35,9 @@ export const FomikInputComponent = ({id, ...inputProps}: FormInputProps): InputE
 }
 
 const styles = StyleSheet.create({
-    input:{
+    input: {
         backgroundColor: '#00ff0000',
         borderColor: '#00ff0000',
-        borderBottomColor: '#c9c9c9',
         borderBottomWidth: 2,
         borderRadius: 2,
         alignItems: 'center',
