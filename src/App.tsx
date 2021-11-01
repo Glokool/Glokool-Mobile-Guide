@@ -14,6 +14,8 @@ import messaging from '@react-native-firebase/messaging';
 import { authContextType } from './context/AuthContext';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SERVER } from './server';
+import axios from 'axios';
 
 
 // 백그라운드 메시지 리스너
@@ -31,58 +33,45 @@ export default function App() {
   const userValue = { currentUser, setCurrentUser };
 
   React.useEffect(() => {
-<<<<<<< HEAD
     auth().onAuthStateChanged(async(user) => {
-        if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
-            if (user && user?.emailVerified) {
-                
-              const userInfo = {
-                    displayName: user?.displayName,
-                    email: user?.email,
-                    photoURL: user?.photoURL,
-                    uid: user?.uid,
-                    access_token: await user.getIdToken(),
-                };
-=======
-    auth().onAuthStateChanged((user) => {
-      if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
-        if (user && user?.emailVerified) {
-          const userInfo = {
-            displayName: user?.displayName,
-            email: user?.email,
-            photoURL: user?.photoURL,
-            uid: user?.uid,
-            access_token: null,
-          };
->>>>>>> 03827ffcdd3ad272d37b917c08bddf4bddb8fa03
 
-          setCurrentUser(userInfo);
-        } else {
-<<<<<<< HEAD
-            const userInfo = {
-                displayName: user?.displayName,
-                email: user?.email,
-                photoURL: user?.photoURL,
-                uid: user?.uid,
-                access_token: await user.getIdToken(),
-            };
+          const userToken = await user?.getIdToken();
 
-            setCurrentUser(userInfo);
-=======
-          auth().signOut;
->>>>>>> 03827ffcdd3ad272d37b917c08bddf4bddb8fa03
-        }
-      } else {
-        const userInfo = {
-          displayName: user?.displayName,
-          email: user?.email,
-          photoURL: user?.photoURL,
-          uid: user?.uid,
-          access_token: null,
-        };
+          const config = {
+              method : 'GET',
+              url : SERVER + '/guides/check',
+              headers : {
+                  Authorization: `Bearer ${userToken}`,
+              }
+          }
 
-        setCurrentUser(userInfo);
-      }
+          if( userToken != undefined) {
+              axios(config)
+                  .then((response) => {
+
+                      console.log(response);
+
+                      const userInfo = {
+                          displayName: user?.displayName,
+                          email: user?.email,
+                          photoURL: user?.photoURL,
+                          uid: user?.uid,
+                          access_token: userToken,
+                      };
+
+                      if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
+                          if (user && user?.emailVerified) { setCurrentUser(userInfo) }
+                      } 
+                      else {
+                          if (user && user?.emailVerified) { setCurrentUser(userInfo) }
+                      }
+                  })
+                  .catch((err) => {
+                      console.log(err);
+                      auth().signOut();
+                  });
+          }
+
     });
 
 
