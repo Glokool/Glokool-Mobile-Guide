@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigatorRoute, SceneRoute } from "./App.route";
 import { AuthNavigator } from './Auth.navigator';
-import auth from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { MainNavigator } from './Main.navigator';
 import { RegisterNavigator } from './SceneNavigator/Tour/Tour.Register.Navigator';
 import { ChatNavigator } from './SceneNavigator/Chat/Chat.navigator';
@@ -21,15 +21,17 @@ export const AppNavigator = (props: React.ReactElement): React.ReactElement => {
 
     // Firebase 유저 관리 파일
     const [initializing, setInitializing] = React.useState(true);
-    const [user, setUser] = React.useState();
+    const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>();
 
-    function onAuthStateChanged(user) {
+    function onAuthStateChanged(user : FirebaseAuthTypes.User | null) {
         setUser(user);
         if (initializing) setInitializing(false);
     }
 
     React.useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+
+        
         return subscriber;
     }, []);
 

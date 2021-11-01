@@ -33,7 +33,7 @@ export const ProfileGuideInfo = () => {
         dispatch(loading_start());
 
         axios.get(SERVER + '/api/guides/' + UID)
-            .then((response) => {
+            .then((response : any) => {
                 setGuideInfo(response.data);
                 setProfileImage(CDN + response.data.avatar);
                 dispatch(loading_end());

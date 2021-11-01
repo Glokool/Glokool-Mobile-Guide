@@ -18,7 +18,7 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const sampleData = [1, 2, 3]
 
-    const renderItem = (item) => {
+    const renderItem = (item : { item: any, index : number }) => {
         return (
             <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourScheduleVisibilityTrue())}>
                 <Layout style={styles.LocationContainer}>

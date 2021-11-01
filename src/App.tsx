@@ -10,7 +10,15 @@ import { AppNavigator } from './navigation/App.navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import { AuthContext } from './context';
+import messaging from '@react-native-firebase/messaging';
 import { authContextType } from './context/AuthContext';
+
+
+// 백그라운드 메시지 리스너
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
+});
+
 
 export default function App() {
   // Redux Store 파일
@@ -21,15 +29,16 @@ export default function App() {
   const userValue = { currentUser, setCurrentUser };
 
   React.useEffect(() => {
-    auth().onAuthStateChanged((user) => {
+    auth().onAuthStateChanged(async(user) => {
         if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
             if (user && user?.emailVerified) {
-                const userInfo = {
+                
+              const userInfo = {
                     displayName: user?.displayName,
                     email: user?.email,
                     photoURL: user?.photoURL,
                     uid: user?.uid,
-                    access_token: null,
+                    access_token: await user.getIdToken(),
                 };
 
                 setCurrentUser(userInfo);
@@ -42,7 +51,7 @@ export default function App() {
                 email: user?.email,
                 photoURL: user?.photoURL,
                 uid: user?.uid,
-                access_token: null,
+                access_token: await user.getIdToken(),
             };
 
             setCurrentUser(userInfo);
@@ -50,9 +59,25 @@ export default function App() {
     });
 
 
+    // 포어그라운드 메시지 리스너
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+
+    });
+
+
     setTimeout(() => {
       SplashScreen.hide();
     }, 500)
+
+
+    // 앱 종료시 실행 함수
+    return () => {
+        unsubscribe;
+    }
+
+
+
+
 }, []);
 
   return (
