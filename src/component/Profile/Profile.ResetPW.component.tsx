@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, TextInput, Alert } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import auth from '@react-native-firebase/auth';
 import { windowWidth, windowHeight } from '../../Design.component';
 import { useDispatch } from 'react-redux';
 import { profile_loading_start, profile_loading_end } from '../../model/profile/Profile.UI.model';
+import { AuthContext } from '../../context';
 
 // 비밀번호 재설정 컴포넌트
 export const ProfileResetPassword = () => {
 
     const dispatch = useDispatch();
+    const { setCurrentUser } = useContext(AuthContext);
 
     const [wrongPW, setWrongPW] = useState(false);
     const [wrongNewPW, setWrongNewPW] = useState(false);
@@ -26,6 +28,7 @@ export const ProfileResetPassword = () => {
             .then(() => {
                 setWrongPW(false);
                 dispatch(profile_loading_start());
+                // 새로운 비밀번호 검증이 끝났을 때
                 if (newPassword.length >= 8 && newPassword === checkPassword) {
                     auth().currentUser?.updatePassword(newPassword)
                         .then(() => {
@@ -35,23 +38,29 @@ export const ProfileResetPassword = () => {
                                 "비밀번호가 변경되었습니다. 다시 로그인 해주세요.",
                                 [{
                                     text: "확인",
-                                    onPress: () => auth().signOut(),
+                                    onPress: () => {
+                                        setCurrentUser(null);
+                                        auth().signOut();
+                                    },
                                 }]
                             )
                         });
                 }
             })
             .catch((e) => {
+                // 기존 비밀번호 틀릴 시
                 setWrongPW(true);
                 return;
             })
 
+        // 새로운 비밀번호 8자보다 작을때
         if (newPassword.length < 8) {
             setWrongNewPW(true);
         } else {
             setWrongNewPW(false);
         }
 
+        // 새로운 비밀번호 확인 실패 시
         if (newPassword != checkPassword) {
             setWrongAgain(true);
         } else {
@@ -66,8 +75,10 @@ export const ProfileResetPassword = () => {
             <TextInput
                 style={[styles.TextInputStyle, { borderColor: wrongPW ? '#f77777' : '#d1d1d1' }]}
                 placeholder={'현재 비밀번호를 입력해주세요'}
+                placeholderTextColor='#A5A5A5'
                 onChangeText={(e) => setPassword(e)}
                 secureTextEntry
+
             />
             <Layout style={styles.WarningContainer}>
                 {wrongPW && <Text style={styles.WarningText}> 잘못된 비밀번호 입니다</Text>}
@@ -75,6 +86,7 @@ export const ProfileResetPassword = () => {
             <TextInput
                 style={[styles.TextInputStyle, { borderColor: wrongNewPW ? '#f77777' : '#d1d1d1' }]}
                 placeholder={'새 비밀번호를 입력해주세요 (8자 이상)'}
+                placeholderTextColor='#A5A5A5'
                 onChangeText={(e) => setNewPassword(e)}
                 secureTextEntry
             />
@@ -84,6 +96,7 @@ export const ProfileResetPassword = () => {
             <TextInput
                 style={[styles.TextInputStyle, { borderColor: wrongAgain ? '#f77777' : '#d1d1d1' }]}
                 placeholder={'새 비밀번호를 한번 더 입력해주세요'}
+                placeholderTextColor='#A5A5A5'
                 onChangeText={(e) => setCheckPassword(e)}
                 secureTextEntry
             />
@@ -123,7 +136,7 @@ const styles = StyleSheet.create({
     PasswordText: {
         fontFamily: 'Pretendard-Medium',
         fontSize: 18,
-        marginBottom: 10,
+        marginBottom: 15,
     },
     TextInputStyle: {
         borderWidth: 1.5,

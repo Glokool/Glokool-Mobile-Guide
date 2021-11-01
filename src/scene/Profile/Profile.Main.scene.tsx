@@ -25,8 +25,8 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
             }, {
                 text: "확인",
                 onPress: () => {
+                    auth().signOut();
                     setCurrentUser(null);
-                    auth().signOut();                    
                 },
                 style: "default"
             }]
@@ -35,6 +35,7 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
 
     return (
         <Layout style={styles.MainContainer}>
+
             <TopTab_NoButton title={'내 정보'} />
 
             <Layout style={styles.WelcomeContainer}>
@@ -46,12 +47,13 @@ export const ProfileScene = (props: ProfileSceneProps): React.ReactElement => {
                     <Text style={styles.ProfileDetailText}>프로필 관리</Text>
                 </TouchableOpacity>
             </Layout>
-
+            
+            {/* 공지사항 FAQ 버튼 */}
             <TouchableOpacity style={styles.FlatButton} onPress={() => Linking.openURL('https://spring-wok-92b.notion.site/4cc039f1d5f0452bbca9036578998faa')}>
                 <Text style={styles.FlatButtonText}>{'공지사항 & FAQ'}</Text>
                 <AngleRight />
             </TouchableOpacity>
-
+            {/* 로그아웃 */}
             <TouchableOpacity style={styles.FlatButton} onPress={() => onPressLogout()}>
                 <Text style={styles.FlatButtonText}>{'로그아웃'}</Text>
                 <AngleRight />

@@ -16,82 +16,81 @@ import { TopTab_NoButton } from '../../component/Common';
 // 로그인 화면
 export const SignInScene = (props: SignInSceneProps) => {
 
-  //로그인 상황 확인을 위한 Loading 상태 관리
-  const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
+    //로그인 상황 확인을 위한 Loading 상태 관리
+    const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
 
-  return (
-    <Layout style={styles.MainContainer}>
+    return (
+        <Layout style={styles.MainContainer}>
 
-      <TopTab_NoButton title={'로그인'} />
+            <TopTab_NoButton title={'로그인'} />
 
-      <Layout style={{ alignItems: 'center' }}>
-        <Formik
-          initialValues={SignInData.empty()}
-          // validationSchema={AuthValidationModel}
-          onSubmit={() => { }}>
-          {FormikComponent}
-        </Formik>
+            <Layout style={{ alignItems: 'center' }}>
+                <Formik
+                    initialValues={SignInData.empty()}
+                    onSubmit={() => { }}>
+                    {FormikComponent}
+                </Formik>
 
-        <TouchableOpacity onPress={() => props.navigation.navigate(SceneRoute.PASSWORD)}>
-          <Text style={styles.ForgotPassword}>
-            {'비밀번호 찾기 > '}
-          </Text>
-        </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate(SceneRoute.PASSWORD)}>
+                    <Text style={styles.ForgotPassword}>
+                        {'비밀번호 찾기 > '}
+                    </Text>
+                </TouchableOpacity>
 
-      </Layout>
+            </Layout>
 
-      <Layout style={{ alignItems: 'center' }}>
-        <Text style={styles.MakeAccountText}>아직 계정이 없으신가요?</Text>
+            <Layout style={{ alignItems: 'center' }}>
+                <Text style={styles.MakeAccountText}>아직 계정이 없으신가요?</Text>
 
-        <TouchableOpacity style={styles.ApplyTAButton} onPress={() => Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')}>
-          <Text style={styles.ApplyTAText}>Travel Assistant 지원하기</Text>
-        </TouchableOpacity>
-      </Layout>
+                <TouchableOpacity style={styles.ApplyTAButton} onPress={() => Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')}>
+                    <Text style={styles.ApplyTAText}>Travel Assistant 지원하기</Text>
+                </TouchableOpacity>
+            </Layout>
 
-      {loading && <LoadingComponent />}
+            {loading && <LoadingComponent />}
 
-    </Layout>
-  )
+        </Layout>
+    )
 }
 
 const styles = StyleSheet.create({
-  LoadingContainer: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)'
-  },
-  MainContainer: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
-  },
-  ForgotPassword: {
-    fontFamily: 'Pretendard-Medium',
-    fontSize: 14,
-    color: '#848484',
-    marginTop: windowWidth * 0.05
-  },
-  ApplyTAButton: {
-    width: windowWidth * 0.9,
-    borderWidth: 2,
-    borderRadius: 8,
-    borderColor: '#7777ff',
-    paddingVertical: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  ApplyTAText: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 14,
-    color: '#7777ff'
-  },
-  MakeAccountText: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 16,
-    color: '#555',
-  }
+    LoadingContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    MainContainer: {
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingBottom: 20,
+    },
+    ForgotPassword: {
+        fontFamily: 'Pretendard-Medium',
+        fontSize: 14,
+        color: '#848484',
+        marginTop: windowWidth * 0.05
+    },
+    ApplyTAButton: {
+        width: windowWidth * 0.9,
+        borderWidth: 2,
+        borderRadius: 8,
+        borderColor: '#7777ff',
+        paddingVertical: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+    },
+    ApplyTAText: {
+        fontFamily: 'Pretendard-SemiBold',
+        fontSize: 14,
+        color: '#7777ff'
+    },
+    MakeAccountText: {
+        fontFamily: 'Pretendard-SemiBold',
+        fontSize: 16,
+        color: '#555',
+    }
 })

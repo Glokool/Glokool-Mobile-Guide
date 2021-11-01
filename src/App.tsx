@@ -12,6 +12,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { AuthContext } from './context';
 import messaging from '@react-native-firebase/messaging';
 import { authContextType } from './context/AuthContext';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 // 백그라운드 메시지 리스너
@@ -29,6 +31,7 @@ export default function App() {
   const userValue = { currentUser, setCurrentUser };
 
   React.useEffect(() => {
+<<<<<<< HEAD
     auth().onAuthStateChanged(async(user) => {
         if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
             if (user && user?.emailVerified) {
@@ -40,12 +43,22 @@ export default function App() {
                     uid: user?.uid,
                     access_token: await user.getIdToken(),
                 };
+=======
+    auth().onAuthStateChanged((user) => {
+      if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
+        if (user && user?.emailVerified) {
+          const userInfo = {
+            displayName: user?.displayName,
+            email: user?.email,
+            photoURL: user?.photoURL,
+            uid: user?.uid,
+            access_token: null,
+          };
+>>>>>>> 03827ffcdd3ad272d37b917c08bddf4bddb8fa03
 
-                setCurrentUser(userInfo);
-            } else {
-                auth().signOut;
-            }
+          setCurrentUser(userInfo);
         } else {
+<<<<<<< HEAD
             const userInfo = {
                 displayName: user?.displayName,
                 email: user?.email,
@@ -55,7 +68,21 @@ export default function App() {
             };
 
             setCurrentUser(userInfo);
+=======
+          auth().signOut;
+>>>>>>> 03827ffcdd3ad272d37b917c08bddf4bddb8fa03
         }
+      } else {
+        const userInfo = {
+          displayName: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL,
+          uid: user?.uid,
+          access_token: null,
+        };
+
+        setCurrentUser(userInfo);
+      }
     });
 
 
@@ -83,6 +110,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <IconRegistry icons={EvaIconsPack} />
+      <StatusBar barStyle="dark-content" />
       <ApplicationProvider {...eva} theme={{ ...eva.light }} >
         <AuthContext.Provider value={userValue}>
           <NavigationContainer>

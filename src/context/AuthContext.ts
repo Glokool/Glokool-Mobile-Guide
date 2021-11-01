@@ -16,7 +16,7 @@ const user = {
         photoURL: "",
         uid: "",
     },
-    setCurrentUser: (newState: authContextType) => { newState },
+    setCurrentUser: (newState: authContextType | any) => { newState },
 };
 
 export const AuthContext = React.createContext(user);

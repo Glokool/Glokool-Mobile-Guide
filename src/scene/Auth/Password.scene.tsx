@@ -11,6 +11,7 @@ import { TopTab_GoBack } from '../../component/Common';
 export const PasswordScene = (props: PasswordSceneProps) => {
 
     const [email, setEmail] = useState<string>("");
+    const [authError, setAuthError] = useState<string>("");
 
     const [isValid, setIsValid] = useState(true);
     const [isMember, setIsMember] = useState(true);
@@ -19,6 +20,7 @@ export const PasswordScene = (props: PasswordSceneProps) => {
     const onPressButton = () => {
         auth().sendPasswordResetEmail(email)
             .then((response) => {
+                setAuthError("");
                 Alert.alert(
                     "비밀번호 재설정",
                     "성공적으로 이메일을 전송하였습니다. 해당 이메일을 확인해주세요.",
@@ -31,11 +33,7 @@ export const PasswordScene = (props: PasswordSceneProps) => {
             })
             .catch((e) => {
                 // 에러코드 분류 -> 유효하지 않은 이메일, 가입되지 않은 이메일
-                e.code == 'auth/invalid-email' && setIsValid(false);
-                if (e.code == 'auth/user-not-found') {
-                    setIsMember(false);
-                    setIsValid(true);
-                };
+                setAuthError(e.code);
             });
     }
 
@@ -49,15 +47,15 @@ export const PasswordScene = (props: PasswordSceneProps) => {
                 <Layout>
                     <Text style={styles.InputTitle}>가입한 이메일</Text>
                     <TextInput
-                        style={[styles.InputContainer, { borderBottomColor: !isValid || !isMember ? '#FE8686' : '#c9c9c9' }]}
+                        style={[styles.InputContainer, { borderBottomColor: authError !== "" ? '#FE8686' : '#c9c9c9' }]}
                         placeholderTextColor={'#c9c9c9'}
                         placeholder={'가입한 이메일을 입력해주세요'}
                         keyboardType={'email-address'}
                         onChangeText={(e) => setEmail(e)}
                     />
                     <Layout style={styles.WarningContainer}>
-                        {!isValid ? (<Text style={styles.WarningText}>잘못된 이메일 형식입니다</Text>) :
-                            (!isMember && <Text style={styles.WarningText}>가입되지 않은 이메일입니다</Text>)}
+                        {authError === 'auth/invalid-email' && (<Text style={styles.WarningText}>잘못된 이메일 형식입니다</Text>)}
+                        {authError === 'auth/user-not-found' && (<Text style={styles.WarningText}>가입되지 않은 사용자입니다</Text>)}
                     </Layout>
                 </Layout>
 
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
     InputContainer: {
         backgroundColor: '#00ff0000',
         borderColor: '#00ff0000',
-        borderBottomColor: '#c9c9c9',
         borderBottomWidth: 2,
         borderRadius: 2,
         alignItems: 'center',

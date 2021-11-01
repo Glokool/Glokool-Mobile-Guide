@@ -14,15 +14,15 @@ import axios from 'axios';
 import { SERVER } from '../../../../server';
 import { launchCamera } from 'react-native-image-picker';
 
-export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
+export const ExtraKeyboardComponent = (props: any): React.ReactElement => {
 
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
-    const ChatDB : FirebaseDatabaseTypes.Reference = props.ChatDB;
-    const ChatRoomID : string = props.ChatRoomID;
+    const ChatDB: FirebaseDatabaseTypes.Reference = props.ChatDB;
+    const ChatRoomID: string = props.ChatRoomID;
 
-    const menuVisiblity = useSelector((state : RootState) => state.ChatUIModel.menuVisiblity);
-    const keyboardHeight = useSelector((state : RootState) => state.ChatKeyboardModel.keyboardHeight);
+    const menuVisiblity = useSelector((state: RootState) => state.ChatUIModel.menuVisiblity);
+    const keyboardHeight = useSelector((state: RootState) => state.ChatKeyboardModel.keyboardHeight);
     const dispatch = useDispatch();
 
     const getAccessToken = async () => {
@@ -34,12 +34,12 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
         }
     };
 
-    const FCMSend = async(message : any, messageType : string) => {
-          
+    const FCMSend = async (message: any, messageType: string) => {
+
         if (currentUser.expiry_date < new Date().getTime()) {
             await getAccessToken();
         }
-    
+
         const data = JSON.stringify({
             message: {
                 notification: {
@@ -50,7 +50,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                     time: new Date(Date.now()).toString(),
                     roomId: ChatRoomID,
                 },
-                topic : ChatRoomID,
+                topic: ChatRoomID,
                 webpush: {
                     fcm_options: {
                         link: 'guide/main/chat',
@@ -58,7 +58,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                 },
             },
         });
-    
+
         const options = {
             method: 'Post',
             url:
@@ -71,7 +71,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
         };
 
         console.log('FCM 전송 시도')
-    
+
         await axios(options).catch((e) => {
             if (e.response) {
                 console.log(e.response.data);
@@ -85,7 +85,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
         dispatch(setMenuVisiblityFalse());
 
         try {
-            const { granted } : any = await requestCameraPermission();
+            const { granted }: any = await requestCameraPermission();
 
             if (!granted) {
                 throw Error('Camera permission denied');
@@ -101,26 +101,26 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                     if (response.assets != undefined) {
 
                         if (response.didCancel == true) {
-                            throw Error('Camera Cancel');
-                        } 
-                        
+                            console.log('카메라 촬영 취소');
+                        }
+
                         else {
 
-                            if (response.assets[0].type === undefined || response.assets[0].uri === undefined){
+                            if (response.assets[0].type === undefined || response.assets[0].uri === undefined) {
                                 throw Error('카메라 촬영파일 불러오기 실패');
                             }
 
                             const newMessage = ChatDB.push();
-                            const type : string = response.assets[0].type;
+                            const type: string = response.assets[0].type;
                             const imageType = type.split('/');
                             const reference = storage().ref();
 
                             const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType[1]}`,).putFile(response.assets[0].uri);
 
-                            picRef.on(storage.TaskEvent.STATE_CHANGED, 
+                            picRef.on(storage.TaskEvent.STATE_CHANGED,
                                 function (snapshot) { // 업로드 도중 실행 함수
                                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                
+
                                     switch (snapshot.state) {
                                         case storage.TaskState.PAUSED:
                                             console.log('Upload is paused');
@@ -144,29 +144,29 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                                 },
                                 function () {
                                     picRef.snapshot?.ref.getDownloadURL() // 업로드 성공 (Firebase Storage)
-                                        .then(function (downloadURL : string) {
-                                            
+                                        .then(function (downloadURL: string) {
+
                                             let message = {
-                                                _id : newMessage.key,
-                                                user : {
-                                                    _id : currentUser?.uid,
-                                                    name : currentUser?.displayName
+                                                _id: newMessage.key,
+                                                user: {
+                                                    _id: currentUser?.uid,
+                                                    name: currentUser?.displayName
                                                 },
-                                                messageType : 'image',
-                                                createdAt : new Date().getTime(),
-                                                location : '',
-                                                image : downloadURL,
-                                                audio : '',
-                                                text : ''
+                                                messageType: 'image',
+                                                createdAt: new Date().getTime(),
+                                                location: '',
+                                                image: downloadURL,
+                                                audio: '',
+                                                text: ''
                                             };
-                                
+
                                             newMessage?.set(message, (e) => {
                                                 console.log('이미지 메시지 전송 실패 : ', e)
                                             });
 
                                             FCMSend(message, "Sent a picture");
 
-                                    });
+                                        });
                                 }
                             );
                         }
@@ -184,25 +184,25 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
         dispatch(setMenuVisiblityFalse());
 
         try {
-            const { granted } : any = await requestStoragePermission();
-            
+            const { granted }: any = await requestStoragePermission();
+
             if (!granted) {
                 throw Error('Storage permission denied');
             }
 
-            const images = await ImagePicker.openPicker((Platform.OS === 'ios')? {multiple : false, forceJpg : true} : {multiple : false});
+            const images = await ImagePicker.openPicker((Platform.OS === 'ios') ? { multiple: false, forceJpg: true } : { multiple: false });
 
             if (images != undefined) {
-                
+
                 const newMessage = ChatDB.push();
                 const reference = storage().ref();
                 const imageType = images.mime.split('/');
                 const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType}`,).putFile(images.path);
 
-                picRef.on(storage.TaskEvent.STATE_CHANGED, 
+                picRef.on(storage.TaskEvent.STATE_CHANGED,
                     function (snapshot) { // 업로드 도중 실행 함수
                         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    
+
                         switch (snapshot.state) {
                             case storage.TaskState.PAUSED:
                                 console.log('Upload is paused');
@@ -226,45 +226,45 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                     },
                     function () {
                         picRef.snapshot?.ref.getDownloadURL() // 업로드 성공 (Firebase Storage)
-                            .then(function (downloadURL : string) {
-                                
+                            .then(function (downloadURL: string) {
+
                                 let message = {
-                                    _id : newMessage.key,
-                                    user : {
-                                        _id : currentUser?.uid,
-                                        name : currentUser?.displayName
+                                    _id: newMessage.key,
+                                    user: {
+                                        _id: currentUser?.uid,
+                                        name: currentUser?.displayName
                                     },
-                                    messageType : 'image',
-                                    createdAt : new Date().getTime(),
-                                    location : '',
-                                    image : downloadURL,
-                                    audio : '',
-                                    text : ''
+                                    messageType: 'image',
+                                    createdAt: new Date().getTime(),
+                                    location: '',
+                                    image: downloadURL,
+                                    audio: '',
+                                    text: ''
                                 };
-                    
+
                                 newMessage?.set(message, (e) => {
                                     console.log('이미지 메시지 전송 실패 : ', e)
                                 });
 
                                 FCMSend(message, "Sent a picture");
 
-                        });
+                            });
                     }
                 );
 
 
             }
-        } 
+        }
         catch (e) {
             console.log('기존 저장 이미지 전송 에러 : ', e);
         }
     };
 
 
-    return(
+    return (
         <>
-            {(menuVisiblity)?
-                <Layout style={{ justifyContent: 'center', backgroundColor: '#F8F8F8', height: keyboardHeight, minHeight: 180}}>
+            {(menuVisiblity) ?
+                <Layout style={{ justifyContent: 'center', backgroundColor: '#F8F8F8', height: keyboardHeight, minHeight: 180 }}>
                     <Layout style={styles.SideContainer}>
                         <Pressable
                             style={styles.SideButton}
@@ -272,7 +272,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                             <Record />
                             <Text style={styles.SideButtonTxt}>Voices</Text>
                         </Pressable>
-        
+
                         <Pressable
                             style={styles.SideButton}
                             onPress={() => ImageSend()}
@@ -280,7 +280,7 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                             <Images />
                             <Text style={styles.SideButtonTxt}>Images</Text>
                         </Pressable>
-        
+
                         <Pressable
                             style={styles.SideButton}
                             onPress={() => takePhoto()}
@@ -288,20 +288,20 @@ export const ExtraKeyboardComponent = (props : any) : React.ReactElement => {
                             <Camera />
                             <Text style={styles.SideButtonTxt}>Camera</Text>
                         </Pressable>
-        
+
                     </Layout>
-        
+
                     <Layout style={styles.SideContainer}></Layout>
                 </Layout>
                 :
-                    null
-                }
+                null
+            }
         </>
     )
 }
 
-const styles = StyleSheet.create({    
-    
+const styles = StyleSheet.create({
+
     SideContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',

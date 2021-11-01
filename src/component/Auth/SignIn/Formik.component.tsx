@@ -20,7 +20,6 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
 
     //Re-Rendering이 자주 일어나지 않는 UI 관련 Hook
     const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
-
     const [authError, setAuthError] = useState<string>("");
 
     //비밀번호 입력창 Icon rendering
@@ -49,7 +48,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                         access_token: '',
                     }
                     setCurrentUser(userInfo);
-      
+
                 })
                 .catch((err) => {
                     setAuthError(err.code);
@@ -69,6 +68,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     textStyle={styles.PlaceholderText}
                     placeholder='이메일을 입력해주세요.'
                     keyboardType='email-address'
+                    authError={authError === 'auth/invalid-email' || authError == 'auth/user-not-found'}
                 />
                 <Layout style={styles.WarningContainer}>
                     {authError === 'auth/invalid-email' && (<Text style={styles.WarningText}>잘못된 이메일 형식입니다</Text>)}
@@ -85,6 +85,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                     placeholder='비밀번호를 입력해주세요.'
                     accessoryRight={renderIcon}
                     secureTextEntry={!passwordVisible}
+                    authError={authError === 'auth/wrong-password'}
                 />
                 <Layout style={styles.WarningContainer}>
                     {authError === 'auth/wrong-password' && (<Text style={styles.WarningText}>잘못된 비밀번호입니다</Text>)}
@@ -141,6 +142,6 @@ const styles = StyleSheet.create({
     WarningText: {
         color: '#f77777',
         fontFamily: 'Pretendard-Regular',
-        fontSize: windowHeight * 0.018,
+        fontSize: windowHeight * 0.016,
     }
 })

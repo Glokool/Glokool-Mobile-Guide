@@ -89,6 +89,8 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
             <Layout style={styles.InnerContainer}>
 
                 <Layout style={{ backgroundColor: '#0000' }}>
+
+                    {/* 날짜 선택 (1일후, 2일후, 3일후) */}
                     <Layout style={styles.PropsContainer}>
                         <Text style={styles.TitleText}>날짜 선택</Text>
                         <FlatList
@@ -102,6 +104,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                         </Layout>
                     </Layout>
 
+                    {/* 지역 선택 */}
                     <Layout style={styles.PropsContainer}>
                         <Text style={styles.TitleText}>지역 선택</Text>
                         <FlatList
@@ -117,6 +120,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                         </Layout>
                     </Layout>
 
+                    {/* 인원 선택 */}
                     <Layout style={styles.PropsContainer}>
                         <Text style={styles.TitleText}>투어 동시 진행 가능 인원 수 선택</Text>
                         <FlatList
@@ -133,6 +137,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                     </Layout>
                 </Layout>
 
+                {/* 등록 버튼 */}
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.InfoText}>등록하기를 누르면</Text>
                     <Text style={styles.InfoText}>이용약관 및 개인정보 처리방침 동의로 간주합니다.</Text>
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
     },
     ButtonValueText: {
         fontFamily: 'Pretendard-SemiBold',
-        fontSize: windowHeight * 0.02,
+        fontSize: windowHeight * 0.018,
     },
     DateButton: {
         width: windowWidth * 0.28,

@@ -9,7 +9,6 @@ import { AngleRight } from '../../assets/icon/Common';
 import { LoadingComponent, TopTab_GoBack } from '../../component/Common';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
-import { SelectableText } from '../../component/Common';
 
 // 내 정보 관리 화면
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
@@ -30,16 +29,13 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
     return (
         <Layout style={styles.MainContainer}>
-
+            
             <TopTab_GoBack title={'프로필 관리'} style={styles.TopTabContainer} />
 
             <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
 
                 {/* 프로필 부분 컴포넌트 */}
                 <ProfileGuideInfo />
-
-                <Text style={[styles.GlokoolEmail, { color: '#595959' }]}>프로필 내용 수정을 희망할 시 아래 이메일로 연락 주세요</Text>
-                <SelectableText style={[styles.GlokoolEmail, { color: '#6464CC' }]}>sungsoo@glokool.com</SelectableText>
 
                 {/* 비밀번호 재설정 컴포넌트 */}
                 <ProfileResetPassword />
@@ -49,7 +45,6 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
                     <Text style={styles.FlatButtonText}>{'탈퇴하기'}</Text>
                     <AngleRight />
                 </TouchableOpacity>
-
                 <SafeAreaView />
 
             </ScrollView>
@@ -74,12 +69,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ddd'
     },
-    GlokoolEmail: {
-        fontFamily: 'Pretendard-Regular',
-        fontSize: 15,
-        alignSelf: 'center',
-    },
-
     FlatButton: {
         flexDirection: 'row',
         alignItems: 'center',

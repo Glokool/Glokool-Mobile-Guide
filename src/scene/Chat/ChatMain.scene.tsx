@@ -12,7 +12,7 @@ export const ChatMainScene = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             {/* 채팅 상단 배너 */}
-            <ChatMainBanner width={windowWidth} />
+            <ChatMainBanner width={windowWidth} height={windowWidth/414 * 149.3} />
             {/* 채팅 리스트 */}
             <ChatListComponent {...props} />
             {/* 새로운 일정 등록 버튼 */}
