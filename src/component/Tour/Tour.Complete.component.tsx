@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Layout, Divider } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
@@ -8,6 +9,9 @@ import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Ma
 import { TourCompleteModal } from '.';
 import { useDispatch } from 'react-redux';
 import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
+import { AuthContext } from '../../context';
+import axios from 'axios';
+import { SERVER } from '../../server';
 
 // 종료된 투어들 렌더링해주는 리스트
 export const TourCompleteList = (props: TourMainSceneProps) => {
@@ -16,6 +20,34 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
 
     const sampleData = [1, 2, 3, 4, 5]
     const tourComplete = false;
+
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
+
+    React.useEffect(() => {
+        InitChatList();
+    }, [])
+
+    const InitChatList = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            data : JSON.stringify({ date : 'past'})
+        }
+
+        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })       
+
+    }
+
 
     const renderItem = (item : {item : any, index : number }) => {
         return (

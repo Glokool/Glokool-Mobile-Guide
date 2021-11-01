@@ -47,9 +47,7 @@ export default function App() {
 
           if( userToken != undefined) {
               axios(config)
-                  .then((response) => {
-
-                      console.log(response);
+                  .then((response : any) => {
 
                       const userInfo = {
                           displayName: user?.displayName,
@@ -57,6 +55,7 @@ export default function App() {
                           photoURL: user?.photoURL,
                           uid: user?.uid,
                           access_token: userToken,
+                          gid : response.data._id
                       };
 
                       if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {

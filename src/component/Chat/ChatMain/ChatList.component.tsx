@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from '@react-native-firebase/auth'
 import { StyleSheet, Text, TouchableOpacity, } from 'react-native';
 import { Divider, Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../../Design.component';
@@ -6,13 +7,46 @@ import { Location } from '../../../assets/icon/Common';
 import moment from 'moment';
 import { NavigatorRoute, SceneRoute } from '../../../navigation/App.route';
 import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat/Chat.navigator';
+import axios from 'axios';
+import { SERVER } from '../../../server';
+import { AuthContext } from '../../../context';
+
 
 // 현재 채팅 목록 나타내는 리스트
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
+
     const sampleData = true;
     const dayTour = true;
     const count = 12;
+
+    React.useEffect(() => {
+        InitChatList();
+    }, [])
+
+    const InitChatList = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            data : JSON.stringify({ date : 'toDay'})
+        }
+
+
+        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })       
+
+    }
+
 
     return (
         <Layout style={styles.MainContainer}>

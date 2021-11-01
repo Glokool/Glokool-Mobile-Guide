@@ -6,6 +6,7 @@ export interface authContextType {
     email: string |null;
     photoURL: string | null;
     uid: string;
+    gid : string;
 }
 
 const user = {
@@ -15,6 +16,7 @@ const user = {
         email: "",
         photoURL: "",
         uid: "",
+        gid : "",
     },
     setCurrentUser: (newState: authContextType | any) => { newState },
 };

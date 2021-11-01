@@ -28,6 +28,8 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                 traveler: travelerList[travelerIndex],
                 date: pickedDate,
             }
+
+            console.log(params);
             props.navigation.replace(SceneRoute.REGISTERSUCCESS, params);
         }
     }

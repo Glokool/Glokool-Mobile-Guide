@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Divider, Layout } from '@ui-kitten/components';
 import { Location } from '../../assets/icon/Common';
@@ -10,13 +11,43 @@ import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Ma
 import { useDispatch } from 'react-redux';
 import { setTourScheduleVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 import { TourScheduleModal } from '.';
+import axios from 'axios';
+import { AuthContext } from '../../context';
+import { SERVER } from '../../server';
 
 // 예정된 투어 렌더링 리스트
 export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch();
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
+    const sampleData = [1, 2, 3];
 
-    const sampleData = [1, 2, 3]
+    React.useEffect(() => {
+        InitChatList();
+    }, [])
+
+    const InitChatList = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            data : JSON.stringify({ date : 'future'})
+        }
+
+
+        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })       
+
+    }
+
 
     const renderItem = (item : { item: any, index : number }) => {
         return (
