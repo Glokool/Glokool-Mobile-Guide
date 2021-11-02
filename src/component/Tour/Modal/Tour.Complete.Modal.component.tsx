@@ -7,9 +7,10 @@ import { CloseIcon } from '../../../assets/icon/Common';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../model';
 import { setTourCompleteVisibilityFalse } from '../../../model/tour/Tour.UI.Model';
+import { TourItem } from '..';
 
 // 종료된 투어 나타내는 모달
-export const TourCompleteModal = () => {
+export const TourCompleteModal = (props : {item : TourItem}) => {
 
     const visibility = useSelector((state: RootState) => state.TourUIModel.CompleteVisibility);
     const dispatch = useDispatch();

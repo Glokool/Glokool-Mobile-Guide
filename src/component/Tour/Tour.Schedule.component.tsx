@@ -10,37 +10,47 @@ import { NewTourButton } from '../Chat';
 import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { useDispatch } from 'react-redux';
 import { setTourScheduleVisibilityTrue } from '../../model/tour/Tour.UI.Model';
-import { TourScheduleModal } from '.';
+import { TourItem, TourScheduleModal } from '.';
 import axios from 'axios';
 import { AuthContext } from '../../context';
 import { SERVER } from '../../server';
+
+
+
 
 // 예정된 투어 렌더링 리스트
 export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch();
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
-    const sampleData = [1, 2, 3];
+    const [data, setData] = React.useState<Array<TourItem>>([]);
+    const [selectedTourItem, setSelectedTourItem] = React.useState<TourItem>({
+        zone : '',
+        maxUserNum: 0,
+        userCount: 0,
+        travelDate : '',
+        _id : ''
+    });
 
     React.useEffect(() => {
         InitChatList();
     }, [])
 
     const InitChatList = async() => {
-
+  
         const token = await auth().currentUser?.getIdToken();
+        const url = ('http://192.168.35.129:4000/v3' + '/guides/' + currentUser.gid + '/chat-rooms?q=' + 'future');
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
-            },
-            data : JSON.stringify({ date : 'future'})
+            }
         }
 
-
-        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
+        axios.get(url, config)
             .then((response) => {
-
+                console.log(response.data);
+                setData(response.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -49,29 +59,40 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
     }
 
 
-    const renderItem = (item : { item: any, index : number }) => {
+    const renderItem = (item : { item: TourItem, index : number }) => {
         return (
-            <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourScheduleVisibilityTrue())}>
+            <TouchableOpacity 
+                style={styles.ItemContainer} 
+                onPress={() => {
+                    setSelectedTourItem(item.item);
+                    dispatch(setTourScheduleVisibilityTrue());
+                }}
+            >
                 <Layout style={styles.LocationContainer}>
                     <Location />
-                    <Text style={styles.LocationText}>홍대</Text>
+                    <Text style={styles.LocationText}>
+                        {(item.item.zone === 'hongdae')? '홍대' : ''}
+                        {(item.item.zone === 'gwanghwamun')? '광화문' : ''}
+                        {(item.item.zone === 'myeongdong')? '명동' : ''}
+                        {(item.item.zone === 'gangnam')? '강남' : ''}
+                    </Text>
                 </Layout>
 
                 <Divider style={styles.Divider} />
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>투어일</Text>
-                    <Text style={styles.ValueText}>{moment(new Date()).format('YYYY.MM.DD')}</Text>
+                    <Text style={styles.ValueText}>{item.item.travelDate}</Text>
                 </Layout>
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>투어 종류</Text>
-                    <Text style={styles.ValueText}>Private Chat</Text>
+                    <Text style={styles.ValueText}>{(item.item.maxUserNum === 1)? 'Private Chat' : 'Group Chat'}</Text>
                 </Layout>
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>동시 진행 인원</Text>
-                    <Text style={styles.ValueText}>1명</Text>
+                    <Text style={styles.ValueText}>{item.item.maxUserNum}명</Text>
                 </Layout>
 
             </TouchableOpacity>
@@ -81,7 +102,7 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             <FlatList
-                data={sampleData}
+                data={data}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
                 ListFooterComponent={
@@ -90,7 +111,7 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
                     </Layout>
                 }
             />
-            <TourScheduleModal />
+            <TourScheduleModal item={selectedTourItem}/>
         </Layout>
     )
 }

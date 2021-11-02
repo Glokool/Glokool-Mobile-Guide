@@ -1,4 +1,5 @@
 import React, { } from 'react';
+import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
@@ -7,6 +8,8 @@ import { ChatUserModal } from '../../component/Chat';
 import { useDispatch } from 'react-redux';
 import { setChatModalVisiblityTrue } from '../../model/chat/Chat.UI.model';
 import { TopTab_GoBack } from '../../component/Common';
+import { SERVER } from '../../server';
+import axios from 'axios';
 
 // 채팅 참여자 목록 화면
 export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
@@ -14,6 +17,30 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     const dispatch = useDispatch();
 
     const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
+
+    const InitChatRoomInfo = async() => {
+        
+        const token = await auth().currentUser?.getIdToken();
+        const url = SERVER + '/chat-rooms/' + props.route.params.id + '/people';
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+
+        axios.get(url, config)
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                
+            })
+
+
+    }
+
+
 
     // 리스트 아이템 렌더링
     const renderItem = (item : {item : any, index : number}) => {

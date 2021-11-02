@@ -1,19 +1,41 @@
 import React from 'react';
+import auth from '@react-native-firebase/auth'
 import { Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Layout, Divider, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../Design.component';
-import moment from 'moment';
 import { CloseIcon } from '../../../assets/icon/Common';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../model';
 import { setTourScheduleVisibilityFalse } from '../../../model/tour/Tour.UI.Model';
+import { TourItem } from '..';
+import axios from 'axios';
 
 // 예정된 투어 나타내는 모달
-export const TourScheduleModal = () => {
+export const TourScheduleModal = (props : { item : TourItem }) => {
+    
     const visibility = useSelector((state: RootState) => state.TourUIModel.ScheduleVisibility);
     const dispatch = useDispatch();
-
     const tourComplete = true;
+
+    const CancelTour = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+        const url = 'http://192.168.35.129:4000/v3/' + 'chat-rooms/' + props.item._id;
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        }
+
+        axios.delete(url, config)
+            .then((result) => {
+                dispatch(setTourScheduleVisibilityFalse());
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
     const onPressCancel = () => {
         Alert.alert(
@@ -24,7 +46,7 @@ export const TourScheduleModal = () => {
                 style: "destructive"
             }, {
                 text: "네",
-                onPress: () => dispatch(setTourScheduleVisibilityFalse()),
+                onPress: () => CancelTour(),
             }]
         )
     }
@@ -56,19 +78,24 @@ export const TourScheduleModal = () => {
 
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어 지역</Text>
-                <Text style={styles.ValueText}>홍대</Text>
+                <Text style={styles.ValueText}>
+                    {(props.item.zone === 'hongdae')? '홍대' : ''}
+                    {(props.item.zone === 'gwanghwamun')? '광화문' : ''}
+                    {(props.item.zone === 'myeongdong')? '명동' : ''}
+                    {(props.item.zone === 'gangnam')? '강남' : ''}
+                </Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어일</Text>
-                <Text style={styles.ValueText}>{moment(new Date()).format('YYYY.MM.DD')} 10AM ~ 7PM</Text>
+                <Text style={styles.ValueText}>{props.item.travelDate} 10AM ~ 7PM</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어 종류</Text>
-                <Text style={styles.ValueText}>Private Chat</Text>
+                <Text style={styles.ValueText}>{(props.item.maxUserNum === 1)? 'Private Chat' : 'Group Chat'}</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>동시 진행 가능 인원</Text>
-                <Text style={styles.ValueText}>1명</Text>
+                <Text style={styles.ValueText}>{props.item.maxUserNum}명</Text>
             </Layout>
 
             <Divider style={styles.Divider} />

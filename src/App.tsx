@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as eva from '@eva-design/eva';
 import auth from '@react-native-firebase/auth';
+
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './model';
@@ -13,7 +14,6 @@ import { AuthContext } from './context';
 import messaging from '@react-native-firebase/messaging';
 import { authContextType } from './context/AuthContext';
 import { StatusBar } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SERVER } from './server';
 import axios from 'axios';
 
@@ -35,41 +35,49 @@ export default function App() {
   React.useEffect(() => {
     auth().onAuthStateChanged(async(user) => {
 
+      if (user != null || user != undefined) {
           const userToken = await user?.getIdToken();
-
+         
+          
+          const url = SERVER + '/guides/check';
           const config = {
-              method : 'GET',
-              url : SERVER + '/guides/check',
               headers : {
                   Authorization: `Bearer ${userToken}`,
               }
           }
 
-          if( userToken != undefined) {
-              axios(config)
-                  .then((response : any) => {
+          axios.get(url, config)
+            .then((result : any) => {
+                const userInfo = {
+                  displayName: user?.displayName,
+                  email: user?.email,
+                  photoURL: user?.photoURL,
+                  uid: user?.uid,
+                  access_token: userToken,
+                  gid : result.data._id
+                };
 
-                      const userInfo = {
-                          displayName: user?.displayName,
-                          email: user?.email,
-                          photoURL: user?.photoURL,
-                          uid: user?.uid,
-                          access_token: userToken,
-                          gid : response.data._id
-                      };
+                if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
+                  if (user && user?.emailVerified) { setCurrentUser(userInfo) }
+                } 
+                else {
+                    if (user && user?.emailVerified) { setCurrentUser(userInfo) }
+                }
+            })
+            .catch((err) => {
+              auth().signOut();
+            })
 
-                      if (user?.providerData[0].providerId == "password" || user?.providerData[0].providerId == null) {
-                          if (user && user?.emailVerified) { setCurrentUser(userInfo) }
-                      } 
-                      else {
-                          if (user && user?.emailVerified) { setCurrentUser(userInfo) }
-                      }
-                  })
-                  .catch((err) => {
-                      console.log(err);
-                      auth().signOut();
-                  });
-          }
+
+      }
+
+        
+
+          
+
+
+
+
 
     });
 

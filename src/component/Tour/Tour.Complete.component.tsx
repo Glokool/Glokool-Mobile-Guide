@@ -6,21 +6,28 @@ import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
 import { Location } from '../../assets/icon/Common';
 import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
-import { TourCompleteModal } from '.';
+import { TourCompleteModal, TourItem } from '.';
 import { useDispatch } from 'react-redux';
 import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 import { AuthContext } from '../../context';
 import axios from 'axios';
 import { SERVER } from '../../server';
 
+
 // 종료된 투어들 렌더링해주는 리스트
 export const TourCompleteList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch()
+    const [data, setData] = React.useState<Array<TourItem>>([]);
+    const [selectedTourItem, setSelectedTourItem] = React.useState<TourItem>({
+        zone : '',
+        maxUserNum: 0,
+        userCount: 0,
+        travelDate : '',
+        _id : ''
+    });
 
-    const sampleData = [1, 2, 3, 4, 5]
     const tourComplete = false;
-
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
     React.useEffect(() => {
@@ -30,17 +37,18 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
+        const url = ('http://192.168.35.129:4000/v3' + '/guides/' + currentUser.gid + '/chat-rooms?q=' + 'past');
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
-            },
-            data : JSON.stringify({ date : 'past'})
+            }
         }
 
-        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
+        axios.get(url, config)
             .then((response) => {
-
+                setData(response.data);
+                console.log(response.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -49,17 +57,22 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
     }
 
 
-    const renderItem = (item : {item : any, index : number }) => {
+    const renderItem = (item : {item : TourItem, index : number }) => {
         return (
             <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourCompleteVisibilityTrue())} >
 
                 <Layout style={styles.TopContainer}>
                     <Layout style={styles.LocationContainer}>
                         <Location />
-                        <Text style={styles.LocationText}>홍대</Text>
+                        <Text style={styles.LocationText}>
+                            {(item.item.zone === 'hongdae')? '홍대' : ''}
+                            {(item.item.zone === 'gwanghwamun')? '광화문' : ''}
+                            {(item.item.zone === 'myeongdong')? '명동' : ''}
+                            {(item.item.zone === 'gangnam')? '강남' : ''}
+                        </Text>
                     </Layout>
 
-                    {tourComplete ? (
+                    {(item.item.userCount != 0) ? (
                         <Text style={styles.TourStatus}>종료된 투어</Text>
                     ) : (
                         <Text style={[styles.TourStatus, { color: '#b5b5b5' }]}>매칭 실패 투어</Text>
@@ -70,17 +83,17 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>투어일</Text>
-                    <Text style={styles.ValueText}>{moment(new Date()).format('YYYY.MM.DD')}</Text>
+                    <Text style={styles.ValueText}>{item.item.travelDate}</Text>
                 </Layout>
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>투어 종류</Text>
-                    <Text style={styles.ValueText}>Private Chat</Text>
+                    <Text style={styles.ValueText}>{(item.item.maxUserNum === 1)? 'Private Chat' : 'Group Chat'}</Text>
                 </Layout>
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>동시 진행 인원</Text>
-                    <Text style={styles.ValueText}>1명</Text>
+                    <Text style={styles.ValueText}>{item.item.maxUserNum}명</Text>
                 </Layout>
 
             </TouchableOpacity>
@@ -90,11 +103,11 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             <FlatList
-                data={sampleData}
+                data={data}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
             />
-            <TourCompleteModal />
+            <TourCompleteModal item={selectedTourItem}/>
         </Layout>
     )
 }

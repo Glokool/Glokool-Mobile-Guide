@@ -10,16 +10,15 @@ import { ChatMainSceneProps } from '../../../navigation/SceneNavigator/Chat/Chat
 import axios from 'axios';
 import { SERVER } from '../../../server';
 import { AuthContext } from '../../../context';
+import { TourItem } from '../../Tour';
+
 
 
 // 현재 채팅 목록 나타내는 리스트
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
-
-    const sampleData = true;
-    const dayTour = true;
-    const count = 12;
+    const [data, setData] = React.useState<TourItem | undefined>();
 
     React.useEffect(() => {
         InitChatList();
@@ -28,22 +27,21 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
+        const url = 'http://192.168.35.129:4000/v3/' + 'guides/' + currentUser.gid + '/chat-rooms?q=today'
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
-            },
-            data : JSON.stringify({ date : 'toDay'})
+            }
         }
 
-
-        axios.get((SERVER + '/guides/' + currentUser.gid + '/chat-rooms'), config)
-            .then((response) => {
-
+        axios.get(url, config)
+            .then((response) => {                        
+                setData(response.data);
             })
             .catch((err) => {
-                console.log(err);
-            })       
+                console.log('에러', err);
+            })         
 
     }
 
@@ -51,9 +49,12 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             <Text style={styles.TourText}>진행중인 투어</Text>
-            {dayTour ? (
+            {data ? (
                 // 오늘 진행되는 투어가 있을 때
-                <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT)}>
+                <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT, {
+                    screen : SceneRoute.CHATROOM,
+                    params : { id : data._id }
+                })}>
                     <Layout style={styles.ItemInfoContainer}>
                         <Layout style={styles.LocationContainer}>
                             <Location />
@@ -63,8 +64,8 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                     </Layout>
                     <Divider style={styles.Divider} />
 
-                    <Layout style={[styles.TravelerContainer, { justifyContent: sampleData ? 'center' : 'space-between' }]}>
-                        {sampleData ?
+                    <Layout style={[styles.TravelerContainer, { justifyContent: data ? 'center' : 'space-between' }]}>
+                        {(data.userCount === 0) ?
                             (
                                 // 매칭이 안됐을 때
                                 <Text style={styles.NotMatchedText}>아직 매칭된 여행객이 없습니다</Text>
@@ -73,12 +74,12 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                                 <>
                                     <Layout style={styles.ChatUsersContainer}>
                                         <Text style={styles.ChatUsersText}>현재 참여 인원 수</Text>
-                                        <Text style={styles.ChatUsersNum}>10</Text>
+                                        <Text style={styles.ChatUsersNum}>{data.userCount}</Text>
                                     </Layout>
                                     <Layout style={styles.UnreadMessageContainer}>
                                         {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
                                         <Layout style={[styles.UnreadMessageCount, { backgroundColor: count > 0 ? '#7777ff' : '#cdcdcd' }]}>
-                                            <Text style={styles.UnreadMessageCountText}>{count}</Text>
+                                            <Text style={styles.UnreadMessageCountText}>{12}</Text>
                                         </Layout>
                                     </Layout>
                                 </>

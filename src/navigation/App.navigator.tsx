@@ -12,7 +12,10 @@ export type AppNavigatorParams = {
     [NavigatorRoute.AUTH]: undefined;
     [NavigatorRoute.MAIN]: undefined;
     [NavigatorRoute.REGISTER]: undefined;
-    [NavigatorRoute.CHAT]: undefined;
+    [NavigatorRoute.CHAT]: {
+        screen : SceneRoute;
+        params : { id : string }
+    };
 }
 
 const Stack = createStackNavigator();

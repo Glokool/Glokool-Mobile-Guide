@@ -8,8 +8,12 @@ import { ChatRoomScene, ChatMainScene, ChatRoomInfoScene, ChatReportScene } from
 type ChatNavigatorParams = AppNavigatorParams & {
     [SceneRoute.CHATMAIN]: undefined;
     [SceneRoute.CHATLIST]: undefined;
-    [SceneRoute.CHATROOM]: undefined;
-    [SceneRoute.CHAT_ROOM_INFO]: undefined;
+    [SceneRoute.CHATROOM]: {
+        id : string;
+    };
+    [SceneRoute.CHAT_ROOM_INFO]: {
+        id : string;
+    };
     [SceneRoute.CHAT_REPORT]: undefined;
 }
 

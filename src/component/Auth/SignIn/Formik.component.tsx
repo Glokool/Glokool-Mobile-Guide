@@ -40,18 +40,8 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
             //빈칸일 경우 진행하지 않음
             FirebaseAuth.signInWithEmailAndPassword(values.email, values.password)
                 .then((response) => {
-
                     dispatch(loading_end());
-
-                    // const userInfo = {
-                    //     displayName: response.user.displayName,
-                    //     email: response.user.email,
-                    //     photoURL: response.user.photoURL,
-                    //     uid: response.user.uid,
-                    //     access_token: '',
-                    // }
-                    // setCurrentUser(userInfo);
-
+                    
                 })
                 .catch((err) => {
                     setAuthError(err.code);

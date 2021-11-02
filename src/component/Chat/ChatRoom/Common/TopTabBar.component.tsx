@@ -39,7 +39,7 @@ export const ChatTopTabBarComponent = (props : ChatRoomSceneProps) : React.React
 
                 <Pressable
                     style={styles.RightIcon}
-                    onPress={() => props.navigation.navigate(SceneRoute.CHAT_ROOM_INFO)}
+                    onPress={() => props.navigation.navigate(SceneRoute.CHAT_ROOM_INFO, { id : props.route.params.id })}
                 >
                     <Chat_Setting />
                 </Pressable>

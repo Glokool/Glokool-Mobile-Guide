@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import auth from '@react-native-firebase/auth'
 import { StyleSheet, Text, FlatList, TouchableOpacity, Pressable } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
@@ -6,6 +7,9 @@ import { RegisterMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tou
 import moment from 'moment';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_GoBack } from '../../component/Common';
+import { AuthContext } from '../../context';
+import { SERVER } from '../../server';
+import axios from 'axios';
 
 // 일정등록 메인 화면
 export const RegisterMainScene = (props: RegisterMainSceneProps) => {
@@ -14,24 +18,58 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
     const locationList = ['홍대', '광화문', '명동', '강남'];
     const travelerList = [1];
 
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
     const [dateIndex, setDateIndex] = useState(-1);
     const [locationIndex, setLocationIndex] = useState(-1);
     const [travelerIndex, setTravelerIndex] = useState(-1);
 
     // 일정 등록 버튼 클릭 시
-    const PressButton = () => {
+    const PressButton = async() => {
         // 인덱스 모두 검증 (선택되었는지 아닌지)
+
+        var engLocation = '';
+        if ( locationList[locationIndex] === '홍대' ) { engLocation = 'hongdae' }
+        if ( locationList[locationIndex] === '광화문' ) { engLocation = 'gwanghwamun' }
+        if ( locationList[locationIndex] === '명동' ) { engLocation = 'myeongdong' }
+        if ( locationList[locationIndex] === '강남' ) { engLocation = 'gangnam' }
+
+        const pickedDate = moment(Today).add(dateIndex + 1, 'days');
+
         if (dateIndex > -1 && locationIndex > -1 && travelerIndex > -1) {
-            const pickedDate = moment(Today).add(dateIndex + 1, 'days').toString();
-            const params = {
-                location: locationList[locationIndex],
-                traveler: travelerList[travelerIndex],
-                date: pickedDate,
+           
+            const token = await auth().currentUser?.getIdToken();
+
+            const url = 'http://192.168.35.129:4000/v3' + '/chat-rooms';
+            const data = JSON.stringify({
+                travelDate : pickedDate,
+                zone : engLocation,
+                guide : currentUser.gid,
+                maxUserNum : travelerList[travelerIndex]
+            })
+            const config = {
+                headers : {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type' : 'application/json'
+                }
             }
 
-            console.log(params);
-            props.navigation.replace(SceneRoute.REGISTERSUCCESS, params);
+            const params = {
+                location : locationList[locationIndex],
+                traveler : travelerList[travelerIndex],
+                date : moment(Today).add(dateIndex + 1, 'days').toString()
+            }
+
+            axios.post(url, data, config)
+                .then((res) => { props.navigation.replace(SceneRoute.REGISTERSUCCESS, params) })
+                .catch((err) => { console.log('실패 : ', err, config) })
+            
         }
+
+
+
+
+
+
     }
 
     // 날짜 버튼 렌더링
