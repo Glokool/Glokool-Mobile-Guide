@@ -1,20 +1,37 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { Layout } from '@ui-kitten/components'
 import { windowWidth } from '../../Design.component';
 import { ProfileDetailSceneProps } from '../../navigation/SceneNavigator/Profile.navigator';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../model';
 import { AngleRight } from '../../assets/icon/Common';
 import { LoadingComponent, TopTab_GoBack } from '../../component/Common';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
+import { profileLoadingSuccess } from '../../model/profile/Profile.UI.model';
 
 // 내 정보 관리 화면
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
 
-    const InitLoading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
+    const dispatch = useDispatch();
+    const InitLoading = useSelector((state: RootState) => state.AuthUIModel.loading);
     const PWLoading = useSelector((state: RootState) => state.ProfileUIModel.loading);
+    const loadingState = useSelector((state: RootState) => state.ProfileUIModel.loadingSuccess);
+
+    useEffect(() => {
+        if (!loadingState) {
+            showMessage({
+                message: "서버 통신에 실패하였습니다. 다시 시도해주세요.",
+                type: "danger",
+                icon: "danger",
+            });
+        } else {
+            hideMessage();
+        }
+    }, [loadingState])
 
     // 탈퇴 버튼 클릭
     const onPressWithdrawal = () => {
@@ -27,9 +44,9 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
         )
     }
 
-    return (
+    return loadingState ? (
         <Layout style={styles.MainContainer}>
-            
+
             <TopTab_GoBack title={'프로필 관리'} style={styles.TopTabContainer} />
 
             <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
@@ -52,6 +69,16 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
             {/* 가이드 정보 로딩 혹은 비밀번호 변경 로딩 */}
             {PWLoading || InitLoading && <LoadingComponent />}
         </Layout>
+    ) : (
+        <Layout style={styles.MainContainer}>
+            <TouchableOpacity
+                onPress={() => {
+                    dispatch(profileLoadingSuccess());
+                }}>
+                <Text style={styles.ReloadMessage}>탭하여 재시도하기</Text>
+            </TouchableOpacity>
+            <FlashMessage autoHide={false} />
+        </Layout>
     )
 }
 
@@ -61,6 +88,7 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#f9f9f9',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     ScrollViewStyle: {
         width: windowWidth,
@@ -82,6 +110,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Pretendard-SemiBold',
         fontSize: 18
     },
-
+    ReloadMessage: {
+        fontFamily: 'Pretendard-Regular',
+        fontSize: 20,
+        color: '#555'
+    }
 
 })

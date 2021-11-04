@@ -12,12 +12,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LoadingComponent } from '../../component/Common';
 import { SceneRoute } from '../../navigation/App.route';
 import { TopTab_NoButton } from '../../component/Common';
+import { CheckModal } from '../../component/Auth/SignIn';
 
 // 로그인 화면
 export const SignInScene = (props: SignInSceneProps) => {
 
     //로그인 상황 확인을 위한 Loading 상태 관리
-    const loading = useSelector((state: RootState) => state.AuthLoadingModel.loading);
+    const loading = useSelector((state: RootState) => state.AuthUIModel.loading);
 
     return (
         <Layout style={styles.MainContainer}>
@@ -48,6 +49,7 @@ export const SignInScene = (props: SignInSceneProps) => {
             </Layout>
 
             {loading && <LoadingComponent />}
+            <CheckModal />
 
         </Layout>
     )

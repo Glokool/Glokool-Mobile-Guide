@@ -39,7 +39,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
            
             const token = await auth().currentUser?.getIdToken();
 
-            const url = 'http://192.168.35.129:4000/v3' + '/chat-rooms';
+            const url = SERVER + '/chat-rooms';
             const data = JSON.stringify({
                 travelDate : pickedDate,
                 zone : engLocation,
@@ -64,11 +64,6 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                 .catch((err) => { console.log('실패 : ', err, config) })
             
         }
-
-
-
-
-
 
     }
 

@@ -12,7 +12,8 @@ import auth from '@react-native-firebase/auth';
 import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 import { AuthContext } from '../../context';
 import { SelectableText } from '../Common';
-import { loading_start, loading_end } from '../../model/auth/auth.model';
+import { loading_start, loading_end } from '../../model/auth/Auth.UI.model';
+import { profileLoadingFailed, profileLoadingSuccess } from '../../model/profile/Profile.UI.model';
 
 export const ProfileGuideInfo = () => {
 
@@ -35,13 +36,18 @@ export const ProfileGuideInfo = () => {
     const InitGuideInfo = () => {
         dispatch(loading_start());
 
-        axios.get(SERVER + '/api/guides/' + UID)
-            .then((response : any) => {
+        axios.get(SERVER + '/guides/' + UID)
+            .then((response: any) => {
                 setGuideInfo(response.data);
                 setProfileImage(CDN + response.data.avatar);
+                dispatch(profileLoadingSuccess());
                 dispatch(loading_end());
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                console.log("Profile Details : ", e);
+                dispatch(profileLoadingFailed());
+                dispatch(loading_end());
+            });
     }
 
     // 갤러리에서 이미지 선택 
@@ -53,7 +59,7 @@ export const ProfileGuideInfo = () => {
             maxHeight: windowWidth * 0.2,
             maxWidth: windowWidth * 0.2,
         },
-            (response: ImagePickerResponse) => {
+            (response: any) => {
                 if (response.didCancel) {
                     return;
                 } else {
@@ -70,16 +76,18 @@ export const ProfileGuideInfo = () => {
         if (imageChanged) {
             const authToken = await auth().currentUser?.getIdToken();
 
-            const data = new FormData();
-
-            data.append('uid', UID);
-            data.append("avatar", {
+            const requiredData: any = {
                 name: photo?.fileName,
                 type: photo?.type,
                 uri: Platform.OS === 'android' ? 'file://' + photo?.uri : photo?.uri
-            });
+            }
 
-            axios.post(SERVER + '/api/guides/uploads', data, {
+            const data = new FormData();
+
+            data.append('uid', UID);
+            data.append("avatar", requiredData);
+
+            axios.post(SERVER + '/guides/uploads', data, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                     "Content-Type": "application/json",

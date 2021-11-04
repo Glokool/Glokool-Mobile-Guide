@@ -7,7 +7,7 @@ import { Button, Icon, Layout } from '@ui-kitten/components';
 import { FormikProps } from 'formik';
 import { FomikInputComponent } from './Formik.Input.component';
 import { useDispatch } from 'react-redux';
-import { loading_end, loading_start } from '../../../model/auth/auth.model';
+import { loading_end, loading_start } from '../../../model/auth/Auth.UI.model';
 import { windowHeight, windowWidth } from '../../../Design.component';
 import { AuthContext } from '../../../context';
 import axios from 'axios';
