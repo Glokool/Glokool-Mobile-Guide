@@ -27,7 +27,8 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
-        const url = SERVER + 'guides/' + currentUser.gid + '/chat-rooms?q=today'
+        
+        const url = SERVER + '/guides/' + currentUser.gid + '/chat-rooms?q=today'
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -35,9 +36,12 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
             }
         }
 
+        console.log(url);
+
         axios.get(url, config)
             .then((response) => {                        
                 setData(response.data);
+                console.log(response.data);
             })
             .catch((err) => {
                 console.log('에러', err);
@@ -52,7 +56,11 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                 // 오늘 진행되는 투어가 있을 때
                 <TouchableOpacity style={styles.ItemContainer} onPress={() => props.navigation.navigate(NavigatorRoute.CHAT, {
                     screen : SceneRoute.CHATROOM,
-                    params : { id : data._id }
+                    params : { 
+                        id : data._id,
+                        travelDate : data.travelDate,
+                        zone : data.zone
+                    }
                 })}>
                     <Layout style={styles.ItemInfoContainer}>
                         <Layout style={styles.LocationContainer}>

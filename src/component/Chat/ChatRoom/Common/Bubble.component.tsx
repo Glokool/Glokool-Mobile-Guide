@@ -22,18 +22,34 @@ export const renderBubble = (props : BubbleProps<IMessage>) : JSX.Element => {
              :
                 <Text style={styles.UserNameText}></Text>
             }
-            <Bubble
-                {...props}
-                wrapperStyle={{
-                    left: styles.LeftBubbleWrapper,
-                    right: styles.RightBubbleWrapper
-                }}
-                textStyle={{
-                    left: styles.LeftBubbleText,
-                    right: styles.RightBubbleText
-                }}
-                tickStyle={{ color: 'black' }}
-            />
+            {(props.currentMessage.messageType === 'emoji')?
+                <Bubble
+                    {...props}
+                    wrapperStyle={{
+                        left: styles.EmojiContainer,
+                        right: styles.EmojiContainer
+                    }}
+                    textStyle={{
+                        left: styles.LeftBubbleText,
+                        right: styles.RightBubbleText
+                    }}
+                    tickStyle={{ color: 'black' }}
+                />
+            :
+                <Bubble
+                    {...props}
+                    wrapperStyle={{
+                        left: styles.LeftBubbleWrapper,
+                        right: styles.RightBubbleWrapper
+                    }}
+                    textStyle={{
+                        left: styles.LeftBubbleText,
+                        right: styles.RightBubbleText
+                    }}
+                    tickStyle={{ color: 'black' }}
+                />
+            }
+
         </Layout>
 
     );
@@ -93,6 +109,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: 'black',
         left: 5
+    },
+
+    
+    EmojiContainer: {
+        marginBottom: 3,
+        backgroundColor: 'white',
     }
 
 })

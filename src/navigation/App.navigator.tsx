@@ -19,7 +19,11 @@ export type AppNavigatorParams = {
     [NavigatorRoute.REGISTER]: undefined;
     [NavigatorRoute.CHAT]: {
         screen: SceneRoute;
-        params: { id: string }
+        params: { 
+            id: string,
+            travelDate : string,
+            zone : string
+        }
     };
 }
 

@@ -19,6 +19,7 @@ export const ExtraKeyboardComponent = (props: any): React.ReactElement => {
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
     const ChatDB: FirebaseDatabaseTypes.Reference = props.ChatDB;
+    const StorageURL = 'chats/' + props.travelDate + props.ChatRoomID;
     const ChatRoomID: string = props.ChatRoomID;
 
     const menuVisiblity = useSelector((state: RootState) => state.ChatUIModel.menuVisiblity);
@@ -115,7 +116,7 @@ export const ExtraKeyboardComponent = (props: any): React.ReactElement => {
                             const imageType = type.split('/');
                             const reference = storage().ref();
 
-                            const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType[1]}`,).putFile(response.assets[0].uri);
+                            const picRef = reference.child(`${StorageURL}/picture/${newMessage.key}.${imageType[1]}`,).putFile(response.assets[0].uri);
 
                             picRef.on(storage.TaskEvent.STATE_CHANGED,
                                 function (snapshot) { // 업로드 도중 실행 함수
@@ -197,7 +198,7 @@ export const ExtraKeyboardComponent = (props: any): React.ReactElement => {
                 const newMessage = ChatDB.push();
                 const reference = storage().ref();
                 const imageType = images.mime.split('/');
-                const picRef = reference.child(`chats/${ChatRoomID}/picture/${newMessage.key}.${imageType}`,).putFile(images.path);
+                const picRef = reference.child(`${StorageURL}/picture/${newMessage.key}.${imageType}`,).putFile(images.path);
 
                 picRef.on(storage.TaskEvent.STATE_CHANGED,
                     function (snapshot) { // 업로드 도중 실행 함수

@@ -30,6 +30,8 @@ export const AudioRecordComponent = (props : any) => {
     const ChatDB = props.ChatDB;
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
+    const StorageURL = 'chats/' + props.travelDate + props.ChatRoomID;
+
     const audioVisiblity = useSelector((state : RootState) => state.ChatUIModel.audioVisiblity);
     const duration = useSelector((state: RootState) => state.AudioDurationModel.duration);
     const dispatch = useDispatch();
@@ -177,7 +179,7 @@ export const AudioRecordComponent = (props : any) => {
 
         const newMessage = ChatDB.push();
         const reference = storage().ref();
-        const voiceRef = reference.child(`chat/${props.roomName}/voice/${newMessage.key}.aac`,); //xxxxx는 대화방 이름으로 변경
+        const voiceRef = reference.child(`${StorageURL}/voice/${newMessage.key}.aac`,); //xxxxx는 대화방 이름으로 변경
 
         voiceRef.putFile(audioPath) 
             .then((response) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import database from '@react-native-firebase/database';
 import { Layout } from '@ui-kitten/components';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
-import { renderAvatar, renderBubble, renderCustomBubble, renderInputToolbar, renderTime } from '..';
+import { EmojiKeyboardComponent, renderAvatar, renderBubble, renderCustomBubble, renderInputToolbar, renderLoadEarlier, renderTime } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBottomSpace, getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
 import { Keyboard, KeyboardEventListener, Platform, SafeAreaView, StyleSheet } from 'react-native';
@@ -53,7 +53,7 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
         Keyboard.addListener('keyboardDidShow', KeyboardOpen);
         Keyboard.addListener('keyboardDidHide', KeyboardHide);
 
-        const Chat = database().ref('/chats/' + 'testChat/messages');
+        const Chat = database().ref('/chats/' + props.route.params.travelDate + '/'+ props.route.params.id +'/messages');
         setChatDB(Chat);
 
         var tempMessages : Array<IMessage> = [];
@@ -86,10 +86,59 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
 
     }, []);
 
-    const onSend = (message : IMessage[]) : void => {
+    const onSend = (messages : IMessage[]) : void => {
+
+        const newMessage = ChatDB?.push();
+        let message = {
+            _id: newMessage?.key,
+            user: {
+                _id: currentUser?.uid,
+                name: currentUser?.displayName
+            },
+            messageType: 'message',
+            createdAt: new Date().getTime(),
+            location: '',
+            image: '',
+            audio: '',
+            text: messages[0].text
+        }
+
+        newMessage?.set(message, (e) => {
+            if (e != null) { console.log('채팅 전송 실패 : ', e) }
+        });
+
+    }
+
+    const LoadEarlierMessages = () => {
+
+        // 50개씩 예전 메시지 로딩
+
+        ChatDB?.off('child_added'); // 먼저 기존 리스너 제거
+
+        var tempMessages: Array<IMessage> = [];
+        let newItems = false;
+
+        ChatDB?.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
+            if (newItems === false) {
+                newItems = true;
+            }
+            else {
+                setChatMessages(value => GiftedChat.append(value, snapshot.val()));
+            }
+        });
 
 
-    }  
+        ChatDB?.orderByKey().limitToLast(messagesCount + 50).once('value', (snapshot) => {
+            snapshot.forEach((data) => {
+                tempMessages = GiftedChat.append(tempMessages, data.val());
+            });
+
+            setChatMessages(tempMessages);
+        });
+
+        setMessagesCount(messagesCount + 50);
+
+    }
 
 
     return(
@@ -104,11 +153,14 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
                     bottomOffset={(isIphoneX()) ? -getBottomSpace() + 47 : (Platform.OS === 'ios') ? - 25 : 0}
                     onSend={(messages) => onSend(messages)}
                     infiniteScroll={true}
+                    loadEarlier={true}
                     user={{ _id: currentUser?.uid }}
                     messagesContainerStyle={{ paddingBottom : (keyboardOpen)? 20 : 20}}
                     alwaysShowSend={true}
                     showUserAvatar={false}
                     renderAvatarOnTop={true}
+                    renderLoadEarlier={renderLoadEarlier}
+                    onLoadEarlier={() => { LoadEarlierMessages() }}
                     renderBubble={renderBubble}
                     renderAvatar={renderAvatar}
                     renderTime={renderTime}
@@ -120,10 +172,13 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
             </Layout>
 
             {/* 엑스트라 키보드 */}
-            <ExtraKeyboardComponent ChatDB={ChatDB} ChatRoomID={'testChat'}/>
+            <ExtraKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate}/>
+
+            {/* 이모지 키보드 */}
+            <EmojiKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id}/>
 
             {/* 오디오 컴포넌트 */}
-            <AudioRecordComponent ChatDB={ChatDB} />
+            <AudioRecordComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate}/>
 
             {/* 이미지 클릭시 확대 이미지 창 출력 */}
             <ImageModal />

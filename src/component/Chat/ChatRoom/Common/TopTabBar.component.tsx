@@ -34,6 +34,8 @@ export const ChatTopTabBarComponent = (props : ChatRoomSceneProps) : React.React
                     <TouchableOpacity onPress={() => dispatch(setGuideVisiblityTrue())}>
                         <Text style={styles.Title}>{guide.name}</Text>
                     </TouchableOpacity> */}
+
+                    <Text style={styles.Title}>{props.route.params.zone.toUpperCase()}</Text>
                     
                 </Layout>
 

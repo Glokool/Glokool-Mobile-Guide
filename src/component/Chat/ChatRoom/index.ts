@@ -14,10 +14,10 @@ export { renderSystemMessage } from './Common/SystemMessage.component';
 export { renderTime } from './Common/Time.component'
 export { renderAvatar } from './Common/Avatar.component'
 //export { ChatTopTabBarComponent } from './Common/TopTabBar.component';
-//export { ExtraKeyboardComponent } from './Common/ExtraKeyboard.component';
+export { ExtraKeyboardComponent } from './Common/ExtraKeyboard.component';
 export { NoticeComponent } from './Common/Notice.component';
 export { renderLoadEarlier } from './Common/LoadEarlier.component';
-//export { EmojiKeyboardComponent } from './Common/EmojiKeyboard.component'
+export { EmojiKeyboardComponent } from './Common/EmojiKeyboard.component'
 export { renderCustomBubble } from './Common/CustomBubble.component'
 
 // Audio

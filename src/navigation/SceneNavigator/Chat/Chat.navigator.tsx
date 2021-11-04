@@ -10,6 +10,8 @@ type ChatNavigatorParams = AppNavigatorParams & {
     [SceneRoute.CHATLIST]: undefined;
     [SceneRoute.CHATROOM]: {
         id : string;
+        travelDate : string;
+        zone : string;
     };
     [SceneRoute.CHAT_ROOM_INFO]: {
         id : string;
