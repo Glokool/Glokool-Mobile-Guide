@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,20 +13,23 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash.png" translatesAutoresizingMaskIntoConstraints="NO" id="deQ-iU-38q">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Km-Ov-Ned">
+                                <rect key="frame" x="0.0" y="44" width="390" height="766"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="deQ-iU-38q" secondAttribute="trailing" id="GnZ-zQ-ndu"/>
-                            <constraint firstItem="deQ-iU-38q" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="Nsf-oe-E0p"/>
-                            <constraint firstItem="deQ-iU-38q" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="nqe-78-JVg"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="deQ-iU-38q" secondAttribute="bottom" id="xaF-1i-pWR"/>
+                            <constraint firstItem="4Km-Ov-Ned" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="ABQ-dX-pR2"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="4Km-Ov-Ned" secondAttribute="bottom" id="O1e-Nf-Qfd"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="4Km-Ov-Ned" secondAttribute="trailing" id="q13-mO-kiV"/>
+                            <constraint firstItem="4Km-Ov-Ned" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="vYr-Zw-gzz"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,9 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splash.png" width="344" height="278"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="splash_icon.png" width="1242" height="1242"/>
     </resources>
 </document>

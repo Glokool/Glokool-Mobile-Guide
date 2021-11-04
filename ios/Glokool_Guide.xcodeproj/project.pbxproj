@@ -11,7 +11,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2518DC422726980D0035A30C /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 2518DC412726980D0035A30C /* splash.png */; };
 		25529AE027224B8C00936F6B /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD227224B8C00936F6B /* Pretendard-Medium.ttf */; };
 		25529AE127224B8C00936F6B /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD327224B8C00936F6B /* Pretendard-Black.ttf */; };
 		25529AE227224B8C00936F6B /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529AD427224B8C00936F6B /* Pretendard-Regular.ttf */; };
@@ -27,6 +26,7 @@
 		25529AEC27224B8C00936F6B /* BrandonGrotesque-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529ADE27224B8C00936F6B /* BrandonGrotesque-MediumItalic.ttf */; };
 		25529AED27224B8C00936F6B /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25529ADF27224B8C00936F6B /* Pretendard-Light.ttf */; };
 		2553557E270467F0006BB339 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2553557D270467F0006BB339 /* GoogleService-Info.plist */; };
+		25821DF42733A26F00C163B6 /* splash_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25821DF32733A26F00C163B6 /* splash_icon.png */; };
 		25EC6500272A700E00615371 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25EC64FF272A700E00615371 /* QBImagePicker.storyboard */; };
 		7240A57E5E1949ED0D1C4115 /* libPods-Glokool_Guide-Glokool_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C585BE8C43465617BAFDB84 /* libPods-Glokool_Guide-Glokool_GuideTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -57,7 +57,6 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Glokool_Guide/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Glokool_Guide/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Glokool_Guide/main.m; sourceTree = "<group>"; };
-		2518DC412726980D0035A30C /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		25529AD227224B8C00936F6B /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		25529AD327224B8C00936F6B /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
 		25529AD427224B8C00936F6B /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		25529ADE27224B8C00936F6B /* BrandonGrotesque-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrandonGrotesque-MediumItalic.ttf"; sourceTree = "<group>"; };
 		25529ADF27224B8C00936F6B /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		2553557D270467F0006BB339 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25821DF32733A26F00C163B6 /* splash_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_icon.png; sourceTree = "<group>"; };
 		25EC64FF272A700E00615371 /* QBImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = QBImagePicker.storyboard; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard"; sourceTree = "<group>"; };
 		46A89A643E6B4677BD6C0524 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.ttf"; path = "../assets/fonts/Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		46FBCF3FCFEC4860AEA662B3 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.ttf"; path = "../assets/fonts/Pretendard-Bold.ttf"; sourceTree = "<group>"; };
@@ -129,9 +129,9 @@
 		13B07FAE1A68108700A75B9A /* Glokool_Guide */ = {
 			isa = PBXGroup;
 			children = (
+				25821DF32733A26F00C163B6 /* splash_icon.png */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				2518DC412726980D0035A30C /* splash.png */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -334,6 +334,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				25529AE827224B8C00936F6B /* Pretendard-ExtraLight.ttf in Resources */,
 				25529AE227224B8C00936F6B /* Pretendard-Regular.ttf in Resources */,
+				25821DF42733A26F00C163B6 /* splash_icon.png in Resources */,
 				25529AE427224B8C00936F6B /* BrandonGrotesque-Black.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				25529AEA27224B8C00936F6B /* Pretendard-ExtraBold.ttf in Resources */,
@@ -343,7 +344,6 @@
 				25529AEC27224B8C00936F6B /* BrandonGrotesque-MediumItalic.ttf in Resources */,
 				25529AE627224B8C00936F6B /* BrandonGrotesque-Medium.ttf in Resources */,
 				25529AE127224B8C00936F6B /* Pretendard-Black.ttf in Resources */,
-				2518DC422726980D0035A30C /* splash.png in Resources */,
 				25529AE927224B8C00936F6B /* Pretendard-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
