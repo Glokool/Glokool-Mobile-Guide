@@ -27,7 +27,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
-        const url = 'http://192.168.35.129:4000/v3/' + 'guides/' + currentUser.gid + '/chat-rooms?q=today'
+        const url = SERVER + 'guides/' + currentUser.gid + '/chat-rooms?q=today'
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -44,7 +44,6 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
             })         
 
     }
-
 
     return (
         <Layout style={styles.MainContainer}>

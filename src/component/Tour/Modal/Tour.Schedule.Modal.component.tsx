@@ -9,18 +9,19 @@ import { RootState } from '../../../model';
 import { setTourScheduleVisibilityFalse } from '../../../model/tour/Tour.UI.Model';
 import { TourItem } from '..';
 import axios from 'axios';
+import { SERVER } from '../../../server';
 
 // 예정된 투어 나타내는 모달
-export const TourScheduleModal = (props : { item : TourItem }) => {
-    
+export const TourScheduleModal = (props: { item: TourItem }) => {
+
     const visibility = useSelector((state: RootState) => state.TourUIModel.ScheduleVisibility);
     const dispatch = useDispatch();
     const tourComplete = true;
 
-    const CancelTour = async() => {
+    const CancelTour = async () => {
 
         const token = await auth().currentUser?.getIdToken();
-        const url = 'http://192.168.35.129:4000/v3/' + 'chat-rooms/' + props.item._id;
+        const url = SERVER + '/chat-rooms/' + props.item._id;
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -30,10 +31,16 @@ export const TourScheduleModal = (props : { item : TourItem }) => {
 
         axios.delete(url, config)
             .then((result) => {
+                Alert.alert("취소 완료", "투어 취소가 완료되었습니다.", [{ text: "확인" }])
                 dispatch(setTourScheduleVisibilityFalse());
             })
             .catch((err) => {
-                console.log(err);
+                if (err.response.status === 404) {
+                    Alert.alert("취소 완료", "투어 취소가 완료되었습니다.", [{ text: "확인" }])
+                    dispatch(setTourScheduleVisibilityFalse());
+                } else {
+                    console.log("투어 취소 : ", err);
+                }
             })
     }
 
@@ -79,10 +86,10 @@ export const TourScheduleModal = (props : { item : TourItem }) => {
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어 지역</Text>
                 <Text style={styles.ValueText}>
-                    {(props.item.zone === 'hongdae')? '홍대' : ''}
-                    {(props.item.zone === 'gwanghwamun')? '광화문' : ''}
-                    {(props.item.zone === 'myeongdong')? '명동' : ''}
-                    {(props.item.zone === 'gangnam')? '강남' : ''}
+                    {(props.item.zone === 'hongdae') ? '홍대' : ''}
+                    {(props.item.zone === 'gwanghwamun') ? '광화문' : ''}
+                    {(props.item.zone === 'myeongdong') ? '명동' : ''}
+                    {(props.item.zone === 'gangnam') ? '강남' : ''}
                 </Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
@@ -91,7 +98,7 @@ export const TourScheduleModal = (props : { item : TourItem }) => {
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어 종류</Text>
-                <Text style={styles.ValueText}>{(props.item.maxUserNum === 1)? 'Private Chat' : 'Group Chat'}</Text>
+                <Text style={styles.ValueText}>{(props.item.maxUserNum === 1) ? 'Private Chat' : 'Group Chat'}</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>동시 진행 가능 인원</Text>

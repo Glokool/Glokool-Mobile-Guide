@@ -64,17 +64,17 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     ModalTitle: {
-        fontFamily: 'Pretendard-Medium',
-        fontSize: 23,
+        fontFamily: 'Pretendard-SemiBold',
+        fontSize: 21,
         color: '#000',
         marginBottom: 15,
         alignSelf: 'center',
     },
     ModalDesc: {
         fontFamily: 'Pretendard-Regular',
-        fontSize: 16,
+        fontSize: 14.5,
         marginTop: 5,
-        color: '#333',
+        color: '#222',
         marginHorizontal: 5,
         letterSpacing: 0.7,
     },

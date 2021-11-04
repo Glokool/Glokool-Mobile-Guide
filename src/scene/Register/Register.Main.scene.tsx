@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth'
-import { StyleSheet, Text, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
 import { RegisterMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Register.Navigator';
@@ -24,45 +24,50 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
     const [travelerIndex, setTravelerIndex] = useState(-1);
 
     // 일정 등록 버튼 클릭 시
-    const PressButton = async() => {
+    const PressButton = async () => {
         // 인덱스 모두 검증 (선택되었는지 아닌지)
 
         var engLocation = '';
-        if ( locationList[locationIndex] === '홍대' ) { engLocation = 'hongdae' }
-        if ( locationList[locationIndex] === '광화문' ) { engLocation = 'gwanghwamun' }
-        if ( locationList[locationIndex] === '명동' ) { engLocation = 'myeongdong' }
-        if ( locationList[locationIndex] === '강남' ) { engLocation = 'gangnam' }
+        if (locationList[locationIndex] === '홍대') { engLocation = 'hongdae' }
+        if (locationList[locationIndex] === '광화문') { engLocation = 'gwanghwamun' }
+        if (locationList[locationIndex] === '명동') { engLocation = 'myeongdong' }
+        if (locationList[locationIndex] === '강남') { engLocation = 'gangnam' }
 
         const pickedDate = moment(Today).add(dateIndex + 1, 'days');
 
         if (dateIndex > -1 && locationIndex > -1 && travelerIndex > -1) {
-           
+
             const token = await auth().currentUser?.getIdToken();
 
             const url = SERVER + '/chat-rooms';
             const data = JSON.stringify({
-                travelDate : pickedDate,
-                zone : engLocation,
-                guide : currentUser.gid,
-                maxUserNum : travelerList[travelerIndex]
+                travelDate: pickedDate,
+                zone: engLocation,
+                guide: currentUser.gid,
+                maxUserNum: travelerList[travelerIndex]
             })
             const config = {
-                headers : {
+                headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type' : 'application/json'
+                    'Content-Type': 'application/json'
                 }
             }
 
             const params = {
-                location : locationList[locationIndex],
-                traveler : travelerList[travelerIndex],
-                date : moment(Today).add(dateIndex + 1, 'days').toString()
+                location: locationList[locationIndex],
+                traveler: travelerList[travelerIndex],
+                date: moment(Today).add(dateIndex + 1, 'days').toString()
             }
 
             axios.post(url, data, config)
                 .then((res) => { props.navigation.replace(SceneRoute.REGISTERSUCCESS, params) })
-                .catch((err) => { console.log('실패 : ', err, config) })
-            
+                .catch((err) => {
+                    console.log('실패 : ', err, config);
+                    if (err.response.status === 400) {
+                        Alert.alert("등록 실패", moment(pickedDate).format("M월 D일에 진행되는 투어가 이미 존재합니다."), [{ text: "확인" }]);
+                    }
+                })
+
         }
 
     }
@@ -182,7 +187,7 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
                         <Text style={styles.RegisterButtonText}>등록하기</Text>
                     </TouchableOpacity>
                 </Layout>
-                
+
             </Layout>
         </Layout>
     )

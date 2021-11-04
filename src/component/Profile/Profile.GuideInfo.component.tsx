@@ -174,6 +174,7 @@ export const ProfileGuideInfo = () => {
                             renderItem={renderKeyword}
                             horizontal
                             scrollEnabled={false}
+                            showsHorizontalScrollIndicator={false}
                         />
                     </Layout>
                 )}

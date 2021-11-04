@@ -1,6 +1,6 @@
 import React from 'react';
 import auth from '@react-native-firebase/auth';
-import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Layout, Divider } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
@@ -12,32 +12,40 @@ import { setTourCompleteVisibilityTrue } from '../../model/tour/Tour.UI.Model';
 import { AuthContext } from '../../context';
 import axios from 'axios';
 import { SERVER } from '../../server';
+import { useFocusEffect } from '@react-navigation/core';
 
 
 // 종료된 투어들 렌더링해주는 리스트
 export const TourCompleteList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch()
+    const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = React.useState<Array<TourItem>>([]);
     const [selectedTourItem, setSelectedTourItem] = React.useState<TourItem>({
-        zone : '',
+        zone: '',
         maxUserNum: 0,
         userCount: 0,
-        travelDate : '',
-        _id : ''
+        travelDate: '',
+        _id: ''
     });
 
     const tourComplete = false;
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
-    React.useEffect(() => {
+    useFocusEffect(() => {
         InitChatList();
-    }, [])
+    })
 
-    const InitChatList = async() => {
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        InitChatList();
+        setTimeout(() => setRefreshing(false), 500);
+    }, []);
+
+    const InitChatList = async () => {
 
         const token = await auth().currentUser?.getIdToken();
-        const url = ('http://192.168.35.129:4000/v3' + '/guides/' + currentUser.gid + '/chat-rooms?q=' + 'past');
+        const url = (SERVER + '/guides/' + currentUser.gid + '/chat-rooms?q=' + 'past');
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -48,16 +56,15 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
         axios.get(url, config)
             .then((response) => {
                 setData(response.data);
-                console.log(response.data);
             })
             .catch((err) => {
-                console.log(err);
-            })       
+                console.log("완료한 투어 : ", err);
+            })
 
     }
 
 
-    const renderItem = (item : {item : TourItem, index : number }) => {
+    const renderItem = (item: { item: TourItem, index: number }) => {
         return (
             <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourCompleteVisibilityTrue())} >
 
@@ -65,10 +72,10 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
                     <Layout style={styles.LocationContainer}>
                         <Location />
                         <Text style={styles.LocationText}>
-                            {(item.item.zone === 'hongdae')? '홍대' : ''}
-                            {(item.item.zone === 'gwanghwamun')? '광화문' : ''}
-                            {(item.item.zone === 'myeongdong')? '명동' : ''}
-                            {(item.item.zone === 'gangnam')? '강남' : ''}
+                            {(item.item.zone === 'hongdae') ? '홍대' : ''}
+                            {(item.item.zone === 'gwanghwamun') ? '광화문' : ''}
+                            {(item.item.zone === 'myeongdong') ? '명동' : ''}
+                            {(item.item.zone === 'gangnam') ? '강남' : ''}
                         </Text>
                     </Layout>
 
@@ -88,7 +95,7 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
 
                 <Layout style={styles.InfoContainer}>
                     <Text style={styles.KeyText}>투어 종류</Text>
-                    <Text style={styles.ValueText}>{(item.item.maxUserNum === 1)? 'Private Chat' : 'Group Chat'}</Text>
+                    <Text style={styles.ValueText}>{(item.item.maxUserNum === 1) ? 'Private Chat' : 'Group Chat'}</Text>
                 </Layout>
 
                 <Layout style={styles.InfoContainer}>
@@ -106,8 +113,14 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
                 data={data}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             />
-            <TourCompleteModal item={selectedTourItem}/>
+            <TourCompleteModal item={selectedTourItem} />
         </Layout>
     )
 }
