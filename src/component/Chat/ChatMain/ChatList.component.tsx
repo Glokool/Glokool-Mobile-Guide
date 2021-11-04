@@ -27,7 +27,6 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
-        
         const url = SERVER + '/guides/' + currentUser.gid + '/chat-rooms?q=today'
         const config = {
             headers: {

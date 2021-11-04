@@ -9,8 +9,7 @@ import { AngleRight } from '../../assets/icon/Common';
 import { LoadingComponent, TopTab_GoBack } from '../../component/Common';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
-import FlashMessage from "react-native-flash-message";
-import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
 import { profileLoadingSuccess } from '../../model/profile/Profile.UI.model';
 
 // 내 정보 관리 화면

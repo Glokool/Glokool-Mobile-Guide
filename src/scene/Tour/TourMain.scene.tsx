@@ -5,6 +5,7 @@ import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Ma
 import { windowWidth } from '../../Design.component';
 import { TourTopNavigator } from '../../navigation/SceneNavigator/Tour/Tour.TopNavigator';
 import { TopTab_NoButton } from '../../component/Common';
+import FlashMessage from 'react-native-flash-message';
 
 // 일정 메인 화면
 export const TourMainScene = (props: TourMainSceneProps) => {
@@ -13,6 +14,7 @@ export const TourMainScene = (props: TourMainSceneProps) => {
             <TopTab_NoButton title={'내 투어 일정'} />
             {/* 상단에 예정된 투어, 지난 투어 위한 navigator */}
             <TourTopNavigator />
+            <FlashMessage />
         </Layout>
     )
 }
