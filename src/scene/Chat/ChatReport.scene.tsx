@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import firestore from '@react-native-firebase/firestore';
 import { StyleSheet, Platform, Text, TouchableOpacity, Alert, TextInput, Linking } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { ArrowLeft } from '../../assets/icon/Common';
@@ -8,14 +9,48 @@ import { ChatReportSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.
 // 채팅 신고 화면
 export const ChatReportScene = (props: ChatReportSceneProps) => {
 
+    const ReportUID = props.route.params.uid;
+    const ChatRoomID = props.route.params.id;
     const [reportText, setReportText] = useState<string>("");
 
-    const onPressReport = () => {
-        Alert.alert(
-            "접수 완료",
-            "신고가 접수되었습니다. 신고 내용은 영업일 2일 이내에 처리됩니다.",
-            [{ text: "확인" }]
-        )
+    const onPressReport = async() => {
+
+        const Reportdoc = await firestore().collection('Reports').doc(ChatRoomID + 123)
+            .update({
+                guide : firestore.FieldValue.arrayUnion({
+                    uid : ReportUID + 12,
+                    desc : reportText
+                })
+            })
+                .then((result) => {
+                    Alert.alert(
+                        "접수 완료",
+                        "신고가 접수되었습니다. 신고 내용은 영업일 2일 이내에 처리됩니다.",
+                        [{ text: "확인" }]
+                    );
+                    setReportText('');
+                })
+                .catch((err) => {
+                    if(err.code === 'firestore/not-found') { 
+                        firestore().collection('Reports').doc(ChatRoomID + 123)
+                            .set({
+                                guide : firestore.FieldValue.arrayUnion({
+                                    uid : ReportUID + 12,
+                                    desc : reportText
+                                })
+                            })
+                            .then((result) => {
+                                Alert.alert(
+                                    "접수 완료",
+                                    "신고가 접수되었습니다. 신고 내용은 영업일 2일 이내에 처리됩니다.",
+                                    [{ text: "확인" }]
+                                );
+
+                                setReportText('');
+                            })
+                    }
+                })
+        
     }
 
     return (

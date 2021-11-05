@@ -3,12 +3,28 @@ import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Image, FlatList } 
 import { Layout, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../../Design.component';
 import { CloseIcon } from '../../../../assets/icon/Common';
-import { SNSicon_FB } from '../../../../assets/icon/Chat';
+import { SNSicon_FB, SNSicon_IG } from '../../../../assets/icon/Chat';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../model';
 import { setChatModalVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
 import { useNavigation } from '@react-navigation/core';
 import { SceneRoute } from '../../../../navigation/App.route';
+
+interface UserInfo {
+    _id : string;
+    avatar : string;
+    email : string;
+    name : string;
+    uid : string;
+    phone : {
+        countryCode: string;
+        number : string;
+    };
+    messenger: {
+        id: string;
+        platform: string;
+    }
+}
 
 // 채팅 이용자 프로필 모달
 export const ChatUserModal = (props: any) => {
@@ -16,10 +32,15 @@ export const ChatUserModal = (props: any) => {
     const Visibility = useSelector((state: RootState) => state.ChatUIModel.ChatModalVisibility);
     const dispatch = useDispatch();
 
+    const data : UserInfo | undefined = props.data;
+
     // 신고 버튼 클릭 시
     const onPressReport = () => {
         dispatch(setChatModalVisiblityFalse());
-        props.navigation.navigate(SceneRoute.CHAT_REPORT);
+        props.navigation.navigate(SceneRoute.CHAT_REPORT, { 
+            id : props.ChatRoomID,
+            uid : data?.uid
+        });
     }
 
     return (
@@ -40,7 +61,7 @@ export const ChatUserModal = (props: any) => {
             </Layout>
 
             <Image
-                source={require('../../../../assets/image/Common/GloGray.png')}
+                source={{uri : data?.avatar}}
                 style={styles.ImageContainer}
                 resizeMode="contain"
             />
@@ -49,17 +70,17 @@ export const ChatUserModal = (props: any) => {
 
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>이메일</Text>
-                <Text style={styles.ValueText}>glokoolofficial@gmail.com</Text>
+                <Text style={styles.ValueText}>{data?.email}</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>연락처</Text>
-                <Text style={styles.ValueText}>01087245922</Text>
+                <Text style={styles.ValueText}>+{data?.phone.countryCode} {data?.phone.number}123</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>비상연락처</Text>
                 <Layout style={styles.snsContainer}>
-                    <SNSicon_FB />
-                    <Text style={[styles.ValueText, { marginLeft: 5 }]}>glokoolofficial</Text>
+                    {data?.messenger.platform === 'Facebook'? <SNSicon_FB /> : <SNSicon_IG /> }
+                    <Text style={[styles.ValueText, { marginLeft: 5 }]}>{data?.messenger.id}</Text>
                 </Layout>
             </Layout>
 
@@ -101,6 +122,7 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: windowWidth * 0.2,
         height: windowWidth * 0.2,
+        borderRadius: 50
     },
     InfoContainer: {
         flexDirection: 'row',

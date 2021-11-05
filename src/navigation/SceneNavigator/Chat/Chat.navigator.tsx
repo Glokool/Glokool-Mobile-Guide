@@ -16,7 +16,10 @@ type ChatNavigatorParams = AppNavigatorParams & {
     [SceneRoute.CHAT_ROOM_INFO]: {
         id : string;
     };
-    [SceneRoute.CHAT_REPORT]: undefined;
+    [SceneRoute.CHAT_REPORT]: { 
+        id : string;
+        uid : string 
+    };
 }
 
 export interface ChatMainSceneProps {

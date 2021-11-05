@@ -11,12 +11,35 @@ import { TopTab_GoBack } from '../../component/Common';
 import { SERVER } from '../../server';
 import axios from 'axios';
 
+interface UserInfo {
+    _id : string;
+    avatar : string;
+    email : string;
+    name : string;
+    uid : string;
+    phone : {
+        countryCode: string;
+        number : string;
+    };
+    messenger: {
+        id: string;
+        platform: string;
+    }
+}
+
+
 // 채팅 참여자 목록 화면
 export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
 
     const dispatch = useDispatch();
+    const [data, setData] = React.useState<Array<UserInfo>>([]);
+    const [selectedData, setSelectedData] = React.useState<UserInfo | undefined >();
 
     const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
+
+    React.useEffect(() => {
+        InitChatRoomInfo();
+    }, [])
 
     const InitChatRoomInfo = async() => {
         
@@ -27,31 +50,36 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
+            params : {
+                q : 'guide-app'
+            }
         }
 
         axios.get(url, config)
             .then((response) => {
-
+                setData(response.data.users);
+                console.log(response.data.users);
             })
             .catch((err) => {
-                
+                if (err.code === 404) { console.error('해당 유저가 없습니다 - 채팅창이 비었습니다') }
+                else { console.error(' 서버 에러 발생! ') }
             })
-
 
     }
 
-
-
     // 리스트 아이템 렌더링
-    const renderItem = (item : {item : any, index : number}) => {
+    const renderItem = (item : {item : UserInfo, index : number}) => {
         return (
             <Layout style={styles.ItemContainer}>
                 <Layout style={styles.ProfileContainer}>
-                    <Image source={require('../../assets/image/Common/GloGray.png')} style={styles.ImageContainer} resizeMode="contain" />
-                    <Text style={styles.NameText}>{item.item}</Text>
+                    <Image source={{ uri : item.item.avatar }} style={styles.ImageContainer} resizeMode="contain" />
+                    <Text style={styles.NameText}>{item.item.name}</Text>
                 </Layout>
 
-                <TouchableOpacity style={styles.DetailsButton} onPress={() => dispatch(setChatModalVisiblityTrue())}>
+                <TouchableOpacity style={styles.DetailsButton} onPress={() => {
+                    dispatch(setChatModalVisiblityTrue());
+                    setSelectedData(item.item);
+                }}>
                     <Text style={styles.DetailsButtonText}>예약정보</Text>
                 </TouchableOpacity>
             </Layout>
@@ -64,12 +92,13 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
             <TopTab_GoBack title={'채팅방 정보'} />
 
             <FlatList
-                data={sampleData}
+                data={data}
                 renderItem={renderItem}
                 ListHeaderComponent={<Text style={styles.TitleText}>여행객 리스트</Text>}
+                showsVerticalScrollIndicator={false}
             />
             {/* 참여자 프로필 모달 */}
-            <ChatUserModal navigation={props.navigation}/>
+            <ChatUserModal ChatRoomID={props.route.params.id} navigation={props.navigation} data={selectedData} />
         </Layout>
     )
 }
@@ -84,6 +113,7 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: windowWidth * 0.11,
         height: windowWidth * 0.11,
+        borderRadius: 50
     },
     ProfileContainer: {
         flexDirection: 'row',
