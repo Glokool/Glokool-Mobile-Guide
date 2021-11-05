@@ -29,7 +29,6 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const InitChatList = async() => {
 
         const token = await auth().currentUser?.getIdToken();
-        
         const url = SERVER + '/guides/' + currentUser.gid + '/chat-rooms?q=today'
         const config = {
             headers: {
@@ -86,10 +85,10 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                                         <Text style={styles.ChatUsersNum}>{data.userCount}</Text>
                                     </Layout>
                                     <Layout style={styles.UnreadMessageContainer}>
-                                        {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
+                                        {/* {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
                                         <Layout style={[styles.UnreadMessageCount, { backgroundColor: count > 0 ? '#7777ff' : '#cdcdcd' }]}>
                                             <Text style={styles.UnreadMessageCountText}>{12}</Text>
-                                        </Layout>
+                                        </Layout> */}
                                     </Layout>
                                 </>
                             )}

@@ -4,6 +4,7 @@ import { StyleSheet, Text, FlatList, TouchableOpacity, RefreshControl } from 're
 import { Layout, Divider } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../Design.component';
 import moment from 'moment';
+import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
 import { Location } from '../../assets/icon/Common';
 import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { TourCompleteModal, TourItem } from '.';
@@ -59,6 +60,11 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
             })
             .catch((err) => {
                 console.log("완료한 투어 : ", err);
+                // showMessage({
+                //     message: "서버 통신에 실패하였습니다. 다시 시도해주세요.",
+                //     type: "danger",
+                //     icon: "danger",
+                // });
             })
 
     }

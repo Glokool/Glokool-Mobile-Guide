@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import auth from '@react-native-firebase/auth';
 import { StyleSheet, Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Divider, Layout } from '@ui-kitten/components';
 import { Location } from '../../assets/icon/Common';
-
+import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
 import { windowWidth, windowHeight } from '../../Design.component';
-import moment from 'moment';
 import { NewTourButton } from '../Chat';
 import { TourMainSceneProps } from '../../navigation/SceneNavigator/Tour/Tour.Main.Navigator';
 import { useDispatch } from 'react-redux';
@@ -20,10 +19,10 @@ import { useFocusEffect } from '@react-navigation/core';
 export const TourScheduleList = (props: TourMainSceneProps) => {
 
     const dispatch = useDispatch();
-    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
+    const { currentUser, setCurrentUser } = useContext(AuthContext);
     const [refreshing, setRefreshing] = useState(false);
-    const [data, setData] = React.useState<Array<TourItem>>([]);
-    const [selectedTourItem, setSelectedTourItem] = React.useState<TourItem>({
+    const [data, setData] = useState<Array<TourItem>>([]);
+    const [selectedTourItem, setSelectedTourItem] = useState<TourItem>({
         zone: '',
         maxUserNum: 0,
         userCount: 0,
@@ -33,9 +32,9 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
 
     useFocusEffect(() => {
         InitChatList();
-    })
+    });
 
-    const onRefresh = React.useCallback(() => {
+    const onRefresh = useCallback(() => {
         setRefreshing(true);
         InitChatList();
         setTimeout(() => setRefreshing(false), 500);
@@ -58,6 +57,11 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
             })
             .catch((err) => {
                 console.log("예정된 투어 : ", err);
+                // showMessage({
+                //     message: "서버 통신에 실패하였습니다. 다시 시도해주세요.",
+                //     type: "danger",
+                //     icon: "danger",
+                // });
             })
 
     }
@@ -122,6 +126,7 @@ export const TourScheduleList = (props: TourMainSceneProps) => {
                 }
             />
             <TourScheduleModal item={selectedTourItem} />
+            
         </Layout>
     )
 }
@@ -152,6 +157,7 @@ const styles = StyleSheet.create({
     LocationContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#0000',
     },
     LocationText: {
         fontFamily: 'Pretendard-SemiBold',

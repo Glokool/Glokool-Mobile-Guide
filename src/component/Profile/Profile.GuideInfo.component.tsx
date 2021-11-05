@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Button, Layout } from '@ui-kitten/components'
+import { Layout } from '@ui-kitten/components'
 import { windowWidth, windowHeight } from '../../Design.component';
 import { ImagePicker } from '../../assets/icon/Profile';
 import FastImage from 'react-native-fast-image';
@@ -9,7 +9,7 @@ import { SERVER, CDN } from '../../server';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { Asset, ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, launchImageLibrary } from 'react-native-image-picker';
 import { AuthContext } from '../../context';
 import { SelectableText } from '../Common';
 import { loading_start, loading_end } from '../../model/auth/Auth.UI.model';
@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     KeywordBox: {
         width: windowWidth * 0.36,
         marginHorizontal: windowWidth * 0.02,
+        marginTop: windowWidth * 0.05,
         borderRadius: 50,
         paddingVertical: 8,
         backgroundColor: '#efefef',
