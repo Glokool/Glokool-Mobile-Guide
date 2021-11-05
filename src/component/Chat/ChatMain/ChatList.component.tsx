@@ -20,6 +20,8 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
     const [data, setData] = React.useState<TourItem | undefined>();
 
+    const count = 0;
+
     React.useEffect(() => {
         InitChatList();
     }, [])
