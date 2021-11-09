@@ -714,7 +714,7 @@ PODS:
     - React-Core
   - react-native-maps (0.29.3):
     - React-Core
-  - react-native-pager-view (5.4.7):
+  - react-native-pager-view (5.4.8):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -786,7 +786,7 @@ PODS:
     - React-perflogger (= 0.65.1)
   - RNAudio (4.3.0):
     - React
-  - RNCAsyncStorage (1.15.9):
+  - RNCAsyncStorage (1.15.11):
     - React-Core
   - RNFastImage (8.5.11):
     - React-Core
@@ -828,7 +828,7 @@ PODS:
     - TOCropViewController
   - RNPermissions (3.1.0):
     - React-Core
-  - RNScreens (3.7.2):
+  - RNScreens (3.9.0):
     - React-Core
     - React-RCTImage
   - RNSound (0.11.1):
@@ -1089,7 +1089,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: d6a30377b40a338bd09d6ad36ce48dc5d12b5792
   react-native-image-picker: 9c8a2687b69300ad9e95cec5d38f35ab9d32467d
   react-native-maps: 41d01d8e0afcebe32bec9eea3bd945adc1b18f7a
-  react-native-pager-view: 741e7606ee2f6e399fc7da777f5519454a4b38c5
+  react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-perflogger: fd28ee1f2b5b150b00043f0301d96bd417fdc339
@@ -1105,7 +1105,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 85187f19dd9c47a7c102f9994f9d14e4dc2110de
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
   RNAudio: cae2991f2dccb75163f260b60da8051717b959fa
-  RNCAsyncStorage: 26f25150da507524a7815f2ada06ca0967f65633
+  RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
   RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
   RNFBApp: dda844e7084b590eb3d9bec1b2115cabbe4bc40e
   RNFBAuth: e3c3e57792b75b019c8d49a5f919c735b8431b01
@@ -1116,7 +1116,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
   RNPermissions: 4b54095940aea8c03fa3e6c92d4ac3647b31ed4e
-  RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
+  RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   RNSound: 27e8268bdb0a1f191f219a33267f7e0445e8d62f
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d

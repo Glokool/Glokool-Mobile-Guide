@@ -37,7 +37,7 @@ export default function App() {
 
         setTimeout(() => {
             SplashScreen.hide();
-        }, 500)
+        }, 2000)
 
         // 앱 종료시 실행 함수
         return () => {
