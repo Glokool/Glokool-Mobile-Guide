@@ -38,6 +38,9 @@ export const TourScheduleModal = (props: { item: TourItem }) => {
                 if (err.response.status === 404) {
                     Alert.alert("취소 완료", "투어 취소가 완료되었습니다.", [{ text: "확인" }])
                     dispatch(setTourScheduleVisibilityFalse());
+                } else if (err.response.status === 400) {
+                    Alert.alert("취소 실패", "투어가 진행되기 하루 전에는 투어를 취소할 수 없습니다.", [{ text: "확인" }])
+                    dispatch(setTourScheduleVisibilityFalse());
                 } else {
                     console.log("투어 취소 : ", err);
                 }

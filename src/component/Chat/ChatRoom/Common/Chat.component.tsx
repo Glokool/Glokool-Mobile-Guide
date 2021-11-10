@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import database from '@react-native-firebase/database';
 import { Layout } from '@ui-kitten/components';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { EmojiKeyboardComponent, renderAvatar, renderBubble, renderCustomBubble, renderInputToolbar, renderLoadEarlier, renderTime } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBottomSpace, getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
-import { Keyboard, KeyboardEventListener, Platform, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, KeyboardEventListener, Platform, SafeAreaView, StyleSheet, } from 'react-native';
 import { windowHeight, windowWidth } from '../../../../Design.component';
 
 import { RootState } from '../../../../model';
@@ -20,9 +20,10 @@ import { renderSound } from '../Audio/Sound.component';
 import { LocationModal } from '../Location/LocationModal.component';
 import { ExtraKeyboardComponent } from './ExtraKeyboard.component';
 import { AudioRecordComponent } from '../Audio/AudioRecord.component';
+import { useFocusEffect } from '@react-navigation/core';
 
 
-export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement => {
+export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => {
 
     // React 모듈 함수 (DB, 메시지 저장)
     const [ChatDB, setChatDB] = React.useState<FirebaseDatabaseTypes.Reference | undefined>(undefined);
@@ -30,20 +31,39 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
     const [messagesCount, setMessagesCount] = React.useState<number>(50);
 
     // Auth 관련 함수
-    const { currentUser, setCurrentUser } = React.useContext(AuthContext); 
+    const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
     // React-Redux 관련 함수 (UI 제어)
     const dispatch = useDispatch();
-    const menuVisiblity = useSelector((state : RootState) => state.ChatUIModel.menuVisiblity);
-    const emojiVisiblity = useSelector((state : RootState) => state.ChatKeyboardModel.emojiKeyboardVisiblity);
-    const keyboardOpen = useSelector((state : RootState) => state.ChatKeyboardModel.keyboard);
+    const menuVisiblity = useSelector((state: RootState) => state.ChatUIModel.menuVisiblity);
+    const emojiVisiblity = useSelector((state: RootState) => state.ChatKeyboardModel.emojiKeyboardVisiblity);
+    const keyboardOpen = useSelector((state: RootState) => state.ChatKeyboardModel.keyboard);
+
+
+    const [iphoneXKeyboardPadding, setIphoneXKeyboardPadding] = useState<number>(getBottomSpace() - 34);
+    const [iosKeyboardPadding, setIosKeyboardPadding] = useState<number>(-14);
+
+    React.useEffect(() => {
+        const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+            setIphoneXKeyboardPadding(getBottomSpace() - 34);
+            setIosKeyboardPadding(-14);
+        });
+        const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+            setIphoneXKeyboardPadding(getBottomSpace() - 13);
+            setIosKeyboardPadding(20);
+        });
+        return () => {
+            showSubscription.remove();
+            hideSubscription.remove();
+        };
+    },[]);
 
     // 최초 시동 함수
     React.useEffect(() => {
 
         const KeyboardOpen = (e) => {
             dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
-            dispatch(setKeyboardTrue())          
+            dispatch(setKeyboardTrue())
         }
 
         const KeyboardHide = (e) => {
@@ -53,22 +73,22 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
         Keyboard.addListener('keyboardDidShow', KeyboardOpen);
         Keyboard.addListener('keyboardDidHide', KeyboardHide);
 
-        const Chat = database().ref('/chats/' + props.route.params.travelDate + '/'+ props.route.params.id +'/messages');
+        const Chat = database().ref('/chats/' + props.route.params.travelDate + '/' + props.route.params.id + '/messages');
         setChatDB(Chat);
 
-        var tempMessages : Array<IMessage> = [];
+        var tempMessages: Array<IMessage> = [];
         let newItems = false;
 
         Chat.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-            if(newItems === false){
+            if (newItems === false) {
                 newItems = true;
             }
             else {
                 setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-            }            
+            }
         });
-        
-        Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {            
+
+        Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
             snapshot.forEach((data) => {
                 tempMessages = GiftedChat.append(tempMessages, data.val());
             });
@@ -86,7 +106,7 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
 
     }, []);
 
-    const onSend = (messages : IMessage[]) : void => {
+    const onSend = (messages: IMessage[]): void => {
 
         const newMessage = ChatDB?.push();
         let message = {
@@ -141,11 +161,11 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
     }
 
 
-    return(
+    return (
         <SafeAreaView style={styles.Container}>
 
             <ChatTopTabBarComponent {...props} />
-            
+
             <Layout style={styles.Container}>
                 <GiftedChat
                     messages={ChatMessages}
@@ -155,7 +175,7 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
                     infiniteScroll={true}
                     loadEarlier={true}
                     user={{ _id: currentUser?.uid }}
-                    messagesContainerStyle={{ paddingBottom : (keyboardOpen)? 20 : 20}}
+                    messagesContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? (isIphoneX() ? iphoneXKeyboardPadding : iosKeyboardPadding) : 20 }}
                     alwaysShowSend={true}
                     showUserAvatar={false}
                     renderAvatarOnTop={true}
@@ -172,13 +192,13 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
             </Layout>
 
             {/* 엑스트라 키보드 */}
-            <ExtraKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate}/>
+            <ExtraKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate} />
 
             {/* 이모지 키보드 */}
-            <EmojiKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id}/>
+            <EmojiKeyboardComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} />
 
             {/* 오디오 컴포넌트 */}
-            <AudioRecordComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate}/>
+            <AudioRecordComponent ChatDB={ChatDB} ChatRoomID={props.route.params.id} travelDate={props.route.params.travelDate} />
 
             {/* 이미지 클릭시 확대 이미지 창 출력 */}
             <ImageModal />
@@ -192,7 +212,7 @@ export const ChatComponent = (props : ChatRoomSceneProps) : React.ReactElement =
 
 const styles = StyleSheet.create({
     Container: {
-        flex : 1,
+        flex: 1,
     },
 
 })

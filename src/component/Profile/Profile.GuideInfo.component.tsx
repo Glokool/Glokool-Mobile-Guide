@@ -104,6 +104,7 @@ export const ProfileGuideInfo = () => {
                     "프로필 이미지 업로드에 실패하였습니다. 다시 시도해 주세요.",
                     [{ text: "확인" }]
                 )
+                console.log(e.response)
             })
         }
     }
