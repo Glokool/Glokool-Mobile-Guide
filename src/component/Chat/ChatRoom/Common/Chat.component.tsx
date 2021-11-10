@@ -77,15 +77,9 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
         setChatDB(Chat);
 
         var tempMessages: Array<IMessage> = [];
-        let newItems = false;
 
         Chat.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-            if (newItems === false) {
-                newItems = true;
-            }
-            else {
-                setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-            }
+            setChatMessages(value => GiftedChat.append(value, snapshot.val()));
         });
 
         Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
@@ -95,6 +89,8 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
             setChatMessages(tempMessages);
         });
+
+        
 
         return () => {
 
@@ -132,19 +128,13 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
     const LoadEarlierMessages = () => {
 
         // 50개씩 예전 메시지 로딩
-
+        setChatMessages([]);
         ChatDB?.off('child_added'); // 먼저 기존 리스너 제거
 
         var tempMessages: Array<IMessage> = [];
-        let newItems = false;
 
         ChatDB?.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-            if (newItems === false) {
-                newItems = true;
-            }
-            else {
-                setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-            }
+            setChatMessages(value => GiftedChat.append(value, snapshot.val()));
         });
 
 
