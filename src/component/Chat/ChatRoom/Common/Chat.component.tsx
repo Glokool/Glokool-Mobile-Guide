@@ -21,6 +21,7 @@ import { LocationModal } from '../Location/LocationModal.component';
 import { ExtraKeyboardComponent } from './ExtraKeyboard.component';
 import { AudioRecordComponent } from '../Audio/AudioRecord.component';
 import { useFocusEffect } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => {
@@ -44,6 +45,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
     const [iosKeyboardPadding, setIosKeyboardPadding] = useState<number>(-14);
 
     React.useEffect(() => {
+
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
             setIphoneXKeyboardPadding(getBottomSpace() - 34);
             setIosKeyboardPadding(-14);
@@ -60,6 +62,8 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
     // 최초 시동 함수
     React.useEffect(() => {
+
+        AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
 
         const KeyboardOpen = (e) => {
             dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
@@ -127,8 +131,6 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
     const LoadEarlierMessages = () => {
 
-        // 50개씩 예전 메시지 로딩
-        setChatMessages([]);
         ChatDB?.off('child_added'); // 먼저 기존 리스너 제거
 
         var tempMessages: Array<IMessage> = [];

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth'
+import messaging from '@react-native-firebase/messaging'
 import { StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native'
 import { SignInData } from '../../../model/auth/auth.validation.model';
 import { Button, Icon, Layout } from '@ui-kitten/components';
@@ -40,7 +41,45 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
             //빈칸일 경우 진행하지 않음
             FirebaseAuth.signInWithEmailAndPassword(values.email, values.password)
                 .then((response) => {
+                    
+                    if (auth().currentUser != undefined) {
+
+                        const TokenReceive = messaging().getToken()
+                            .then(async(result) => {
+                                console.log('등록 토큰 리프레시 성공 : ', result);
+            
+                                const token = await auth().currentUser?.getIdToken();
+            
+                                const url = SERVER + '/guides/token';
+                                const data = JSON.stringify({
+                                    uid : auth().currentUser?.uid,
+                                    token : result
+                                })
+                                const config = {
+                                    headers: {
+                                        Authorization: `Bearer ${token}`,
+                                        "Content-Type": "application/json",
+                                    }
+                                }
+            
+                                axios.post(url, data, config)
+                                    .then((response) => {
+                                        console.log('서버 메시징 토큰 등록 성공');
+                                        console.log(response.data);
+                                    })
+                                    .catch((err) => {
+                                        console.error('서버 메시징 토큰 등록 오류 : ', err)
+                                    })                    
+            
+                            })
+                            .catch((err) => {
+                                console.error('등록 토큰 리프레시 실패 : ', err)
+                            })
+                    }
+                             
                     dispatch(loading_end());
+
+
                     
                 })
                 .catch((err) => {

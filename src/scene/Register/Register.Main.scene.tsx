@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import auth from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import { StyleSheet, Text, FlatList, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { windowHeight, windowWidth } from '../../Design.component';
@@ -15,7 +16,7 @@ import axios from 'axios';
 export const RegisterMainScene = (props: RegisterMainSceneProps) => {
 
     const Today = new Date();
-    const locationList = ['홍대', '광화문', '명동', '강남'];
+    const locationList = ['홍대', '광화문'];
     const travelerList = [1];
 
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
@@ -60,7 +61,18 @@ export const RegisterMainScene = (props: RegisterMainSceneProps) => {
             }
 
             axios.post(url, data, config)
-                .then((res) => { props.navigation.replace(SceneRoute.REGISTERSUCCESS, params) })
+                .then((res : any) => { 
+
+                    const TokenMessage = messaging().subscribeToTopic(res.data._id)
+                        .then(() => {
+                            console.log('FCM 토픽 구독 성공 : ', res.data._id);
+                            props.navigation.replace(SceneRoute.REGISTERSUCCESS, params);
+                        })
+                        .catch((err) => {
+                            console.log('FCM 토픽 구독 실패 : ', err);                        
+                        })                
+                    
+                })
                 .catch((err) => {
                     console.log('실패 : ', err, config);
                     if (err.response.status === 400) {

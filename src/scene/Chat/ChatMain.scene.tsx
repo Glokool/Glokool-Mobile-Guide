@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { ChatMainSceneProps } from '../../navigation/SceneNavigator/Chat/Chat.navigator';
 import { ChatMainBanner } from '../../assets/icon/Chat';
@@ -12,7 +12,8 @@ export const ChatMainScene = (props: ChatMainSceneProps) => {
     return (
         <Layout style={styles.MainContainer}>
             {/* 채팅 상단 배너 */}
-            <ChatMainBanner width={windowWidth} height={windowWidth/414 * 149.3} />
+
+            <ChatMainBanner width={windowWidth} height={windowWidth/414 * 149.3} onPress={() => Linking.openURL('https://spring-wok-92b.notion.site/4cc039f1d5f0452bbca9036578998faa')}/>
             {/* 채팅 리스트 */}
             <ChatListComponent {...props} />
             {/* 새로운 일정 등록 버튼 */}

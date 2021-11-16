@@ -35,8 +35,6 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     const [data, setData] = React.useState<Array<UserInfo>>([]);
     const [selectedData, setSelectedData] = React.useState<UserInfo | undefined >();
 
-    const sampleData = ['Sarah', 'Wendy', 'Jack', 'Kevin', 'Github', 'React Native', 'Flutter'];
-
     React.useEffect(() => {
         InitChatRoomInfo();
     }, [])

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as eva from '@eva-design/eva';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './model';
@@ -12,6 +14,8 @@ import { AuthContext } from './context';
 import messaging from '@react-native-firebase/messaging';
 import { authContextType } from './context/AuthContext';
 import { StatusBar, LogBox } from 'react-native';
+import { SERVER } from './server';
+import axios from 'axios';
 
 
 // 백그라운드 메시지 리스너
@@ -33,7 +37,49 @@ export default function App() {
         // 포어그라운드 메시지 리스너
         const unsubscribe = messaging().onMessage(async (remoteMessage) => {
 
+            AsyncStorage.setItem('ChatCheck', 'true');
+            AsyncStorage.setItem(`ChatCheck_${remoteMessage.data?.roomId}`, remoteMessage.data?.time);
+
         });
+
+        if (auth().currentUser != undefined) {
+
+            const TokenReceive = messaging().getToken()
+                .then(async(result) => {
+                    console.log('등록 토큰 리프레시 성공 : ', result);
+
+                    const token = await auth().currentUser?.getIdToken();
+
+                    const url = SERVER + '/guides/token';
+                    const data = JSON.stringify({
+                        uid : auth().currentUser?.uid,
+                        token : result
+                    })
+                    const config = {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        }
+                    }
+
+                    axios.post(url, data, config)
+                        .then((response) => {
+                            console.log('서버 메시징 토큰 등록 성공');
+                            console.log(response.data);
+                        })
+                        .catch((err) => {
+                            console.error('서버 메시징 토큰 등록 오류 : ', err)
+                        })                    
+
+                })
+                .catch((err) => {
+                    console.error('등록 토큰 리프레시 실패 : ', err)
+                })
+        }
+
+        
+
+
 
         setTimeout(() => {
             SplashScreen.hide();

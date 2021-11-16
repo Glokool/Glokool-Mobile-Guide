@@ -11,6 +11,7 @@ import axios from 'axios';
 import { SERVER } from '../../../server';
 import { AuthContext } from '../../../context';
 import { TourItem } from '../../Tour';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -18,12 +19,19 @@ import { TourItem } from '../../Tour';
 export const ChatListComponent = (props: ChatMainSceneProps) => {
 
     const { currentUser, setCurrentUser } = React.useContext(AuthContext);
-    const [data, setData] = React.useState<TourItem | undefined>();
+    const [chat, setChat] = React.useState(false);
+    const [time, setTime] = React.useState<Date | undefined>(undefined);
+    const [data, setData] = React.useState<TourItem | undefined>(undefined);
 
     const count = 0;
 
     React.useEffect(() => {
-        InitChatList();
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            InitChatList();
+        });
+        
+
+        return unsubscribe;
     }, [])
 
     const InitChatList = async() => {
@@ -37,12 +45,22 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
             }
         }
 
-        console.log(url);
 
         axios.get(url, config)
-            .then((response) => {                        
+            .then(async(response) => {                        
                 setData(response.data);
-                console.log(response.data);
+
+                var data : any = response.data;
+                var state : any = await AsyncStorage.getItem(`ChatCheck_${data._id}`);
+
+                if (state != null) {
+                    setTime(new Date(state));
+                }
+
+                else { 
+                    setTime(undefined);
+                }
+                          
             })
             .catch((err) => {
                 console.log('에러', err);
@@ -72,7 +90,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                     </Layout>
                     <Divider style={styles.Divider} />
 
-                    <Layout style={[styles.TravelerContainer, { justifyContent: data ? 'center' : 'space-between' }]}>
+                    <Layout style={[styles.TravelerContainer, { justifyContent: data ? 'space-around' : 'space-between' }]}>
                         {(data.userCount === 0) ?
                             (
                                 // 매칭이 안됐을 때
@@ -84,12 +102,19 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                                         <Text style={styles.ChatUsersText}>현재 참여 인원 수</Text>
                                         <Text style={styles.ChatUsersNum}>{data.userCount}</Text>
                                     </Layout>
-                                    <Layout style={styles.UnreadMessageContainer}>
-                                        {/* {count > 0 && <Text style={styles.UnreadMessageTime}>14:53</Text>}
-                                        <Layout style={[styles.UnreadMessageCount, { backgroundColor: count > 0 ? '#7777ff' : '#cdcdcd' }]}>
-                                            <Text style={styles.UnreadMessageCountText}>{12}</Text>
-                                        </Layout> */}
-                                    </Layout>
+
+                                    {(time != undefined)?
+                                        <Layout style={styles.UnreadMessageContainer}>
+                                            <Text style={styles.UnreadMessageTime}>{moment(time).format('hh:mm')}</Text>
+                                            <Layout style={[styles.UnreadMessageCount, { backgroundColor: '#7777ff' }]}>
+                                                <Text style={styles.UnreadMessageCountText}>{}</Text>
+                                            </Layout>
+                                        </Layout>
+                                    :
+                                        null
+                                    }
+
+
                                 </>
                             )}
                     </Layout>
@@ -189,10 +214,12 @@ const styles = StyleSheet.create({
         color: '#929292'
     },
     UnreadMessageCount: {
-        borderRadius: 14,
+        borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 5,
+        width: 10,
+        height: 10,
+        paddingVertical: 10,
         paddingHorizontal: 10,
         marginTop: 3,
     },
