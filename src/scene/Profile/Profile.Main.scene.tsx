@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     WelcomeContainer: {
         paddingHorizontal: windowWidth * 0.05,
-        paddingTop: windowHeight * 0.15
+        paddingTop: windowHeight * 0.01
     },
     WelcomeText: {
         fontFamily: 'Pretendard-Bold',

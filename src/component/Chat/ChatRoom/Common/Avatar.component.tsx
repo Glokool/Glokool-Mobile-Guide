@@ -10,18 +10,17 @@ export const renderAvatar = (props: AvatarProps<IMessage>): React.ReactElement =
 
     if (props.currentMessage?.user.avatar == undefined) {
         return (
-            <>
-            <Layout style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, marginRight: 5, marginTop: 10 }}>
-                <FastImage source={require('../../../../assets/image/Common/GloGray.png')} style={{ width: windowWidth * 0.08, height: windowWidth * 0.08 }} resizeMode={'stretch'} />              
+            
+            <Layout style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, marginRight: 5, marginTop: 10, justifyContent: 'center', alignItems: 'center' }}>
+                <FastImage source={require('../../../../assets/image/Common/GloGray.png')} style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, borderRadius: 50 }} resizeMode={'stretch'} />              
+                <Text numberOfLines={1} style={styles.NicknameText}>{props.currentMessage?.user.name}</Text>
             </Layout>
-            <Text numberOfLines={1} style={styles.NicknameText}>{props.currentMessage?.user.name}</Text>
-            </>
         )
     }
 
     return (
-        <Layout style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, marginRight: 5, marginTop: 10 }}>
-            <FastImage source={require('../../../../assets/image/Common/GloGray.png')} style={{ width: windowWidth * 0.08, height: windowWidth * 0.08 }} resizeMode={'stretch'} />  
+        <Layout style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, marginRight: 5, marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+            <FastImage source={{uri : props.currentMessage?.user.avatar }} style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, borderRadius: 50 }} resizeMode={'stretch'} />  
             <Text numberOfLines={1} style={styles.NicknameText}>{props.currentMessage.user.name}</Text>
         </Layout>
     )
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
         fontFamily : 'Pretendard-Medium',
         fontSize: 14,
         color : '#575757',
-        top: -10, 
+        top: -20, 
         left : 0,
         overflow : 'visible',
         width: 100

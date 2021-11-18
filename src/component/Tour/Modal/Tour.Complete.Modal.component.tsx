@@ -15,8 +15,6 @@ export const TourCompleteModal = (props : {item : TourItem}) => {
     const visibility = useSelector((state: RootState) => state.TourUIModel.CompleteVisibility);
     const dispatch = useDispatch();
 
-    const tourComplete = true;
-
     return (
         <Modal
             visible={visibility}
@@ -53,7 +51,7 @@ export const TourCompleteModal = (props : {item : TourItem}) => {
 
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>투어 진행 상태</Text>
-                {tourComplete ?
+                {(props.item.userCount != 0)?
                     <Text style={[styles.ValueText, { color: '#7777ff' }]}>종료된 투어</Text>
                     :
                     <Text style={[styles.ValueText, { color: '#F77777' }]}>매칭 실패 투어</Text>

@@ -84,7 +84,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                     <Layout style={styles.ItemInfoContainer}>
                         <Layout style={styles.LocationContainer}>
                             <Location />
-                            <Text style={styles.LocationText}>지역</Text>
+                            <Text style={styles.LocationText}>{(data.zone === 'hongdae')? '홍대' : '광화문' }</Text>
                         </Layout>
                         <Text>{moment(new Date()).format('YYYY.MM.DD')}</Text>
                     </Layout>

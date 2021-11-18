@@ -71,8 +71,16 @@ export const TourCompleteList = (props: TourMainSceneProps) => {
 
 
     const renderItem = (item: { item: TourItem, index: number }) => {
+
+
         return (
-            <TouchableOpacity style={styles.ItemContainer} onPress={() => dispatch(setTourCompleteVisibilityTrue())} >
+            <TouchableOpacity 
+                style={styles.ItemContainer} 
+                onPress={() => {
+                    setSelectedTourItem(item.item)
+                    dispatch(setTourCompleteVisibilityTrue());
+                }}
+            >
 
                 <Layout style={styles.TopContainer}>
                     <Layout style={styles.LocationContainer}>
