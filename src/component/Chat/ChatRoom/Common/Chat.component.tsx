@@ -5,9 +5,9 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { EmojiKeyboardComponent, renderAvatar, renderBubble, renderCustomBubble, renderInputToolbar, renderLoadEarlier, renderTime } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBottomSpace, getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
-import { Keyboard, KeyboardEventListener, Platform, SafeAreaView, StyleSheet, } from 'react-native';
+import { Alert, Keyboard, KeyboardEventListener, Platform, SafeAreaView, StyleSheet, } from 'react-native';
 import { windowHeight, windowWidth } from '../../../../Design.component';
-
+import { filterText } from '../../../../model/FilterChat';
 import { RootState } from '../../../../model';
 import { AuthContext } from '../../../../context';
 import { ChatTopTabBarComponent } from './TopTabBar.component';
@@ -58,7 +58,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             showSubscription.remove();
             hideSubscription.remove();
         };
-    },[]);
+    }, []);
 
     // 최초 시동 함수
     React.useEffect(() => {
@@ -94,7 +94,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             setChatMessages(tempMessages);
         });
 
-        
+
 
         return () => {
 
@@ -108,25 +108,28 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
     const onSend = (messages: IMessage[]): void => {
 
-        const newMessage = ChatDB?.push();
-        let message = {
-            _id: newMessage?.key,
-            user: {
-                _id: currentUser?.uid,
-                name: currentUser?.displayName
-            },
-            messageType: 'message',
-            createdAt: new Date().getTime(),
-            location: '',
-            image: '',
-            audio: '',
-            text: messages[0].text
+        if (filterText(messages[0].text)) {
+            const newMessage = ChatDB?.push();
+            let message = {
+                _id: newMessage?.key,
+                user: {
+                    _id: currentUser?.uid,
+                    name: currentUser?.displayName
+                },
+                messageType: 'message',
+                createdAt: new Date().getTime(),
+                location: '',
+                image: '',
+                audio: '',
+                text: messages[0].text
+            }
+
+            newMessage?.set(message, (e) => {
+                if (e != null) { console.log('채팅 전송 실패 : ', e) }
+            });
+        } else {
+            Alert.alert("욕설이 감지되었습니다.");
         }
-
-        newMessage?.set(message, (e) => {
-            if (e != null) { console.log('채팅 전송 실패 : ', e) }
-        });
-
     }
 
     const LoadEarlierMessages = () => {
