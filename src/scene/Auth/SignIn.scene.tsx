@@ -20,6 +20,11 @@ export const SignInScene = (props: SignInSceneProps) => {
     //로그인 상황 확인을 위한 Loading 상태 관리
     const loading = useSelector((state: RootState) => state.AuthUIModel.loading);
 
+    const onPressSignUpButton = () => {
+        // Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6');
+        props.navigation.navigate(SceneRoute.SIGNUP);
+    }
+
     return (
         <Layout style={styles.MainContainer}>
 
@@ -43,7 +48,7 @@ export const SignInScene = (props: SignInSceneProps) => {
             <Layout style={{ alignItems: 'center' }}>
                 <Text style={styles.MakeAccountText}>아직 계정이 없으신가요?</Text>
 
-                <TouchableOpacity style={styles.ApplyTAButton} onPress={() => Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')}>
+                <TouchableOpacity style={styles.ApplyTAButton} onPress={() => onPressSignUpButton()}>
                     <Text style={styles.ApplyTAText}>Travel Assistant 지원하기</Text>
                 </TouchableOpacity>
             </Layout>

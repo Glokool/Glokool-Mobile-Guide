@@ -3,11 +3,12 @@ import { RouteProp } from '@react-navigation/native'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { AppNavigatorParams } from './app.navigator';
 import { SceneRoute } from './App.route';
-import { SignInScene, PasswordScene } from '../scene/Auth';
+import { SignInScene, SignUpScene, PasswordScene, SignUpSuccessScene } from '../scene/Auth';
 
 type AuthNavigatorParams = AppNavigatorParams & {
     [SceneRoute.SIGNIN]: undefined;
     [SceneRoute.SIGNUP]: undefined;
+    [SceneRoute.SIGNUP_SUCCESS]: undefined;
     [SceneRoute.PASSWORD]: undefined;
 }
 
@@ -31,6 +32,8 @@ const Stack = createStackNavigator();
 export const AuthNavigator = (): React.ReactElement => (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={SceneRoute.SIGNIN} component={SignInScene} />
+        <Stack.Screen name={SceneRoute.SIGNUP} component={SignUpScene} />
+        <Stack.Screen name={SceneRoute.SIGNUP_SUCCESS} component={SignUpSuccessScene} />
         <Stack.Screen name={SceneRoute.PASSWORD} component={PasswordScene} />
     </Stack.Navigator>
 )
