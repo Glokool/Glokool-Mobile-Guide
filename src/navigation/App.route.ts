@@ -14,6 +14,8 @@ export enum SceneRoute {
     SIGNUP = 'Sign Up',
     SIGNUP_SUCCESS = 'Sign Up Success',
     PASSWORD = 'Password',
+    POLICY_01 = 'Policy 01',
+    POLICY_02 = 'Policy 02',
 
     // Main 네비게이터
     HOME = 'Home',

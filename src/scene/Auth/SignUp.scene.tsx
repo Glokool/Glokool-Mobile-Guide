@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Platform, Pressable } from 'react-native'
-import { Layout } from '@ui-kitten/components'
+import { Layout, CheckBox } from '@ui-kitten/components'
 import { SignUpSceneProps } from '../../navigation/Auth.navigator';
 import { ArrowLeft } from '../../assets/icon/Common';
 import { windowHeight, windowWidth } from '../../Design.component';
@@ -20,6 +20,9 @@ export const SignUpScene = (props: SignUpSceneProps) => {
     const [license, setLicense] = useState("");
     const [foreign, setForeign] = useState("");
 
+    const [policy01, setPolicy01] = useState(false);
+    const [policy02, setPolicy02] = useState(false);
+
     const enabled =
         name == "" ||
         birth == "" ||
@@ -28,7 +31,9 @@ export const SignUpScene = (props: SignUpSceneProps) => {
         education == "" ||
         language == "" ||
         license == "" ||
-        foreign == "";
+        foreign == "" ||
+        !policy01 ||
+        !policy02;
 
     const onPressButton = () => {
         const birthDate = birth.split('.');
@@ -154,13 +159,28 @@ export const SignUpScene = (props: SignUpSceneProps) => {
                         multiline={true}
                         numberOfLines={5}
                         textAlignVertical='top'
-                        style={styles.TextAreaStyle}
+                        style={[styles.TextAreaStyle, { marginBottom: 30 }]}
                         placeholder={'ex) 유학 5년, 해외거주 5년, 교환학생 5년'}
                         placeholderTextColor={'#ccc'}
                         onChangeText={(e) => {
                             setForeign(e);
                         }}
                     />
+                    <Text style={styles.KeyText}>약관 동의</Text>
+                    <Layout style={styles.PolicyContainer} >
+                        <CheckBox checked={policy01} onChange={(check) => setPolicy01(check)} />
+                        <Pressable onPress={() => props.navigation.navigate(SceneRoute.POLICY_01)}>
+                            <Text style={styles.PolicyText}>이용약관 [필수]</Text>
+                        </Pressable>
+                    </Layout>
+
+                    <Layout style={styles.PolicyContainer}>
+                        <CheckBox checked={policy02} onChange={(check) => setPolicy02(check)} />
+                        <Pressable onPress={() => props.navigation.navigate(SceneRoute.POLICY_02)}>
+                            <Text style={styles.PolicyText}>개인정보 처리방침 [필수]</Text>
+                        </Pressable>
+                    </Layout>
+
                 </Layout>
             </ScrollView>
         </Layout>
@@ -228,4 +248,15 @@ const styles = StyleSheet.create({
         fontSize: 15,
         height: windowHeight * 0.15,
     },
+    PolicyText: {
+        fontFamily: 'Pretendard-Medium',
+        fontSize: 16,
+        color: '#686868',
+        marginLeft: 10,
+    },
+    PolicyContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: windowHeight * 0.05,
+    }
 })

@@ -3,13 +3,15 @@ import { RouteProp } from '@react-navigation/native'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { AppNavigatorParams } from './app.navigator';
 import { SceneRoute } from './App.route';
-import { SignInScene, SignUpScene, PasswordScene, SignUpSuccessScene } from '../scene/Auth';
+import { SignInScene, SignUpScene, PasswordScene, PolicyScene_01, PolicyScene_02, SignUpSuccessScene } from '../scene/Auth';
 
 type AuthNavigatorParams = AppNavigatorParams & {
     [SceneRoute.SIGNIN]: undefined;
     [SceneRoute.SIGNUP]: undefined;
     [SceneRoute.SIGNUP_SUCCESS]: undefined;
     [SceneRoute.PASSWORD]: undefined;
+    [SceneRoute.POLICY_01]: undefined;
+    [SceneRoute.POLICY_02]: undefined;
 }
 
 export interface SignInSceneProps {
@@ -35,5 +37,7 @@ export const AuthNavigator = (): React.ReactElement => (
         <Stack.Screen name={SceneRoute.SIGNUP} component={SignUpScene} />
         <Stack.Screen name={SceneRoute.SIGNUP_SUCCESS} component={SignUpSuccessScene} />
         <Stack.Screen name={SceneRoute.PASSWORD} component={PasswordScene} />
+        <Stack.Screen name={SceneRoute.POLICY_01} component={PolicyScene_01} />
+        <Stack.Screen name={SceneRoute.POLICY_02} component={PolicyScene_02} />
     </Stack.Navigator>
 )
