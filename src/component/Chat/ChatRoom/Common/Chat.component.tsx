@@ -27,6 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => {
 
     // React 모듈 함수 (DB, 메시지 저장)
+    const [msg, setMsg] = React.useState("");
     const [ChatDB, setChatDB] = React.useState<FirebaseDatabaseTypes.Reference | undefined>(undefined);
     const [ChatMessages, setChatMessages] = React.useState<Array<IMessage>>([]);
     const [messagesCount, setMessagesCount] = React.useState<number>(50);
@@ -125,7 +126,10 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             }
 
             newMessage?.set(message, (e) => {
-                if (e != null) { console.log('채팅 전송 실패 : ', e) }
+                if (e != null) { 
+                    console.log('채팅 전송 실패 : ', e);
+                    setMsg(msg);
+                }
             });
         } else {
             Alert.alert("욕설이 감지되었습니다.");
@@ -164,6 +168,8 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             <Layout style={styles.Container}>
                 <GiftedChat
                     messages={ChatMessages}
+                    text={msg}
+                    onInputTextChanged={(text) => setMsg(text)}
                     textInputProps={{ autoFocus: true }}
                     bottomOffset={(isIphoneX()) ? -getBottomSpace() + 47 : (Platform.OS === 'ios') ? - 25 : 0}
                     onSend={(messages) => onSend(messages)}
