@@ -54,7 +54,7 @@ export const SignInScene = (props: SignInSceneProps) => {
             </Layout>
 
             {loading && <LoadingComponent />}
-            <CheckModal />
+            <CheckModal navigation={props.navigation}/>
 
         </Layout>
     )

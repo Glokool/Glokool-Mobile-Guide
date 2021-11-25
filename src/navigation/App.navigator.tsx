@@ -66,7 +66,7 @@ export const AppNavigator = (props: React.ReactElement): React.ReactElement => {
                     })
                     .catch((err) => {
                         dispatch(checkGuideTrue())
-                        console.log("test")
+                        console.log(err.response)
                         auth().signOut();
                     })
             }

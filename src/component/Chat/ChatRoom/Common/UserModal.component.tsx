@@ -66,7 +66,7 @@ export const ChatUserModal = (props: any) => {
                 resizeMode="contain"
             />
 
-            <Text style={styles.NameText}>Glokool</Text>
+            <Text style={styles.NameText}>{data?.name}</Text>
 
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>이메일</Text>
@@ -74,7 +74,7 @@ export const ChatUserModal = (props: any) => {
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>연락처</Text>
-                <Text style={styles.ValueText}>+{data?.phone.countryCode} {data?.phone.number}123</Text>
+                <Text style={styles.ValueText}>+{data?.phone.countryCode} {data?.phone.number}</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>비상연락처</Text>
@@ -122,7 +122,9 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: windowWidth * 0.2,
         height: windowWidth * 0.2,
-        borderRadius: 50
+        borderRadius: 50,
+        borderWidth: 0.5,
+        borderColor: '#ccc',
     },
     InfoContainer: {
         flexDirection: 'row',
