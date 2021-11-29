@@ -66,8 +66,10 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
     }, []);
 
     // 최초 시동 함수
-    React.useEffect(() => {
+    // React.useEffect((r
 
+
+    useFocusEffect(()=>{
         const unsubscribe = props.navigation.addListener('focus', () => {
             FocusScreen();
 
@@ -104,16 +106,16 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
         });
 
-        const unfocus = props.navigation.addListener('blur', () => {
-            if (ChatDB != undefined) { ChatDB.off('child_added') }
-            Keyboard.removeAllListeners('keyboardDidShow');
-            Keyboard.removeAllListeners('keyboardDidHide');
-        })
+        // const unfocus = props.navigation.addListener('blur', () => {
+        //     if (ChatDB != undefined) { ChatDB.off('child_added') }
+        //     Keyboard.removeAllListeners('keyboardDidShow');
+        //     Keyboard.removeAllListeners('keyboardDidHide');
+        // })
 
         return () => {
 
             unsubscribe;
-            unfocus;
+            // unfocus;
 
             if (ChatDB != undefined) { ChatDB.off('child_added') }
             Keyboard.removeAllListeners('keyboardDidShow');
@@ -121,8 +123,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
         };
 
-    }, []);
-
+    })
 
     const FocusScreen = async () => {
 
