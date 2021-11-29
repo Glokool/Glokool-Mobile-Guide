@@ -6,7 +6,7 @@ import { renderLocationMessage } from '../Location/LocationMessage.component';
 import { EmojiMessages } from './EmojiBubble.component';
 
 
-export const renderCustomBubble = (props: BubbleProps<IMessage> & ChatMessageType, dispatch : Dispatch<any>) : React.ReactNode => {
+export const renderCustomBubble = (props: BubbleProps<IMessage> & ChatMessageType, dispatch : Dispatch<any>,) : React.ReactNode => {
 
     if (props.currentMessage?.messageType === 'location') {
         return renderLocationMessage(props, dispatch)

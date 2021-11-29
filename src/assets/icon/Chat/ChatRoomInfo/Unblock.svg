@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="28" viewBox="0 0 80 28">
+  <g id="그룹_2543" data-name="그룹 2543" transform="translate(-295 -306)">
+    <g id="사각형_3184" data-name="사각형 3184" transform="translate(295 306)" fill="none" stroke="#77f" stroke-width="2">
+      <rect width="80" height="28" rx="14" stroke="none"/>
+      <rect x="1" y="1" width="78" height="26" rx="13" fill="none"/>
+    </g>
+    <text id="차단_해제" data-name="차단 해제" transform="translate(309 325)" fill="#77f" font-size="14" font-family="Pretendard-SemiBold, Pretendard" font-weight="600"><tspan x="0" y="0">차단 해제</tspan></text>
+  </g>
+</svg>

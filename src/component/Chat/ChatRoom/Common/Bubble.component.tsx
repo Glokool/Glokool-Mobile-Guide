@@ -5,9 +5,20 @@ import { Bubble, BubbleProps, IMessage } from 'react-native-gifted-chat';
 import { Layout, Text } from '@ui-kitten/components';
 
 // 대화창 말풍선 
-export const renderBubble = (props: BubbleProps<IMessage>): JSX.Element => {
+export const renderBubble = (props: BubbleProps<IMessage>, block : Array<String>): JSX.Element => {
 
     const userID = auth().currentUser?.uid;
+    var tempMessage = props;
+
+
+    if (props.currentMessage != undefined && block != undefined && block.includes(props.currentMessage?.user._id.toString()) === true){
+        tempMessage.currentMessage = {
+            _id : props.currentMessage?._id,
+            createdAt : props.currentMessage?.createdAt,
+            text : "차단된 유저입니다.",
+            user : props.currentMessage.user
+        };
+    }
 
     return (
         <Layout style={styles.BubbleContainer}>
@@ -24,7 +35,8 @@ export const renderBubble = (props: BubbleProps<IMessage>): JSX.Element => {
             }
             {(props.currentMessage.messageType === 'emoji') ?
                 <Bubble
-                    {...props}
+        
+                    {...props && props.currentMessage.text }
                     wrapperStyle={{
                         left: styles.EmojiContainer,
                         right: styles.EmojiContainer
@@ -63,6 +75,7 @@ const styles = StyleSheet.create({
     },
 
     LeftBubbleWrapper: {
+        minHeight : 0,
         backgroundColor: '#7777FF',
         borderTopStartRadius: 5,
         borderTopEndRadius: 15,
@@ -77,6 +90,7 @@ const styles = StyleSheet.create({
     },
 
     RightBubbleWrapper: {
+        minHeight : 0,
         backgroundColor: 'white',
         borderTopStartRadius: 15,
         borderTopEndRadius: 15,

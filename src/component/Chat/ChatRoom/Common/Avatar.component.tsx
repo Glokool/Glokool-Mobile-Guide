@@ -8,9 +8,10 @@ import { AuthContext } from '../../../../context';
 
 export const renderAvatar = (props: AvatarProps<IMessage>): React.ReactElement => {
 
+
+        
     if (props.currentMessage?.user.avatar == undefined) {
-        return (
-            
+        return (            
             <Layout style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, marginRight: 5, marginTop: 10, justifyContent: 'center', alignItems: 'center' }}>
                 <FastImage source={require('../../../../assets/image/Common/GloGray.png')} style={{ width: windowWidth * 0.08, height: windowWidth * 0.08, borderRadius: 50 }} resizeMode={'stretch'} />              
                 <Text numberOfLines={1} style={styles.NicknameText}>{props.currentMessage?.user.name}</Text>
@@ -24,6 +25,8 @@ export const renderAvatar = (props: AvatarProps<IMessage>): React.ReactElement =
             <Text numberOfLines={1} style={styles.NicknameText}>{props.currentMessage.user.name}</Text>
         </Layout>
     )
+    
+
 }
 
 const styles = StyleSheet.create({

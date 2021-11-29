@@ -20,6 +20,7 @@ interface LocationBubbleMessage {
 
 export const renderLocationMessage = (props: BubbleProps<IMessage> & LocationBubbleMessage, dispatch : Dispatch<any>) => {
 
+
     // Mapview (My Location) 출력을 위한 코드
     if (props.currentMessage.messageType === 'location') {
 

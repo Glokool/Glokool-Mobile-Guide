@@ -1,5 +1,6 @@
-import React, { } from 'react';
-import { StyleSheet, Platform, Text, TouchableOpacity, Alert, Image, FlatList } from 'react-native';
+import React from 'react';
+import auth from '@react-native-firebase/auth';
+import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { Layout, Modal } from '@ui-kitten/components';
 import { windowWidth, windowHeight } from '../../../../Design.component';
 import { CloseIcon } from '../../../../assets/icon/Common';
@@ -7,8 +8,11 @@ import { SNSicon_FB, SNSicon_IG } from '../../../../assets/icon/Chat';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../model';
 import { setChatModalVisiblityFalse } from '../../../../model/chat/Chat.UI.model';
-import { useNavigation } from '@react-navigation/core';
 import { SceneRoute } from '../../../../navigation/App.route';
+import { Block, Unblock } from '../../../../assets/icon/Chat/ChatRoomInfo';
+import axios from 'axios';
+import { SERVER } from '../../../../server';
+import { useNavigation } from '@react-navigation/core';
 
 interface UserInfo {
     _id : string;
@@ -29,10 +33,50 @@ interface UserInfo {
 // 채팅 이용자 프로필 모달
 export const ChatUserModal = (props: any) => {
 
+    const navigation = useNavigation();
+
     const Visibility = useSelector((state: RootState) => state.ChatUIModel.ChatModalVisibility);
     const dispatch = useDispatch();
-
+    const [block, setBlock] = React.useState<Array<String>>([]);
     const data : UserInfo | undefined = props.data;
+    const [blockable, setBlockable] = React.useState(false);
+
+   
+    React.useEffect(() => {      
+       
+        console.log("야호 보인다", data?.uid);
+        InitModal();
+
+    }, [Visibility])
+
+    const InitModal = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+        var url = SERVER + '/chat-rooms/'+ props.ChatRoomID + '/user/block';
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        }
+
+        axios.get(url, config)
+            .then((response : any) => {
+                setBlock(response.data.blockedUser);
+
+                if (data?.uid != undefined && response.data.blockedUser.indexOf(data?.uid) != -1){                    
+                    setBlockable(true);
+                }
+                else {
+                    setBlockable(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
+
 
     // 신고 버튼 클릭 시
     const onPressReport = () => {
@@ -41,6 +85,40 @@ export const ChatUserModal = (props: any) => {
             id : props.ChatRoomID,
             uid : data?.uid
         });
+    };
+
+    const onPressBlock = async() => {
+
+        const token = await auth().currentUser?.getIdToken();
+
+        console.log(data?.uid);
+
+        const blockData = JSON.stringify({
+            uid : data?.uid
+        });
+
+        const config = {
+            headers : {
+                'Authorization' : `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }            
+        };
+        
+        axios.post((SERVER + '/chat-rooms/'+ props.ChatRoomID +'/user/block'), blockData, config)
+            .then((response : any) => {
+                dispatch(setChatModalVisiblityFalse());
+                setBlock(response.data.blockedUser);
+                console.log(response.data);
+
+                if (data?.uid != undefined) {
+                    if (blockData.indexOf(data?.uid) != -1) {
+                        setBlockable(true);
+                    }
+                }
+
+            })
+
+
     }
 
     return (
@@ -66,7 +144,7 @@ export const ChatUserModal = (props: any) => {
                 resizeMode="contain"
             />
 
-            <Text style={styles.NameText}>Glokool</Text>
+            <Text style={styles.NameText}>{data?.name}</Text>
 
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>이메일</Text>
@@ -84,6 +162,12 @@ export const ChatUserModal = (props: any) => {
                 </Layout>
             </Layout>
 
+            <TouchableOpacity
+                style={styles.blockButton}
+                onPress={() => onPressBlock()}
+            >
+                {(blockable)? <Unblock /> : <Block />}
+            </TouchableOpacity>
 
         </Modal>
     )
@@ -158,5 +242,8 @@ const styles = StyleSheet.create({
         height: windowWidth * 0.05,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    blockButton: {
+        marginTop: 15,
     }
 })

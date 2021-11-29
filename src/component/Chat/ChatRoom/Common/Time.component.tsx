@@ -6,6 +6,7 @@ import { Layout } from '@ui-kitten/components'
 // 채팅 메세지에 달려있는 시간 표시
 export const renderTime = (props: any) : React.ReactElement => {
 
+
     return (
         <Layout
             style={(props.position === 'right')? styles.BubbleRightTimeContainer : styles.BubbleLeftTimeContainer}>

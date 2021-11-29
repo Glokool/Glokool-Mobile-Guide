@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Layout } from '@ui-kitten/components';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
@@ -22,11 +23,14 @@ import { ExtraKeyboardComponent } from './ExtraKeyboard.component';
 import { AudioRecordComponent } from '../Audio/AudioRecord.component';
 import { useFocusEffect } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SERVER } from '../../../../server';
+import axios from 'axios';
 
 
 export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => {
 
     // React 모듈 함수 (DB, 메시지 저장)
+    const [block, setBlock] = React.useState<Array<String>>([]);
     const [msg, setMsg] = React.useState("");
     const [ChatDB, setChatDB] = React.useState<FirebaseDatabaseTypes.Reference | undefined>(undefined);
     const [ChatMessages, setChatMessages] = React.useState<Array<IMessage>>([]);
@@ -64,6 +68,11 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
     // 최초 시동 함수
     React.useEffect(() => {
 
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            FocusScreen();
+         });
+        
+
         AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
 
         const KeyboardOpen = (e) => {
@@ -99,6 +108,8 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
         return () => {
 
+            unsubscribe;
+
             if (ChatDB != undefined) { ChatDB.off('child_added') }
             Keyboard.removeAllListeners('keyboardDidShow');
             Keyboard.removeAllListeners('keyboardDidHide');
@@ -106,6 +117,30 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
         };
 
     }, []);
+
+    
+    const FocusScreen = async() => {
+
+        var token = await auth().currentUser?.getIdToken();
+        var url = SERVER + '/chat-rooms/'+ props.route.params.id + '/user/block';
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        }
+
+        axios.get(url, config)
+            .then((response : any) => {
+                setBlock(response.data.blockedUser);
+                console.log(response.data.blockedUser);
+            })
+            .catch((err) => {
+                console.log(err);
+                setBlock([]);
+            })
+
+    }
 
     const onSend = (messages: IMessage[]): void => {
 
@@ -179,15 +214,16 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
                     messagesContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? (isIphoneX() ? iphoneXKeyboardPadding : iosKeyboardPadding) : 20 }}
                     alwaysShowSend={true}
                     showUserAvatar={false}
+                    showAvatarForEveryMessage={false}
                     renderAvatarOnTop={true}
                     renderLoadEarlier={renderLoadEarlier}
                     onLoadEarlier={() => { LoadEarlierMessages() }}
-                    renderBubble={renderBubble}
+                    renderBubble={(props) => renderBubble(props, block)}
                     renderAvatar={renderAvatar}
                     renderTime={renderTime}
                     renderMessageAudio={renderSound}
                     renderCustomView={(props) => renderCustomBubble(props, dispatch)}
-                    renderMessageImage={(props) => renderImage(props, dispatch)}
+                    renderMessageImage={(props) => renderImage(props, dispatch,)}
                     renderInputToolbar={(props) => renderInputToolbar(props, dispatch, menuVisiblity, emojiVisiblity)}
                 />
             </Layout>

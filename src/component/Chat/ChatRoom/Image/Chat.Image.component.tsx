@@ -1,3 +1,4 @@
+import { Layout } from '@ui-kitten/components';
 import React, { Dispatch } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
