@@ -61,7 +61,7 @@ export const SignUpScene = (props: SignUpSceneProps) => {
 
         axios(config)
             .then((response) => { props.navigation.replace(SceneRoute.SIGNUP_SUCCESS) })
-            .catch((e) => { console.log(e.status) });
+            .catch((e) => { console.log(e.response.status) });
     }
 
     return (

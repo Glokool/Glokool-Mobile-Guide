@@ -152,7 +152,7 @@ export const ChatUserModal = (props: any) => {
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>연락처</Text>
-                <Text style={styles.ValueText}>+{data?.phone.countryCode} {data?.phone.number}123</Text>
+                <Text style={styles.ValueText}>+{data?.phone.countryCode} {data?.phone.number}</Text>
             </Layout>
             <Layout style={styles.InfoContainer}>
                 <Text style={styles.KeyText}>비상연락처</Text>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: windowWidth * 0.2,
         height: windowWidth * 0.2,
-        borderRadius: 50
+        borderRadius: 50,
     },
     InfoContainer: {
         flexDirection: 'row',

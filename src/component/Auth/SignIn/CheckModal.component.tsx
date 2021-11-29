@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity, Linking, } from 'react-native'
-import { Button, Divider, Layout, Modal } from '@ui-kitten/components'
+import React, {  } from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, Linking, } from 'react-native'
+import { Layout, Modal } from '@ui-kitten/components'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../model';
 import { checkGuideFalse } from '../../../model/auth/Auth.UI.model';
 import { CloseIcon } from '../../../assets/icon/Common';
 import { windowWidth } from '../../../Design.component';
+import { SceneRoute } from '../../../navigation/App.route';
 
-export const CheckModal = () => {
+export const CheckModal = (props: any) => {
 
     const visible = useSelector((state: RootState) => state.AuthUIModel.checkGuide);
     const dispatch = useDispatch();
@@ -45,7 +46,14 @@ export const CheckModal = () => {
                         <Text style={[styles.ButtonText, { color: '#444' }]}>앱 스토어로 이동</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')} style={styles.Button}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            // Linking.openURL('https://forms.gle/2H88ZFCQ3NbH1KDu6')
+                            props.navigation.navigate(SceneRoute.SIGNUP);
+                            dispatch(checkGuideFalse());
+                        }}
+                        style={styles.Button}
+                    >
                         <Text style={[styles.ButtonText, { color: '#5656ff' }]}>TA 지원하기</Text>
                     </TouchableOpacity>
                 </Layout>

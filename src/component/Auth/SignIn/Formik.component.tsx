@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging'
 import { StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity } from 'react-native'
 import { SignInData } from '../../../model/auth/auth.validation.model';
@@ -24,6 +25,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
     //Re-Rendering이 자주 일어나지 않는 UI 관련 Hook
     const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
     const [authError, setAuthError] = useState<string>("");
+    const [guide, setGuide] = useState(false);
 
     //비밀번호 입력창 Icon rendering
     const renderIcon = (props: any): React.ReactElement => (
@@ -33,27 +35,37 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
     );
 
     //컨트롤을 위한 코드 (분리 가능)
-    function SignIn(values: SignInData): void {
+    async function SignIn(values: SignInData): Promise<void> {
 
         dispatch(loading_start());
 
+        // const tempDataList: Array<String> = [];
+        // const response = await firestore().collection('Guides').get();
+
+        // response.docs.forEach((val) => {
+        //     tempDataList.push(val.data().email);
+        // })
+
+        // const isGuide = tempDataList.includes(props.values.email);
+
         if (values.email != "" || values.password != "") {
+
             //빈칸일 경우 진행하지 않음
             FirebaseAuth.signInWithEmailAndPassword(values.email, values.password)
                 .then((response) => {
-                    
+
                     if (auth().currentUser != undefined) {
 
                         const TokenReceive = messaging().getToken()
-                            .then(async(result) => {
-                                console.log('등록 토큰 리프레시 성공 : ', result);
-            
+                            .then(async (result) => {
+                                console.log('로그인 - 등록 토큰 리프레시 성공 : ', result);
+
                                 const token = await auth().currentUser?.getIdToken();
-            
+
                                 const url = SERVER + '/guides/token';
                                 const data = JSON.stringify({
-                                    uid : auth().currentUser?.uid,
-                                    token : result
+                                    uid: auth().currentUser?.uid,
+                                    token: result
                                 })
                                 const config = {
                                     headers: {
@@ -61,31 +73,31 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                                         "Content-Type": "application/json",
                                     }
                                 }
-            
+
                                 axios.post(url, data, config)
                                     .then((response) => {
-                                        console.log('서버 메시징 토큰 등록 성공');
+                                        console.log('로그인 - 서버 메시징 토큰 등록 성공');
                                         console.log(response.data);
                                     })
                                     .catch((err) => {
-                                        console.error('서버 메시징 토큰 등록 오류 : ', err)
-                                    })                    
-            
+                                        console.log('서버 메시징 토큰 등록 오류 : ', err)
+                                    })
+
+                                setCurrentUser(auth().currentUser);
                             })
                             .catch((err) => {
                                 console.error('등록 토큰 리프레시 실패 : ', err)
                             })
                     }
-                             
                     dispatch(loading_end());
-
-
-                    
                 })
                 .catch((err) => {
                     setAuthError(err.code);
                     dispatch(loading_end())
                 })
+        } else {
+            setAuthError('auth/user-not-found');
+            dispatch(loading_end());
         }
 
     }

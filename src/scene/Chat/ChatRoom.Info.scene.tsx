@@ -12,14 +12,14 @@ import { SERVER } from '../../server';
 import axios from 'axios';
 
 interface UserInfo {
-    _id : string;
-    avatar : string;
-    email : string;
-    name : string;
-    uid : string;
-    phone : {
+    _id: string;
+    avatar: string;
+    email: string;
+    name: string;
+    uid: string;
+    phone: {
         countryCode: string;
-        number : string;
+        number: string;
     };
     messenger: {
         id: string;
@@ -34,34 +34,35 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     const dispatch = useDispatch();
     const [block, setBlock] = React.useState<Array<String>>([]);
     const [data, setData] = React.useState<Array<UserInfo>>([]);
-    const [selectedData, setSelectedData] = React.useState<UserInfo | undefined >();
+    const [selectedData, setSelectedData] = React.useState<UserInfo | undefined>();
 
     React.useEffect(() => {
         InitChatRoomInfo();
     }, [])
 
-    const InitChatRoomInfo = async() => {
-        
+    const InitChatRoomInfo = async () => {
+
         const token = await auth().currentUser?.getIdToken();
-        const url = SERVER + '/chat-rooms/' + props.route.params.id + '/people';
+        const url = SERVER + '/chat-rooms/' + props.route.params.id + '/people'
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
-            params : {
-                q : 'guide-app'
+            params: {
+                q: 'guide-app'
             }
         }
 
         axios.get(url, config)
-            .then((response : any) => {
+            .then((response: any) => {
                 setData(response.data.users);
                 console.log(response.data.users);
             })
             .catch((err) => {
-                if (err.code === 404) { console.error('해당 유저가 없습니다 - 채팅창이 비었습니다') }
-                else { console.error(' 서버 에러 발생! ') }
+                console.log(err.response.status);
+                if (err.response.status === 404) { console.error('해당 유저가 없습니다 - 채팅창이 비었습니다') }
+                // else { console.error(' 서버 에러 발생! ') }
             })
 
 
@@ -69,11 +70,11 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
     }
 
     // 리스트 아이템 렌더링
-    const renderItem = (item : {item : UserInfo, index : number}) => {
+    const renderItem = (item: { item: UserInfo, index: number }) => {
         return (
             <Layout style={styles.ItemContainer}>
                 <Layout style={styles.ProfileContainer}>
-                    <Image source={{ uri : item.item.avatar }} style={styles.ImageContainer} resizeMode="contain" />
+                    <Image source={{ uri: item.item.avatar }} style={styles.ImageContainer} resizeMode="contain" />
                     <Text style={styles.NameText}>{item.item.name}</Text>
                 </Layout>
 
@@ -82,6 +83,7 @@ export const ChatRoomInfoScene = (props: ChatRoomInfoSceneProps) => {
                 <TouchableOpacity style={styles.DetailsButton} onPress={() => {
                     dispatch(setChatModalVisiblityTrue());
                     setSelectedData(item.item);
+                    console.log(item.item);
                 }}>
                     <Text style={styles.DetailsButtonText}>예약정보</Text>
                 </TouchableOpacity>
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: windowWidth * 0.11,
         height: windowWidth * 0.11,
-        borderRadius: 50
+        borderRadius: 50,
     },
     ProfileContainer: {
         flexDirection: 'row',

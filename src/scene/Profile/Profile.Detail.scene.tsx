@@ -11,6 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileGuideInfo, ProfileResetPassword } from '../../component/Profile';
 import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
 import { profileLoadingSuccess } from '../../model/profile/Profile.UI.model';
+import auth from '@react-native-firebase/auth'
+import axios from 'axios';
+import { SERVER } from '../../server';
 
 // 내 정보 관리 화면
 export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
@@ -33,12 +36,26 @@ export const ProfileDetailScene = (props: ProfileDetailSceneProps) => {
     }, [loadingState])
 
     // 탈퇴 버튼 클릭
-    const onPressWithdrawal = () => {
+    const onPressWithdrawal = async () => {
+        const userToken = await auth().currentUser?.getIdToken();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+                "Content-Type": "application/json",
+            }
+        }
+
         Alert.alert(
             "가이드 탈퇴",
             "탈퇴하기 버튼을 누르면, 글로쿨 가이드앱의 모든 정보가 즉시 삭제되며, 복구할 수 없습니다. 정말로 탈퇴하시겠습니까? 탈퇴를 희망하신다면, sungsoo@glokool.com 으로 문의주세요.",
             [{
-                text: "확인"
+                text: "확인",
+                onPress: () => {
+                    axios.delete(SERVER + '/guides', config)
+                        .then((response) => { auth().signOut(); })
+                        .catch((e) => console.log(e));
+                }
             }]
         )
     }

@@ -109,5 +109,7 @@ export default function App() {
 }
 
 LogBox.ignoreLogs([
-    "EventEmitter.removeListener('change', ...)"
+    "EventEmitter.removeListener('change', ...)",
+    "Module",
+    "Can't"
 ]);
