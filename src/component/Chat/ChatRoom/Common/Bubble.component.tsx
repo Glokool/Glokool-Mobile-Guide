@@ -33,10 +33,10 @@ export const renderBubble = (props: BubbleProps<IMessage>, block : Array<String>
                         :
                         <Text style={styles.UserNameText}></Text>
             }
-            {(props.currentMessage.messageType === 'emoji') ?
+            {(props.currentMessage?.messageType === 'emoji') ?
                 <Bubble
         
-                    {...props && props.currentMessage.text }
+                    {...props && props.currentMessage?.text }
                     wrapperStyle={{
                         left: styles.EmojiContainer,
                         right: styles.EmojiContainer

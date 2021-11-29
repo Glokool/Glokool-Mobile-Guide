@@ -31,6 +31,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
     // React 모듈 함수 (DB, 메시지 저장)
     const [block, setBlock] = React.useState<Array<String>>([]);
+    const [loading, setLoading] = React.useState(false);
     const [msg, setMsg] = React.useState("");
     const [ChatDB, setChatDB] = React.useState<FirebaseDatabaseTypes.Reference | undefined>(undefined);
     const [ChatMessages, setChatMessages] = React.useState<Array<IMessage>>([]);
@@ -65,46 +66,45 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
         };
     }, []);
 
-    // 최초 시동 함수
-    // React.useEffect((r
-
-
-    useFocusEffect(()=>{
+    //최초 시동 함수
+    React.useEffect(() => {
+        
+        
         const unsubscribe = props.navigation.addListener('focus', () => {
             FocusScreen();
-
-            AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
-
-            const KeyboardOpen = (e) => {
-                dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
-                dispatch(setKeyboardTrue())
-            }
-
-            const KeyboardHide = (e) => {
-                dispatch(setKeyboardFalse())
-            }
-
-            Keyboard.addListener('keyboardDidShow', KeyboardOpen);
-            Keyboard.addListener('keyboardDidHide', KeyboardHide);
-
-            const Chat = database().ref('/chats/' + props.route.params.travelDate + '/' + props.route.params.id + '/messages');
-            setChatDB(Chat);
-
-            var tempMessages: Array<IMessage> = [];
-
-            Chat.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-                setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-            });
-
-            Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
-                snapshot.forEach((data) => {
-                    tempMessages = GiftedChat.append(tempMessages, data.val());
-                });
-
-                setChatMessages(tempMessages);
-            });
-
         });
+
+        AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
+
+        const KeyboardOpen = (e) => {
+            dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
+            dispatch(setKeyboardTrue())
+        }
+
+        const KeyboardHide = (e) => {
+            dispatch(setKeyboardFalse())
+        }
+
+        Keyboard.addListener('keyboardDidShow', KeyboardOpen);
+        Keyboard.addListener('keyboardDidHide', KeyboardHide);
+
+        const Chat = database().ref('/chats/' + props.route.params.travelDate + '/' + props.route.params.id + '/messages');
+        setChatDB(Chat);
+
+        var tempMessages: Array<IMessage> = [];
+
+        Chat.orderByKey().on('child_added', (snapshot, previousKey) => {
+            setChatMessages(value => GiftedChat.append(value, snapshot.val()));
+        });
+
+        // Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
+        //     snapshot.forEach((data) => {
+        //         tempMessages = GiftedChat.append(tempMessages, data.val());
+        //     });
+
+        //     setChatMessages(tempMessages);
+        //     setLoading(true);
+        // });
 
         // const unfocus = props.navigation.addListener('blur', () => {
         //     if (ChatDB != undefined) { ChatDB.off('child_added') }
@@ -122,10 +122,11 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             Keyboard.removeAllListeners('keyboardDidHide');
 
         };
+    }, []);
 
-    })
 
     const FocusScreen = async () => {
+        console.log("어딜 실행하고 있는거냐?");
 
         var token = await auth().currentUser?.getIdToken();
         var url = SERVER + '/chat-rooms/' + props.route.params.id + '/user/block';
@@ -177,29 +178,6 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
         }
     }
 
-    const LoadEarlierMessages = () => {
-
-        ChatDB?.off('child_added'); // 먼저 기존 리스너 제거
-
-        var tempMessages: Array<IMessage> = [];
-
-        ChatDB?.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-            setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-        });
-
-
-        ChatDB?.orderByKey().limitToLast(messagesCount + 50).once('value', (snapshot) => {
-            snapshot.forEach((data) => {
-                tempMessages = GiftedChat.append(tempMessages, data.val());
-            });
-
-            setChatMessages(tempMessages);
-        });
-
-        setMessagesCount(messagesCount + 50);
-
-    }
-
 
     return (
         <SafeAreaView style={styles.Container}>
@@ -215,16 +193,14 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
                     bottomOffset={(isIphoneX()) ? -getBottomSpace() + 47 : (Platform.OS === 'ios') ? - 25 : 0}
                     onSend={(messages) => onSend(messages)}
                     infiniteScroll={true}
-                    loadEarlier={true}
+
                     user={{ _id: currentUser?.uid }}
                     messagesContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? (isIphoneX() ? iphoneXKeyboardPadding : iosKeyboardPadding) : 20 }}
                     alwaysShowSend={true}
                     showUserAvatar={false}
                     showAvatarForEveryMessage={false}
                     renderAvatarOnTop={true}
-                    renderLoadEarlier={renderLoadEarlier}
-                    onLoadEarlier={() => { LoadEarlierMessages() }}
-                    renderBubble={(props) => renderBubble(props, block)}
+                    renderBubble={(props) => renderBubble(props,block)}
                     renderAvatar={renderAvatar}
                     renderTime={renderTime}
                     renderMessageAudio={renderSound}
