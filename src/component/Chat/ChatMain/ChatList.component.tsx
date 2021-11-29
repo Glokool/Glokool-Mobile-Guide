@@ -63,7 +63,7 @@ export const ChatListComponent = (props: ChatMainSceneProps) => {
                           
             })
             .catch((err) => {
-                console.log('에러', err);
+                console.log('에러', err.response);
             })         
 
     }

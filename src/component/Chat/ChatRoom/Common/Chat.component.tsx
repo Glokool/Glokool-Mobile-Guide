@@ -70,45 +70,50 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
         const unsubscribe = props.navigation.addListener('focus', () => {
             FocusScreen();
-         });
-        
 
-        AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
+            AsyncStorage.setItem(`ChatCheck_${props.route.params.id}`, '');
 
-        const KeyboardOpen = (e) => {
-            dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
-            dispatch(setKeyboardTrue())
-        }
+            const KeyboardOpen = (e) => {
+                dispatch(setKeyboardHeight(e.endCoordinates.height + 60));
+                dispatch(setKeyboardTrue())
+            }
 
-        const KeyboardHide = (e) => {
-            dispatch(setKeyboardFalse())
-        }
+            const KeyboardHide = (e) => {
+                dispatch(setKeyboardFalse())
+            }
 
-        Keyboard.addListener('keyboardDidShow', KeyboardOpen);
-        Keyboard.addListener('keyboardDidHide', KeyboardHide);
+            Keyboard.addListener('keyboardDidShow', KeyboardOpen);
+            Keyboard.addListener('keyboardDidHide', KeyboardHide);
 
-        const Chat = database().ref('/chats/' + props.route.params.travelDate + '/' + props.route.params.id + '/messages');
-        setChatDB(Chat);
+            const Chat = database().ref('/chats/' + props.route.params.travelDate + '/' + props.route.params.id + '/messages');
+            setChatDB(Chat);
 
-        var tempMessages: Array<IMessage> = [];
+            var tempMessages: Array<IMessage> = [];
 
-        Chat.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
-            setChatMessages(value => GiftedChat.append(value, snapshot.val()));
-        });
-
-        Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
-            snapshot.forEach((data) => {
-                tempMessages = GiftedChat.append(tempMessages, data.val());
+            Chat.orderByKey().limitToLast(1).on('child_added', (snapshot, previousKey) => {
+                setChatMessages(value => GiftedChat.append(value, snapshot.val()));
             });
 
-            setChatMessages(tempMessages);
+            Chat.orderByKey().limitToLast(messagesCount).once('value', (snapshot) => {
+                snapshot.forEach((data) => {
+                    tempMessages = GiftedChat.append(tempMessages, data.val());
+                });
+
+                setChatMessages(tempMessages);
+            });
+
         });
 
-
+        const unfocus = props.navigation.addListener('blur', () => {
+            if (ChatDB != undefined) { ChatDB.off('child_added') }
+            Keyboard.removeAllListeners('keyboardDidShow');
+            Keyboard.removeAllListeners('keyboardDidHide');
+        })
 
         return () => {
 
             unsubscribe;
+            unfocus;
 
             if (ChatDB != undefined) { ChatDB.off('child_added') }
             Keyboard.removeAllListeners('keyboardDidShow');
@@ -118,11 +123,11 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
 
     }, []);
 
-    
-    const FocusScreen = async() => {
+
+    const FocusScreen = async () => {
 
         var token = await auth().currentUser?.getIdToken();
-        var url = SERVER + '/chat-rooms/'+ props.route.params.id + '/user/block';
+        var url = SERVER + '/chat-rooms/' + props.route.params.id + '/user/block';
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -131,7 +136,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
         }
 
         axios.get(url, config)
-            .then((response : any) => {
+            .then((response: any) => {
                 setBlock(response.data.blockedUser);
                 console.log(response.data.blockedUser);
             })
@@ -161,7 +166,7 @@ export const ChatComponent = (props: ChatRoomSceneProps): React.ReactElement => 
             }
 
             newMessage?.set(message, (e) => {
-                if (e != null) { 
+                if (e != null) {
                     console.log('채팅 전송 실패 : ', e);
                     setMsg(msg);
                 }

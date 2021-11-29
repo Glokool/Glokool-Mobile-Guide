@@ -73,7 +73,7 @@ export default function App() {
 
                 })
                 .catch((err) => {
-                    console.error('등록 토큰 리프레시 실패 : ', err)
+                    console.log('등록 토큰 리프레시 실패 : ', err)
                 })
         }
 

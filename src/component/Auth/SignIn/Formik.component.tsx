@@ -86,7 +86,7 @@ export const FormikComponent = (props: FormikProps<SignInData>): React.ReactFrag
                                 setCurrentUser(auth().currentUser);
                             })
                             .catch((err) => {
-                                console.error('등록 토큰 리프레시 실패 : ', err)
+                                console.log('등록 토큰 리프레시 실패 : ', err)
                             })
                     }
                     dispatch(loading_end());
